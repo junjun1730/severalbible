@@ -344,7 +344,7 @@ This project actively adopts **Functional Programming** principles for a stable 
 
 ---
 
-## 6. Available Agents (사용 가능한 에이전트)
+## 6. Available Agents
 
 This project includes specialized Claude agents to support the TDD workflow. Use these agents at the appropriate stages of development.
 
@@ -352,127 +352,127 @@ This project includes specialized Claude agents to support the TDD workflow. Use
 
 | Agent | Color | Purpose | When to Use |
 |-------|-------|---------|-------------|
-| **phase-planning-agent** | 🔴 Red | TDD 계획 수립 | 새로운 개발 페이즈 시작 시 |
-| **tdd-checklist-manager** | 🔵 Blue | 진행 상황 추적 | 개발 중 진행 확인/다음 단계 필요 시 |
-| **test-first-validator** | 🟢 Green | TDD 준수 검증 | TDD 사이클 완료 후/코드 리뷰 시 |
-| **documentation-generator** | 🟡 Yellow | 문서화 | 페이즈 완료 후/API 추가 시 |
-| **code-review-quality** | 🟣 Purple | 코드 품질 검토 | 페이즈 완료 전 품질 검증 시 |
+| **phase-planning-agent** | 🔴 Red | TDD Planning | When starting a new development phase |
+| **tdd-checklist-manager** | 🔵 Blue | Progress Tracking | To check progress or when needing next steps |
+| **test-first-validator** | 🟢 Green | TDD Compliance Check | After completing a TDD cycle or for code review |
+| **documentation-generator** | 🟡 Yellow | Documentation | After completing a phase or adding APIs |
+| **code-review-quality** | 🟣 Purple | Code Quality Review | For quality verification before completing a phase |
 
 ### Agent Usage Guide
 
 #### 1. Phase Planning Agent (🔴 phase-planning-agent)
-**용도**: 새로운 개발 페이즈를 시작할 때 포괄적인 TDD 체크리스트 생성
+**Purpose**: Generates a comprehensive TDD checklist when starting a new development phase.
 
-**사용 시점**:
-- "Phase 1 개발을 시작하려고 해"
-- "Scripture Card 기능을 계획해줘"
-- "다음 페이즈로 넘어가자"
+**When to Use**:
+- "I'm starting Phase 1 development."
+- "Plan the Scripture Card feature."
+- "Let's move to the next phase."
 
-**제공 기능**:
-- Red-Green-Refactor 사이클 분해
-- 테스트 케이스별 파일 위치 제안
-- 의존성 그래프 및 일정 추정
-- 우선순위 기반 구현 순서
+**Features**:
+- Red-Green-Refactor cycle breakdown
+- Suggests file locations for test cases
+- Dependency graph and schedule estimation
+- Priority-based implementation order
 
 ---
 
 #### 2. TDD Checklist Manager (🔵 tdd-checklist-manager)
-**용도**: 개발 진행 상황 실시간 추적 및 다음 단계 제안
+**Purpose**: Tracks real-time development progress and suggests next steps.
 
-**사용 시점**:
-- "현재 Phase 1 진행 상황이 어떻게 돼?"
-- "AuthRepository 테스트 완료했어"
-- "다음에 뭘 해야 해?"
-- "Supabase RLS 테스트에서 막혔어"
+**When to Use**:
+- "What is the current progress of Phase 1?"
+- "I've completed the AuthRepository test."
+- "What should I do next?"
+- "I'm stuck on the Supabase RLS test."
 
-**제공 기능**:
-- 완료/진행중/대기/차단 항목 추적
-- 커버리지 목표 대비 현황
-- 블로커 감지 및 해결 제안
-- 우선순위 기반 다음 작업 추천
+**Features**:
+- Tracks Completed/In Progress/Pending/Blocked items
+- Current status vs. coverage goals
+- Blocker detection and resolution suggestions
+- Priority-based next task recommendations
 
 ---
 
 #### 3. Test-First Validator (🟢 test-first-validator)
-**용도**: TDD 원칙(테스트 우선 작성) 준수 여부 검증
+**Purpose**: Verifies adherence to TDD principles (writing tests first).
 
-**사용 시점**:
-- "ScriptureRepository 구현 완료했어, 검토해줘"
-- "TDD 잘 따르고 있는지 확인해줘"
-- "다음 기능으로 넘어가기 전에 검증해줘"
+**When to Use**:
+- "ScriptureRepository implementation is done, please review."
+- "Check if I'm following TDD correctly."
+- "Verify before moving to the next feature."
 
-**제공 기능**:
-- 테스트 우선 작성 여부 확인
-- 레이어별 커버리지 분석
-- Red-Green-Refactor 사이클 준수 확인
-- TDD 점수 및 개선 권고
+**Features**:
+- Verifies if tests were written first
+- Analyzes coverage by layer
+- Checks adherence to Red-Green-Refactor cycle
+- TDD score and improvement recommendations
 
 ---
 
 #### 4. Documentation Generator (🟡 documentation-generator)
-**용도**: API 문서, 기술 문서, 코드 주석, 변경 로그 생성
+**Purpose**: Generates API documentation, technical docs, code comments, and changelogs.
 
-**사용 시점**:
-- "Phase 1 완료! 문서화 해줘"
-- "get_daily_scriptures RPC 함수 문서화해줘"
-- "아키텍처 변경했으니 문서 업데이트해줘"
+**When to Use**:
+- "Phase 1 complete! Please document it."
+- "Document the get_daily_scriptures RPC function."
+- "Architecture changed, update the docs."
 
-**제공 기능**:
-- Dart doc 주석 생성
-- Supabase RPC/Edge Function 문서화
-- CHANGELOG.md 업데이트
-- 아키텍처 결정 기록(ADR)
+**Features**:
+- Dart doc comment generation
+- Supabase RPC/Edge Function documentation
+- CHANGELOG.md update
+- Architecture Decision Record (ADR)
 
 ---
 
 #### 5. Code Review Quality (🟣 code-review-quality)
-**용도**: 페이즈 완료 전 코드 품질 종합 검토
+**Purpose**: Comprehensive code quality review before phase completion.
 
-**사용 시점**:
-- "Phase 1 코드 리뷰해줘"
-- "AuthRepository가 함수형 프로그래밍 원칙 따르는지 확인해줘"
-- "리팩토링 할 부분 찾아줘"
+**When to Use**:
+- "Review Phase 1 code."
+- "Check if AuthRepository follows functional programming principles."
+- "Find areas for refactoring."
 
-**제공 기능**:
-- 코드 품질 점수(A~F)
-- 리팩토링 기회 식별
-- 함수형 프로그래밍 원칙 준수 확인
-- Supabase/Flutter 베스트 프랙티스 검증
-- Context7 MCP를 통한 최신 문서 기반 검증
+**Features**:
+- Code quality score (A~F)
+- Identifies refactoring opportunities
+- Verifies adherence to functional programming principles
+- Validates Supabase/Flutter best practices
+- Validation based on latest docs via Context7 MCP
 
 ---
 
 ### Recommended Workflow
 
 ```
-새 페이즈 시작
+Start New Phase
     │
     ▼
 🔴 phase-planning-agent
-    "Phase X 계획 세워줘"
+    "Plan Phase X"
     │
     ▼
-[TDD 개발 사이클 반복]
+[Repeat TDD Development Cycle]
     │
-    ├──▶ 🔵 tdd-checklist-manager (진행 상황 확인)
-    │        "현재 진행 상황 알려줘"
+    ├──▶ 🔵 tdd-checklist-manager (Check Progress)
+    │        "Tell me current status"
     │
-    ├──▶ 🟢 test-first-validator (사이클 완료 시)
-    │        "이 구현 TDD 검증해줘"
+    ├──▶ 🟢 test-first-validator (Upon Cycle Completion)
+    │        "Verify TDD for this implementation"
     │
     ▼
-페이즈 완료
+Phase Complete
     │
     ▼
 🟣 code-review-quality
-    "최종 코드 리뷰해줘"
+    "Final code review"
     │
     ▼
 🟡 documentation-generator
-    "문서화 해줘"
+    "Generate documentation"
     │
     ▼
-다음 페이즈로
+To Next Phase
 ```
 
 ---

@@ -342,7 +342,189 @@ dev_dependencies:
    - 함수의 시그니처만으로도 의도를 명확히 파악할 수 있도록 설계합니다.
    - 에러 처리는 예외 던지기(Throw)보다 명시적인 리턴 타입(예: Either)을 활용하는 방향을 지향합니다.
 
-## 7. 연락처 및 리소스
+---
+
+## 6. 사용 가능한 에이전트 (Available Agents)
+
+이 프로젝트는 TDD 워크플로우를 지원하기 위해 특화된 Claude 에이전트를 포함하고 있습니다. 개발 단계에 맞춰 적절한 에이전트를 활용하세요.
+
+### 에이전트 개요 (Agent Overview)
+
+| 에이전트 (Agent) | 색상 | 목적 | 사용 시점 |
+|---|---|---|---|
+| **phase-planning-agent** | 🔴 Red | TDD 계획 수립 | 새로운 개발 페이즈 시작 시 |
+| **tdd-checklist-manager** | 🔵 Blue | 진행 상황 추적 | 개발 중 진행 확인/다음 단계 필요 시 |
+| **test-first-validator** | 🟢 Green | TDD 준수 검증 | TDD 사이클 완료 후/코드 리뷰 시 |
+| **documentation-generator** | 🟡 Yellow | 문서화 | 페이즈 완료 후/API 추가 시 |
+| **code-review-quality** | 🟣 Purple | 코드 품질 검토 | 페이즈 완료 전 품질 검증 시 |
+
+### 에이전트 사용 가이드
+
+#### 1. Phase Planning Agent (🔴 phase-planning-agent)
+**용도**: 새로운 개발 페이즈를 시작할 때 포괄적인 TDD 체크리스트 생성
+
+**사용 시점**:
+- "Phase 1 개발을 시작하려고 해"
+- "Scripture Card 기능을 계획해줘"
+- "다음 페이즈로 넘어가자"
+
+**제공 기능**:
+- Red-Green-Refactor 사이클 분해
+- 테스트 케이스별 파일 위치 제안
+- 의존성 그래프 및 일정 추정
+- 우선순위 기반 구현 순서
+
+---
+
+#### 2. TDD Checklist Manager (🔵 tdd-checklist-manager)
+**용도**: 개발 진행 상황 실시간 추적 및 다음 단계 제안
+
+**사용 시점**:
+- "현재 Phase 1 진행 상황이 어떻게 돼?"
+- "AuthRepository 테스트 완료했어"
+- "다음에 뭘 해야 해?"
+- "Supabase RLS 테스트에서 막혔어"
+
+**제공 기능**:
+- 완료/진행중/대기/차단 항목 추적
+- 커버리지 목표 대비 현황
+- 블로커 감지 및 해결 제안
+- 우선순위 기반 다음 작업 추천
+
+---
+
+#### 3. Test-First Validator (🟢 test-first-validator)
+**용도**: TDD 원칙(테스트 우선 작성) 준수 여부 검증
+
+**사용 시점**:
+- "ScriptureRepository 구현 완료했어, 검토해줘"
+- "TDD 잘 따르고 있는지 확인해줘"
+- "다음 기능으로 넘어가기 전에 검증해줘"
+
+**제공 기능**:
+- 테스트 우선 작성 여부 확인
+- 레이어별 커버리지 분석
+- Red-Green-Refactor 사이클 준수 확인
+- TDD 점수 및 개선 권고
+
+---
+
+#### 4. Documentation Generator (🟡 documentation-generator)
+**용도**: API 문서, 기술 문서, 코드 주석, 변경 로그 생성
+
+**사용 시점**:
+- "Phase 1 완료! 문서화 해줘"
+- "get_daily_scriptures RPC 함수 문서화해줘"
+- "아키텍처 변경했으니 문서 업데이트해줘"
+
+**제공 기능**:
+- Dart doc 주석 생성
+- Supabase RPC/Edge Function 문서화
+- CHANGELOG.md 업데이트
+- 아키텍처 결정 기록(ADR)
+
+---
+
+#### 5. Code Review Quality (🟣 code-review-quality)
+**용도**: 페이즈 완료 전 코드 품질 종합 검토
+
+**사용 시점**:
+- "Phase 1 코드 리뷰해줘"
+- "AuthRepository가 함수형 프로그래밍 원칙 따르는지 확인해줘"
+- "리팩토링 할 부분 찾아줘"
+
+**제공 기능**:
+- 코드 품질 점수(A~F)
+- 리팩토링 기회 식별
+- 함수형 프로그래밍 원칙 준수 확인
+- Supabase/Flutter 베스트 프랙티스 검증
+- Context7 MCP를 통한 최신 문서 기반 검증
+
+### 추천 워크플로우 (Recommended Workflow)
+
+```
+새 페이즈 시작
+    │
+    ▼
+🔴 phase-planning-agent
+    "Phase X 계획 세워줘"
+    │
+    ▼
+[TDD 개발 사이클 반복]
+    │
+    ├──▶ 🔵 tdd-checklist-manager (진행 상황 확인)
+    │        "현재 진행 상황 알려줘"
+    │
+    ├──▶ 🟢 test-first-validator (사이클 완료 시)
+    │        "이 구현 TDD 검증해줘"
+    │
+    ▼
+페이즈 완료
+    │
+    ▼
+🟣 code-review-quality
+    "최종 코드 리뷰해줘"
+    │
+    ▼
+🟡 documentation-generator
+    "문서화 해줘"
+    │
+    ▼
+다음 페이즈로
+```
+
+---
+
+## 7. 다음 단계 (Next Steps)
+
+### Phase 1: 환경 설정 및 인증
+
+- [ ] Flutter 프로젝트 초기화 및 패키지 설정
+- [ ] Supabase 프로젝트 생성 및 환경 변수 설정
+- [ ] User Profiles 테이블 및 RLS 정책 작성
+- [ ] AuthRepository 테스트 및 구현 (TDD)
+- [ ] 로그인/회원가입 화면 구현
+- [ ] Tier 관리 로직 구현
+
+### Phase 2: 말씀 카드 제공 시스템
+
+- [ ] Scriptures 테이블 생성 및 샘플 데이터 입력
+- [ ] RPC 함수 작성 (랜덤, 중복 방지, 프리미엄)
+- [ ] ScriptureRepository 테스트 및 구현 (TDD)
+- [ ] Scripture Card Widget 구현
+- [ ] Daily Feed 화면 구현
+- [ ] 로그인 유도 로직 구현
+
+### Phase 3: 기도 노트 시스템
+
+- [ ] Prayer Notes 테이블 및 RLS 정책 작성
+- [ ] PrayerNoteRepository 테스트 및 구현 (TDD)
+- [ ] 기도 노트 작성 UI 구현
+- [ ] Calendar View (table_calendar) 구현
+- [ ] Tier별 조회 제한 로직 구현
+- [ ] Edge Function (자동 삭제) 배포
+
+### Phase 4: 유료화 및 결제
+
+- [ ] In-App Purchase 설정 (iOS/Android)
+- [ ] 구독 관리 로직 구현 (TDD)
+- [ ] Premium 전환 UI/UX 구현
+- [ ] 결제 성공 시 Supabase user_profiles 업데이트
+- [ ] 구독 만료 처리 로직
+
+### Phase 5: 최적화 및 론칭
+
+- [ ] 오프라인 모드 구현 (Hive/Sqflite)
+- [ ] 푸시 알림 (Firebase Cloud Messaging)
+- [ ] 성능 최적화 (이미지 캐싱, lazy loading)
+- [ ] 앱 아이콘 및 스플래시 화면
+- [ ] 앱스토어 스크린샷 및 설명 준비
+- [ ] 베타 테스트 (TestFlight, Google Play Internal Testing)
+- [ ] 정식 출시
+
+---
+
+## 8. 연락처 및 리소스
 
 - **개발 Repository**: [GitHub 링크]
 - **Supabase Dashboard**: [Supabase 프로젝트 URL]
