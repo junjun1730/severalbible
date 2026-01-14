@@ -10,7 +10,7 @@
 ## 1-1. Project Initialization
 
 ### Setup Tasks
-- [ ] Create folder structure (Clean Architecture)
+- [x] Create folder structure (Clean Architecture)
   - `lib/domain/entities/` - Entity classes
   - `lib/domain/repositories/` - Repository interfaces
   - `lib/data/repositories/` - Repository implementations
@@ -21,7 +21,7 @@
   - `lib/core/constants/` - App constants
   - `lib/core/errors/` - Failure classes
   - `lib/core/utils/` - Utility functions
-- [ ] Add essential packages to `pubspec.yaml`
+- [x] Add essential packages to `pubspec.yaml`
   ```yaml
   dependencies:
     flutter_riverpod: ^2.4.0
@@ -36,8 +36,8 @@
     mockito: ^5.4.0
     mocktail: ^1.0.0
   ```
-- [ ] Configure `analysis_options.yaml` (strict mode)
-- [ ] Setup GitHub Actions for CI/CD
+- [x] Configure `analysis_options.yaml` (strict mode)
+- [x] Setup GitHub Actions for CI/CD
   - `.github/workflows/flutter_ci.yml`
   - Build test on push/PR
 
@@ -231,13 +231,13 @@
 
 | Section | Total | Completed | Progress |
 |---------|-------|-----------|----------|
-| 1-1. Project Setup | 4 | 0 | 0% |
+| 1-1. Project Setup | 4 | 4 | 100% |
 | 1-2. Supabase Setup | 6 | 0 | 0% |
 | 1-3. Auth Feature (TDD) | 28 | 0 | 0% |
 | 1-4. UI Implementation | 17 | 0 | 0% |
-| **Total** | **55** | **0** | **0%** |
+| **Total** | **55** | **4** | **7%** |
 
 ---
 
 **Last Updated**: 2026-01-14
-**Phase Status**: Not Started
+**Phase Status**: In Progress (1-1 Complete)

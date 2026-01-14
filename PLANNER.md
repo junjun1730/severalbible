@@ -4,9 +4,9 @@
 **Goal**: Establish the project foundation and integrate Supabase Auth to start managing user tiers.
 
 ### 1-1. Project Initialization
-- [ ] **[Setup]** Create Flutter project and set up folder structure (Clean Architecture: layer/domain, layer/data, layer/presentation)
-- [ ] **[Setup]** Add essential packages (`flutter_riverpod`, `supabase_flutter`, `go_router`, `freezed`, etc.) and configure `analysis_options.yaml`
-- [ ] **[Setup]** Basic CI/CD and Github Actions setup (Build test)
+- [x] **[Setup]** Create Flutter project and set up folder structure (Clean Architecture: layer/domain, layer/data, layer/presentation)
+- [x] **[Setup]** Add essential packages (`flutter_riverpod`, `supabase_flutter`, `go_router`, `freezed`, etc.) and configure `analysis_options.yaml`
+- [x] **[Setup]** Basic CI/CD and Github Actions setup (Build test)
 
 ### 1-2. Supabase Environment Configuration
 - [ ] **[DB]** Create Supabase project
