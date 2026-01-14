@@ -46,16 +46,16 @@
 ## 1-2. Supabase Environment Configuration
 
 ### Database Setup
-- [ ] Create Supabase project and get credentials
-- [ ] Create `.env` file (add to `.gitignore`)
+- [x] Create Supabase project and get credentials
+- [x] Create `.env` file (add to `.gitignore`)
   ```
   SUPABASE_URL=your_project_url
   SUPABASE_ANON_KEY=your_anon_key
   ```
-- [ ] Initialize Supabase in `main.dart`
+- [x] Initialize Supabase in `main.dart`
 
 ### User Profiles Table
-- [ ] Create `user_profiles` table
+- [x] Create `user_profiles` table
   ```sql
   CREATE TABLE user_profiles (
     id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
@@ -64,7 +64,7 @@
     updated_at TIMESTAMPTZ DEFAULT NOW()
   );
   ```
-- [ ] Set RLS policies for `user_profiles`
+- [x] Set RLS policies for `user_profiles`
   ```sql
   -- Enable RLS
   ALTER TABLE user_profiles ENABLE ROW LEVEL SECURITY;
@@ -77,7 +77,7 @@
   CREATE POLICY "Users can update own profile" ON user_profiles
     FOR UPDATE USING (auth.uid() = id);
   ```
-- [ ] Create trigger for auto-creating profile on sign-up
+- [x] Create trigger for auto-creating profile on sign-up
   ```sql
   CREATE OR REPLACE FUNCTION handle_new_user()
   RETURNS TRIGGER AS $$
@@ -232,12 +232,12 @@
 | Section | Total | Completed | Progress |
 |---------|-------|-----------|----------|
 | 1-1. Project Setup | 4 | 4 | 100% |
-| 1-2. Supabase Setup | 6 | 0 | 0% |
+| 1-2. Supabase Setup | 6 | 6 | 100% |
 | 1-3. Auth Feature (TDD) | 28 | 0 | 0% |
 | 1-4. UI Implementation | 17 | 0 | 0% |
-| **Total** | **55** | **4** | **7%** |
+| **Total** | **55** | **10** | **18%** |
 
 ---
 
 **Last Updated**: 2026-01-14
-**Phase Status**: In Progress (1-1 Complete)
+**Phase Status**: In Progress (1-1, 1-2 Complete)

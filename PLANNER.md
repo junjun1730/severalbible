@@ -9,10 +9,10 @@
 - [x] **[Setup]** Basic CI/CD and Github Actions setup (Build test)
 
 ### 1-2. Supabase Environment Configuration
-- [ ] **[DB]** Create Supabase project
-- [ ] **[DB]** Create `user_profiles` table (id, tier, created_at, etc.)
-- [ ] **[DB]** Set RLS policies: `user_profiles` (View/Edit own profile)
-- [ ] **[DB]** Set Trigger function: Auto-create `user_profiles` on sign-up (Tier: 'guest' or 'member')
+- [x] **[DB]** Create Supabase project
+- [x] **[DB]** Create `user_profiles` table (id, tier, created_at, etc.)
+- [x] **[DB]** Set RLS policies: `user_profiles` (View/Edit own profile)
+- [x] **[DB]** Set Trigger function: Auto-create `user_profiles` on sign-up (Tier: 'guest' or 'member')
 
 ### 1-3. Auth Feature (TDD)
 - [ ] **[Domain]** Define `User` Entity and `AuthRepository` Interface
