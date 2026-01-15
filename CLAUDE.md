@@ -308,6 +308,38 @@ dev_dependencies:
 - ❌ Do not create dependencies between tests (Ensure independent execution).
 - ❌ Golden tests are not for pixel perfection (For layout verification).
 
+### Checklist Update Rules (CRITICAL)
+
+**IMPORTANT**: When completing any phase or sub-phase tasks, you MUST update all related checklist files.
+
+**Checklist Files to Update**:
+1. `PLANNER.md` - High-level phase progress
+2. `checklist/phase{N}-*.md` - Detailed TDD checklist for each phase
+3. `docs/phase-{N}-{M}-checklist.md` - Phase completion documentation (if created)
+
+**When to Update**:
+- ✅ After completing each TDD cycle (Red → Green → Refactor)
+- ✅ After implementing a feature or test
+- ✅ Before committing code changes
+- ✅ When a phase or sub-phase is completed
+
+**Update Checklist**:
+1. Change `[ ]` to `[x]` for completed items
+2. Update Progress Summary section (Total/Completed/Progress %)
+3. Update "Last Updated" date
+4. Update "Phase Status" description
+
+**Example**:
+```markdown
+# Before
+- [ ] **[Test]** Write AuthRepository tests
+
+# After
+- [x] **[Test]** Write AuthRepository tests (11 tests passing)
+```
+
+**NEVER** complete development work without updating the corresponding checklists.
+
 ---
 
 ## 5. Development Principles (Functional Programming Orientation)

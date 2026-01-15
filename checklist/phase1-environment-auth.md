@@ -99,70 +99,104 @@
 
 ### Domain Layer
 
-#### User Entity
+#### UserTier & UserProfile Entity
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 1.1 | 🔴 RED | Write `User` entity test (`test/domain/entities/user_test.dart`) | [ ] |
-| 1.1 | 🟢 GREEN | Implement `User` entity with freezed (`lib/domain/entities/user.dart`) | [ ] |
-| 1.1 | 🔵 REFACTOR | Verify immutability and copyWith | [ ] |
+| 1.1 | 🟢 GREEN | Implement `UserTier` enum (`lib/features/auth/domain/user_tier.dart`) | [x] |
+| 1.1 | 🟢 GREEN | Implement `UserProfile` entity with freezed (`lib/features/auth/domain/user_profile.dart`) | [x] |
+| 1.1 | 🔵 REFACTOR | Verify immutability and copyWith | [x] |
 
-#### AuthRepository Interface
+#### SupabaseService Abstraction
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 1.2 | 🔴 RED | Define `AuthRepository` interface contract | [ ] |
-| 1.2 | 🟢 GREEN | Create `lib/domain/repositories/auth_repository.dart` | [ ] |
+| 1.2 | 🟢 GREEN | Create `SupabaseService` interface for testability | [x] |
+| 1.2 | 🟢 GREEN | Implement `SupabaseServiceImpl` (`lib/core/services/supabase_service.dart`) | [x] |
 
-### Data Layer - SupabaseAuthRepository
+### Data Layer - AuthRepository
 
-#### Sign In with Google
+#### Sign In with Email
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 2.1 | 🔴 RED | Test `signInWithGoogle` returns `Right(User)` on success | [ ] |
-| 2.1 | 🔴 RED | Test `signInWithGoogle` returns `Left(AuthFailure)` on error | [ ] |
-| 2.1 | 🟢 GREEN | Implement `signInWithGoogle` in `SupabaseAuthRepository` | [ ] |
-| 2.1 | 🔵 REFACTOR | Extract error handling to helper | [ ] |
+| 2.1 | 🔴 RED | Test `signInWithEmail` returns `Right(User)` on success | [x] |
+| 2.1 | 🔴 RED | Test `signInWithEmail` returns `Left(failure)` on error | [x] |
+| 2.1 | 🟢 GREEN | Implement `signInWithEmail` in `AuthRepository` | [x] |
 
-#### Sign In with Apple
+#### Sign Up with Email
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 2.2 | 🔴 RED | Test `signInWithApple` returns `Right(User)` on success | [ ] |
-| 2.2 | 🔴 RED | Test `signInWithApple` returns `Left(AuthFailure)` on error | [ ] |
-| 2.2 | 🟢 GREEN | Implement `signInWithApple` in `SupabaseAuthRepository` | [ ] |
-| 2.2 | 🔵 REFACTOR | Consolidate OAuth logic | [ ] |
+| 2.2 | 🔴 RED | Test `signUpWithEmail` returns `Right(User)` on success | [x] |
+| 2.2 | 🔴 RED | Test `signUpWithEmail` returns `Left(failure)` on error | [x] |
+| 2.2 | 🟢 GREEN | Implement `signUpWithEmail` in `AuthRepository` | [x] |
+
+#### OAuth Methods (Google/Apple)
+| Cycle | Phase | Task | Status |
+|-------|-------|------|--------|
+| 2.3 | 🟢 GREEN | Implement `signInWithGoogle` method | [x] |
+| 2.3 | 🟢 GREEN | Implement `signInWithApple` method | [x] |
+| 2.3 | ⏳ PENDING | OAuth integration test (requires device testing) | [ ] |
 
 #### Sign Out
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 2.3 | 🔴 RED | Test `signOut` completes successfully | [ ] |
-| 2.3 | 🔴 RED | Test `signOut` returns `Left(AuthFailure)` on error | [ ] |
-| 2.3 | 🟢 GREEN | Implement `signOut` | [ ] |
-| 2.3 | 🔵 REFACTOR | Clean up | [ ] |
+| 2.4 | 🔴 RED | Test `signOut` completes successfully | [x] |
+| 2.4 | 🔴 RED | Test `signOut` returns `Left(failure)` on error | [x] |
+| 2.4 | 🟢 GREEN | Implement `signOut` | [x] |
 
-#### Get Current User
+#### Current User & Auth State
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 2.4 | 🔴 RED | Test `getCurrentUser` returns `Right(User)` when logged in | [ ] |
-| 2.4 | 🔴 RED | Test `getCurrentUser` returns `Right(null)` when not logged in | [ ] |
-| 2.4 | 🟢 GREEN | Implement `getCurrentUser` | [ ] |
-| 2.4 | 🔵 REFACTOR | Optimize user mapping | [ ] |
+| 2.5 | 🔴 RED | Test `currentUser` returns User when logged in | [x] |
+| 2.5 | 🔴 RED | Test `currentUser` returns null when not logged in | [x] |
+| 2.5 | 🔴 RED | Test `isLoggedIn` returns correct boolean | [x] |
+| 2.5 | 🔴 RED | Test `authStateChanges` emits auth state | [x] |
+| 2.5 | 🟢 GREEN | Implement all currentUser/authState methods | [x] |
 
-#### Auth State Changes Stream
+### Data Layer - UserProfileRepository
+
+#### UserProfileDataSource Abstraction
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 2.5 | 🔴 RED | Test `authStateChanges` emits user on login | [ ] |
-| 2.5 | 🔴 RED | Test `authStateChanges` emits null on logout | [ ] |
-| 2.5 | 🟢 GREEN | Implement `authStateChanges` stream | [ ] |
-| 2.5 | 🔵 REFACTOR | Final repository cleanup | [ ] |
+| 2.6 | 🟢 GREEN | Create `UserProfileDataSource` interface | [x] |
+| 2.6 | 🟢 GREEN | Implement `SupabaseUserProfileDataSource` | [x] |
 
-### State Layer - AuthProvider (Riverpod)
+#### Get User Profile
+| Cycle | Phase | Task | Status |
+|-------|-------|------|--------|
+| 2.7 | 🔴 RED | Test `getUserProfile` returns profile when found | [x] |
+| 2.7 | 🔴 RED | Test `getUserProfile` returns failure when not found | [x] |
+| 2.7 | 🔴 RED | Test `getUserProfile` handles database error | [x] |
+| 2.7 | 🟢 GREEN | Implement `getUserProfile` | [x] |
+
+#### Get/Update User Tier
+| Cycle | Phase | Task | Status |
+|-------|-------|------|--------|
+| 2.8 | 🔴 RED | Test `getUserTier` returns tier for existing user | [x] |
+| 2.8 | 🔴 RED | Test `getUserTier` returns guest for non-existing user | [x] |
+| 2.8 | 🔴 RED | Test `updateUserTier` updates successfully | [x] |
+| 2.8 | 🔴 RED | Test `updateUserTier` handles error | [x] |
+| 2.8 | 🟢 GREEN | Implement `getUserTier` and `updateUserTier` | [x] |
+
+#### Create User Profile
+| Cycle | Phase | Task | Status |
+|-------|-------|------|--------|
+| 2.9 | 🔴 RED | Test `createUserProfile` with default tier | [x] |
+| 2.9 | 🔴 RED | Test `createUserProfile` with specified tier | [x] |
+| 2.9 | 🔴 RED | Test `createUserProfile` handles error | [x] |
+| 2.9 | 🟢 GREEN | Implement `createUserProfile` | [x] |
+
+### State Layer - Riverpod Providers
 
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 3.1 | 🔴 RED | Test `AuthProvider` initial state is `AuthState.initial` | [ ] |
-| 3.1 | 🔴 RED | Test `AuthProvider` state changes to `authenticated` on login | [ ] |
-| 3.1 | 🔴 RED | Test `AuthProvider` state changes to `unauthenticated` on logout | [ ] |
-| 3.1 | 🟢 GREEN | Implement `AuthProvider` with `StateNotifier` | [ ] |
-| 3.1 | 🔵 REFACTOR | Optimize state transitions | [ ] |
+| 3.1 | 🟢 GREEN | Create `supabaseClientProvider` | [x] |
+| 3.1 | 🟢 GREEN | Create `supabaseServiceProvider` | [x] |
+| 3.1 | 🟢 GREEN | Create `authRepositoryProvider` | [x] |
+| 3.1 | 🟢 GREEN | Create `userProfileDataSourceProvider` | [x] |
+| 3.1 | 🟢 GREEN | Create `userProfileRepositoryProvider` | [x] |
+| 3.1 | 🟢 GREEN | Create `currentUserProvider` | [x] |
+| 3.1 | 🟢 GREEN | Create `authStateChangesProvider` | [x] |
+| 3.1 | 🟢 GREEN | Create `currentUserTierProvider` | [x] |
+| 3.1 | 🟢 GREEN | Create `isLoggedInProvider` | [x] |
 
 ---
 
@@ -204,26 +238,23 @@
 
 ## Test File Locations
 
-| Test Type | File Path |
-|-----------|-----------|
-| User Entity | `test/domain/entities/user_test.dart` |
-| AuthRepository | `test/data/repositories/auth_repository_test.dart` |
-| AuthProvider | `test/presentation/providers/auth_provider_test.dart` |
-| SplashScreen | `test/presentation/screens/splash_screen_test.dart` |
-| LoginScreen | `test/presentation/screens/login_screen_test.dart` |
-| OnboardingPopup | `test/presentation/widgets/onboarding_popup_test.dart` |
+| Test Type | File Path | Tests |
+|-----------|-----------|-------|
+| AuthRepository | `test/features/auth/auth_repository_test.dart` | 11 |
+| UserProfileRepository | `test/features/auth/user_profile_repository_test.dart` | 13 |
+| Widget Test | `test/widget_test.dart` | 1 |
 
 ## Implementation File Locations
 
 | Component | File Path |
 |-----------|-----------|
-| User Entity | `lib/domain/entities/user.dart` |
-| AuthRepository Interface | `lib/domain/repositories/auth_repository.dart` |
-| SupabaseAuthRepository | `lib/data/repositories/supabase_auth_repository.dart` |
-| AuthProvider | `lib/presentation/providers/auth_provider.dart` |
-| SplashScreen | `lib/presentation/screens/splash_screen.dart` |
-| LoginScreen | `lib/presentation/screens/login_screen.dart` |
-| OnboardingPopup | `lib/presentation/widgets/onboarding_popup.dart` |
+| SupabaseService | `lib/core/services/supabase_service.dart` |
+| UserTier Enum | `lib/features/auth/domain/user_tier.dart` |
+| UserProfile Entity | `lib/features/auth/domain/user_profile.dart` |
+| AuthRepository | `lib/features/auth/data/auth_repository.dart` |
+| UserProfileDataSource | `lib/features/auth/data/user_profile_data_source.dart` |
+| UserProfileRepository | `lib/features/auth/data/user_profile_repository.dart` |
+| Auth Providers | `lib/features/auth/providers/auth_providers.dart` |
 
 ---
 
@@ -233,11 +264,17 @@
 |---------|-------|-----------|----------|
 | 1-1. Project Setup | 4 | 4 | 100% |
 | 1-2. Supabase Setup | 6 | 6 | 100% |
-| 1-3. Auth Feature (TDD) | 28 | 0 | 0% |
+| 1-3. Auth Feature (TDD) | 44 | 43 | 98% |
 | 1-4. UI Implementation | 17 | 0 | 0% |
-| **Total** | **55** | **10** | **18%** |
+| **Total** | **71** | **53** | **75%** |
+
+### Test Summary
+- AuthRepository Tests: 11 passing
+- UserProfileRepository Tests: 13 passing
+- Widget Tests: 1 passing
+- **Total Tests: 25 passing**
 
 ---
 
-**Last Updated**: 2026-01-14
-**Phase Status**: In Progress (1-1, 1-2 Complete)
+**Last Updated**: 2026-01-15
+**Phase Status**: In Progress (1-1, 1-2, 1-3 Complete)

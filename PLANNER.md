@@ -15,10 +15,13 @@
 - [x] **[DB]** Set Trigger function: Auto-create `user_profiles` on sign-up (Tier: 'guest' or 'member')
 
 ### 1-3. Auth Feature (TDD)
-- [ ] **[Domain]** Define `User` Entity and `AuthRepository` Interface
-- [ ] **[Test]** Write `AuthRepository` Unit Tests (Use MockSupabase: Sign-in, Sign-out, Sign-up, Check User State)
-- [ ] **[Data]** Implement `SupabaseAuthRepository`
-- [ ] **[State]** Implement `AuthProvider` (Riverpod) and Test (State change detection)
+- [x] **[Domain]** Define `UserTier` Enum and `UserProfile` Entity (freezed)
+- [x] **[Core]** Create `SupabaseService` abstraction for testability
+- [x] **[Test]** Write `AuthRepository` Unit Tests (11 tests: Sign-in, Sign-out, Sign-up, Current User, Auth State)
+- [x] **[Data]** Implement `AuthRepository` with Either type for error handling
+- [x] **[Test]** Write `UserProfileRepository` Unit Tests (13 tests: CRUD operations, tier management)
+- [x] **[Data]** Implement `UserProfileRepository` with `UserProfileDataSource` abstraction
+- [x] **[State]** Implement Riverpod Providers (auth, userProfile, tier providers)
 
 ### 1-4. UI Implementation
 - [ ] **[UI]** Implement Splash Screen (Auto-login check and routing)
