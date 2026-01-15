@@ -49,5 +49,7 @@ app.*.map.json
 .env.*
 !.env.example
 
-.p8
-.py
+# Sensitive files
+*.p8
+*.py
+*.rb

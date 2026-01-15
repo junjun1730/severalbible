@@ -69,10 +69,10 @@ supabase db push
 
 After running migrations, verify in Supabase Dashboard:
 
-- [ ] `user_profiles` table exists in Table Editor
-- [ ] RLS is enabled (lock icon on table)
-- [ ] Policies are created (check Policies tab)
-- [ ] Trigger is created (check Database > Triggers)
+- [x] `user_profiles` table exists in Table Editor
+- [x] RLS is enabled (lock icon on table)
+- [x] Policies are created (check Policies tab)
+- [x] Trigger is created (check Database > Triggers)
 
 ## Database Schema
 
