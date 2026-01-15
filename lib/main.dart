@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'core/router/app_router.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,26 +23,29 @@ Future<void> main() async {
   );
 }
 
-// Global Supabase client accessor
+// Global Supabase client accessor (deprecated, use providers)
 SupabaseClient get supabase => Supabase.instance.client;
 
-class OneMessageApp extends StatelessWidget {
+class OneMessageApp extends ConsumerWidget {
   const OneMessageApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+  Widget build(BuildContext context, WidgetRef ref) {
+    final router = ref.watch(appRouterProvider);
+
+    return MaterialApp.router(
       title: 'One Message',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
         useMaterial3: true,
       ),
-      home: const HomeScreen(),
+      routerConfig: router,
     );
   }
 }
 
+// Legacy HomeScreen for backward compatibility with widget_test.dart
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
