@@ -17,7 +17,7 @@
 |-------|-------|------|--------|
 | 1.1 | 🟢 GREEN | Create `scriptures` table with schema | [x] |
 | 1.1 | 🟢 GREEN | Insert dummy data (minimum 20 items, 5 premium) | [x] |
-| 1.1 | 🔵 REFACTOR | Verify data integrity and indexes | [ ] |
+| 1.1 | 🔵 REFACTOR | Verify data integrity and indexes | [x] |
 
 **Migration Files Created**:
 - `supabase/migrations/002_create_scriptures.sql`
@@ -97,11 +97,13 @@ CREATE INDEX idx_user_scripture_history_user_date ON user_scripture_history(user
 #### RPC: get_random_scripture (Guest)
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 1.3 | 🔴 RED | Write SQL test for random scripture selection | [ ] |
-| 1.3 | 🔴 RED | Test returns exactly 1 scripture | [ ] |
-| 1.3 | 🔴 RED | Test excludes premium scriptures | [ ] |
+| 1.3 | 🔴 RED | Write SQL test for random scripture selection | [x] |
+| 1.3 | 🔴 RED | Test returns exactly 1 scripture | [x] |
+| 1.3 | 🔴 RED | Test excludes premium scriptures | [x] |
 | 1.3 | 🟢 GREEN | Implement `get_random_scripture` RPC | [x] |
 | 1.3 | 🔵 REFACTOR | Optimize query performance | [x] |
+
+**pgTAP Tests Created**: `supabase/tests/scripture_rpc_test.sql` (Tests 1-4)
 
 **RPC Implementation**:
 ```sql
@@ -121,13 +123,15 @@ $$;
 #### RPC: get_daily_scriptures (Member - No Duplicate)
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 1.4 | 🔴 RED | Write SQL test for no-duplicate logic | [ ] |
-| 1.4 | 🔴 RED | Test returns up to 3 scriptures | [ ] |
-| 1.4 | 🔴 RED | Test excludes already viewed (today) | [ ] |
-| 1.4 | 🔴 RED | Test excludes premium scriptures | [ ] |
-| 1.4 | 🔴 RED | Test handles user with no history | [ ] |
+| 1.4 | 🔴 RED | Write SQL test for no-duplicate logic | [x] |
+| 1.4 | 🔴 RED | Test returns up to 3 scriptures | [x] |
+| 1.4 | 🔴 RED | Test excludes already viewed (today) | [x] |
+| 1.4 | 🔴 RED | Test excludes premium scriptures | [x] |
+| 1.4 | 🔴 RED | Test handles user with no history | [x] |
 | 1.4 | 🟢 GREEN | Implement `get_daily_scriptures` RPC | [x] |
 | 1.4 | 🔵 REFACTOR | Add error handling and edge cases | [x] |
+
+**pgTAP Tests Created**: `supabase/tests/scripture_rpc_test.sql` (Tests 5-7, 12)
 
 **RPC Implementation**:
 ```sql
@@ -161,12 +165,14 @@ $$;
 #### RPC: get_premium_scriptures (Premium)
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 1.5 | 🔴 RED | Write SQL test for premium scripture selection | [ ] |
-| 1.5 | 🔴 RED | Test returns only premium scriptures | [ ] |
-| 1.5 | 🔴 RED | Test applies no-duplicate logic | [ ] |
-| 1.5 | 🔴 RED | Test returns up to 3 additional scriptures | [ ] |
+| 1.5 | 🔴 RED | Write SQL test for premium scripture selection | [x] |
+| 1.5 | 🔴 RED | Test returns only premium scriptures | [x] |
+| 1.5 | 🔴 RED | Test applies no-duplicate logic | [x] |
+| 1.5 | 🔴 RED | Test returns up to 3 additional scriptures | [x] |
 | 1.5 | 🟢 GREEN | Implement `get_premium_scriptures` RPC | [x] |
 | 1.5 | 🔵 REFACTOR | Verify premium tier validation | [x] |
+
+**pgTAP Tests Created**: `supabase/tests/scripture_rpc_test.sql` (Tests 8-9)
 
 **RPC Implementation**:
 ```sql
@@ -199,9 +205,20 @@ $$;
 #### RPC: record_scripture_view
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 1.6 | 🔴 RED | Test successful history recording | [ ] |
-| 1.6 | 🔴 RED | Test prevents duplicate entries (same day) | [ ] |
+| 1.6 | 🔴 RED | Test successful history recording | [x] |
+| 1.6 | 🔴 RED | Test prevents duplicate entries (same day) | [x] |
 | 1.6 | 🟢 GREEN | Implement `record_scripture_view` RPC | [x] |
+
+**pgTAP Tests Created**: `supabase/tests/scripture_rpc_test.sql` (Tests 10-11)
+
+#### RPC: get_scripture_history
+| Cycle | Phase | Task | Status |
+|-------|-------|------|--------|
+| 1.7 | 🔴 RED | Test returns viewed scriptures for date | [x] |
+| 1.7 | 🔴 RED | Test returns empty for date with no history | [x] |
+| 1.7 | 🟢 GREEN | Implement `get_scripture_history` RPC | [x] |
+
+**pgTAP Tests Created**: `supabase/tests/scripture_rpc_test.sql` (Tests 13-15)
 
 **All RPC Functions implemented in**: `supabase/migrations/004_create_scripture_rpc_functions.sql`
 - `get_random_scripture(limit_count)` - For Guest
@@ -676,24 +693,28 @@ CREATE POLICY "Users can insert own history" ON user_scripture_history
 
 | Section | Total | Completed | Progress |
 |---------|-------|-----------|----------|
-| 2-1. Database & RPC | 24 | 15 | 63% |
+| 2-1. Database & RPC | 24 | 24 | 100% |
 | 2-2. Scripture Feature (TDD) | 48 | 46 | 96% |
 | 2-3. UI Implementation | 20 | 0 | 0% |
-| **Total** | **92** | **61** | **66%** |
+| **Total** | **92** | **70** | **76%** |
 
 ### Test Summary
-- RPC Tests (SQL): 0/15 (pending - requires Supabase deployment)
+- RPC Tests (pgTAP): 15/15 written (pending Supabase deployment to run)
 - ScriptureRepository Tests: 17/17 (100%)
 - Provider Tests: Implementation complete (tests pending)
 - Widget Tests: 0/22
 - Integration Tests: 0/11
-- **Total Tests: 17/84**
+- **Total Tests: 32/84 written**
 
 ### Migration Files Created
 - `002_create_scriptures.sql` - Scriptures table with RLS
 - `003_create_user_scripture_history.sql` - History table with RLS
 - `004_create_scripture_rpc_functions.sql` - All RPC functions
 - `005_insert_scripture_dummy_data.sql` - 23 dummy scriptures
+
+### Test Files Created
+- `supabase/tests/scripture_rpc_test.sql` - 15 pgTAP tests for RPC functions
+- `test/features/scripture/data/repositories/scripture_repository_test.dart` - 17 repository tests
 
 ### Implementation Files Created (Phase 2-2)
 - `lib/core/errors/failures.dart` - Failure types for error handling
@@ -707,5 +728,5 @@ CREATE POLICY "Users can insert own history" ON user_scripture_history
 ---
 
 **Last Updated**: 2026-01-16
-**Phase Status**: 2-2 Scripture Feature (TDD) Complete - Ready for 2-3 UI Implementation
+**Phase Status**: 2-1 & 2-2 Complete (100% + 96%) - Ready for 2-3 UI Implementation
 **Estimated Completion**: 4-5 days remaining (UI only)

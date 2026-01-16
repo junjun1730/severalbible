@@ -41,12 +41,16 @@
 - [x] **[DB]** Implement RPC function: `get_daily_scriptures` (For Member - No Duplicate)
 - [x] **[DB]** Implement RPC function: `get_premium_scriptures` (For Premium)
 - [x] **[DB]** Implement RPC function: `record_scripture_view` (History tracking)
+- [x] **[Test]** Write pgTAP tests for all RPC functions (15 tests)
 
 **Migration Files Created**:
 - `002_create_scriptures.sql`
 - `003_create_user_scripture_history.sql`
 - `004_create_scripture_rpc_functions.sql`
 - `005_insert_scripture_dummy_data.sql`
+
+**Test Files Created**:
+- `supabase/tests/scripture_rpc_test.sql` (15 pgTAP tests)
 
 ### 2-2. Scripture Feature (TDD) ✅
 - [x] **[Domain]** Define `Scripture` Entity (Apply `freezed`)
