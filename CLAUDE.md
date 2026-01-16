@@ -39,6 +39,33 @@ This project is designed around three core values:
 
 ---
 
+## ⚠️ CRITICAL: Checklist Update Rules
+
+**MANDATORY**: Before ANY git commit, you MUST update all related checklists.
+
+### Files to Update
+| File | Purpose | When |
+|------|---------|------|
+| `PLANNER.md` | High-level phase progress | Every task completion |
+| `checklist/phase{N}-*.md` | Detailed TDD checklist | Every TDD cycle |
+
+### Update Checklist (Do This EVERY Time)
+1. ✅ Change `[ ]` to `[x]` for completed items
+2. ✅ Update Progress Summary (Total/Completed/%)
+3. ✅ Update "Last Updated" date
+4. ✅ Add notes about what was done (e.g., "11 tests passing")
+
+### Warning
+```
+❌ Failure to update checklists = Incomplete work
+❌ NEVER commit code without updating PLANNER.md
+❌ NEVER finish a phase without updating the detailed checklist
+```
+
+**This is NON-NEGOTIABLE. Always update checklists before committing.**
+
+---
+
 ## 2. User Tiers & Benefits
 
 | Category        | Guest (Non-login)                      | Member (Free)                    | Premium (Paid Subscription) |
@@ -308,28 +335,11 @@ dev_dependencies:
 - ❌ Do not create dependencies between tests (Ensure independent execution).
 - ❌ Golden tests are not for pixel perfection (For layout verification).
 
-### Checklist Update Rules (CRITICAL)
+### Checklist Update Rules
 
-**IMPORTANT**: When completing any phase or sub-phase tasks, you MUST update all related checklist files.
+> ⚠️ **See Section "CRITICAL: Checklist Update Rules" above for full details.**
 
-**Checklist Files to Update**:
-1. `PLANNER.md` - High-level phase progress
-2. `checklist/phase{N}-*.md` - Detailed TDD checklist for each phase
-3. `docs/phase-{N}-{M}-checklist.md` - Phase completion documentation (if created)
-
-**When to Update**:
-- ✅ After completing each TDD cycle (Red → Green → Refactor)
-- ✅ After implementing a feature or test
-- ✅ Before committing code changes
-- ✅ When a phase or sub-phase is completed
-
-**Update Checklist**:
-1. Change `[ ]` to `[x]` for completed items
-2. Update Progress Summary section (Total/Completed/Progress %)
-3. Update "Last Updated" date
-4. Update "Phase Status" description
-
-**Example**:
+**Quick Reference Example**:
 ```markdown
 # Before
 - [ ] **[Test]** Write AuthRepository tests
@@ -337,8 +347,6 @@ dev_dependencies:
 # After
 - [x] **[Test]** Write AuthRepository tests (11 tests passing)
 ```
-
-**NEVER** complete development work without updating the corresponding checklists.
 
 ---
 

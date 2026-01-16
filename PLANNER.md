@@ -34,12 +34,19 @@
 **Goal**: Provide scripture cards, the core content, according to tier-based logic.
 **Detailed TDD Checklist**: See `checklist/phase2-scripture-delivery.md` (92 items, 84 tests, 8-10 days)
 
-### 2-1. Database & RPC
-- [ ] **[DB]** Create `scriptures` table and insert dummy data (at least 20 items)
-- [ ] **[DB]** Create `user_scripture_history` table
-- [ ] **[DB]** Implement RPC function: `get_random_scripture` (For Guest)
-- [ ] **[DB]** Implement RPC function: `get_daily_scriptures` (For Member - No Duplicate)
-- [ ] **[DB]** Implement RPC function: `get_premium_scriptures` (For Premium)
+### 2-1. Database & RPC ✅
+- [x] **[DB]** Create `scriptures` table and insert dummy data (23 items: 15 regular + 8 premium)
+- [x] **[DB]** Create `user_scripture_history` table with RLS policies
+- [x] **[DB]** Implement RPC function: `get_random_scripture` (For Guest)
+- [x] **[DB]** Implement RPC function: `get_daily_scriptures` (For Member - No Duplicate)
+- [x] **[DB]** Implement RPC function: `get_premium_scriptures` (For Premium)
+- [x] **[DB]** Implement RPC function: `record_scripture_view` (History tracking)
+
+**Migration Files Created**:
+- `002_create_scriptures.sql`
+- `003_create_user_scripture_history.sql`
+- `004_create_scripture_rpc_functions.sql`
+- `005_insert_scripture_dummy_data.sql`
 
 ### 2-2. Scripture Feature (TDD)
 - [ ] **[Domain]** Define `Scripture` Entity (Apply `freezed`)
