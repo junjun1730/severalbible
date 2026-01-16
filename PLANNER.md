@@ -24,14 +24,15 @@
 - [x] **[State]** Implement Riverpod Providers (auth, userProfile, tier providers)
 
 ### 1-4. UI Implementation
-- [ ] **[UI]** Implement Splash Screen (Auto-login check and routing)
-- [ ] **[UI]** Implement Login/Sign-up Screen (Include Social Login buttons)
-- [ ] **[UI]** Implement Onboarding Funnel (Popup to induce Guest → Member conversion)
+- [x] **[UI]** Implement Splash Screen (Auto-login check and routing)
+- [x] **[UI]** Implement Login/Sign-up Screen (Include Social Login buttons)
+- [x] **[UI]** Implement Onboarding Funnel (Popup to induce Guest → Member conversion)
 
 ---
 
 ## Phase 2: Scripture Delivery System
 **Goal**: Provide scripture cards, the core content, according to tier-based logic.
+**Detailed TDD Checklist**: See `checklist/phase2-scripture-delivery.md` (92 items, 84 tests, 8-10 days)
 
 ### 2-1. Database & RPC
 - [ ] **[DB]** Create `scriptures` table and insert dummy data (at least 20 items)
