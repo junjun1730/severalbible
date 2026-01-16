@@ -48,12 +48,21 @@
 - `004_create_scripture_rpc_functions.sql`
 - `005_insert_scripture_dummy_data.sql`
 
-### 2-2. Scripture Feature (TDD)
-- [ ] **[Domain]** Define `Scripture` Entity (Apply `freezed`)
-- [ ] **[Domain]** Define `ScriptureRepository` Interface
-- [ ] **[Test]** Write `ScriptureRepository` Unit Tests (Verify each RPC call and mapping)
-- [ ] **[Data]** Implement `SupabaseScriptureRepository`
-- [ ] **[State]** Implement `DailyScriptureProvider` (Manage daily scripture caching and loading state)
+### 2-2. Scripture Feature (TDD) ✅
+- [x] **[Domain]** Define `Scripture` Entity (Apply `freezed`)
+- [x] **[Domain]** Define `ScriptureRepository` Interface
+- [x] **[Test]** Write `ScriptureRepository` Unit Tests (17 tests passing)
+- [x] **[Data]** Implement `SupabaseScriptureRepository` with `SupabaseScriptureDataSource`
+- [x] **[State]** Implement Providers (DailyScriptures, PremiumScriptures, ScriptureViewTracker)
+
+**Implementation Files Created**:
+- `lib/core/errors/failures.dart` - Failure types for error handling
+- `lib/features/scripture/domain/entities/scripture.dart` - Scripture entity with freezed
+- `lib/features/scripture/domain/repositories/scripture_repository.dart` - Repository interface
+- `lib/features/scripture/data/datasources/scripture_datasource.dart` - DataSource interface
+- `lib/features/scripture/data/datasources/supabase_scripture_datasource.dart` - Supabase implementation
+- `lib/features/scripture/data/repositories/supabase_scripture_repository.dart` - Repository implementation
+- `lib/features/scripture/presentation/providers/scripture_providers.dart` - Riverpod providers
 
 ### 2-3. UI Implementation
 - [ ] **[UI]** Implement `ScriptureCard` Widget (Apply design system: fonts, background, etc.)
