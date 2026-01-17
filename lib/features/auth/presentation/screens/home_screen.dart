@@ -5,6 +5,7 @@ import '../../providers/auth_providers.dart';
 import '../../domain/user_tier.dart';
 import '../widgets/onboarding_popup.dart';
 import '../../../../core/router/app_router.dart';
+import '../../../scripture/presentation/screens/daily_feed_screen.dart';
 
 /// Home screen - Daily scripture feed
 class HomeScreen extends ConsumerStatefulWidget {
@@ -62,53 +63,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ],
       ),
       body: tierAsync.when(
-        data: (tier) => _buildContent(tier),
+        data: (tier) => const DailyFeedScreen(),
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, stack) => Center(child: Text('Error: $error')),
       ),
     );
-  }
-
-  Widget _buildContent(UserTier tier) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.menu_book_rounded,
-            size: 80,
-            color: Theme.of(context).colorScheme.primary,
-          ),
-          const SizedBox(height: 24),
-          Text(
-            'Welcome to One Message',
-            style: Theme.of(context).textTheme.headlineSmall,
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Your tier: ${tier.name}',
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: Colors.grey.shade600,
-                ),
-          ),
-          const SizedBox(height: 24),
-          Text(
-            _getScriptureCount(tier),
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
-        ],
-      ),
-    );
-  }
-
-  String _getScriptureCount(UserTier tier) {
-    switch (tier) {
-      case UserTier.guest:
-        return 'You can read 1 scripture per day';
-      case UserTier.member:
-        return 'You can read 3 scriptures per day';
-      case UserTier.premium:
-        return 'You have unlimited access';
-    }
   }
 }

@@ -68,11 +68,12 @@
 - `lib/features/scripture/data/repositories/supabase_scripture_repository.dart` - Repository implementation
 - `lib/features/scripture/presentation/providers/scripture_providers.dart` - Riverpod providers
 
-### 2-3. UI Implementation
-- [ ] **[UI]** Implement `ScriptureCard` Widget (Apply design system: fonts, background, etc.)
-- [ ] **[UI]** Implement `DailyFeedScreen` (Utilize PageView/ListView)
-- [ ] **[Logic]** Connect UI with logic for Guest (1/day) and Member (3/day) limits
-- [ ] **[UI]** Implement Blocker Widget (Induce login/payment when limit reached)
+### 2-3. UI Implementation ✅
+- [x] **[UI]** Implement `ScriptureCard` Widget (Apply design system: fonts, background, etc.) - 9 tests passing
+- [x] **[UI]** Implement `DailyFeedScreen` (Utilize PageView/ListView) - 6 tests passing
+- [x] **[Logic]** Connect UI with logic for Guest (1/day) and Member (3/day) limits
+- [x] **[UI]** Implement Blocker Widget (Induce login/payment when limit reached) - 9 tests passing
+- [x] **[UI]** Implement PageIndicator Widget - 4 tests passing
 
 ---
 
