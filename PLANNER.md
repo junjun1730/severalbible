@@ -79,18 +79,42 @@
 
 ## Phase 3: Prayer Note System
 **Goal**: Implement features for users to record and view meditations. Apply tier-based view restrictions.
+**Detailed TDD Checklist**: See `checklist/phase3-prayer-note.md` (99 items, 85 tests, 6-8 days)
 
 ### 3-1. Database & RLS
-- [ ] **[DB]** Create `prayer_notes` table
-- [ ] **[DB]** Set RLS policies: Verify Member (last 3 days), Premium (all), Guest (forbidden) policies
-- [ ] **[Edge]** Deploy Auto-delete Edge Function (7-day limit for Member)
+- [x] **[DB]** Create `prayer_notes` table
+- [x] **[DB]** Set RLS policies: Verify Member (last 3 days), Premium (all), Guest (forbidden) policies
+- [x] **[DB]** Implement RPC functions (7 functions: CRUD + utilities)
+- [x] **[Test]** Write pgTAP tests for RLS and RPC functions (20 tests)
+- [x] **[Edge]** Create Auto-delete Edge Function (7-day limit for Member)
 
-### 3-2. Prayer Note Feature (TDD)
-- [ ] **[Domain]** Define `PrayerNote` Entity
-- [ ] **[Domain]** Define `PrayerNoteRepository` Interface (CRUD)
-- [ ] **[Test]** Write `PrayerNoteRepository` Tests (Create, Read, Update, Delete)
-- [ ] **[Data]** Implement `SupabasePrayerNoteRepository`
-- [ ] **[State]** Implement `PrayerNoteListProvider` and `PrayerNoteFormController`
+**Migration Files Created**:
+- `006_create_prayer_notes.sql`
+- `007_create_prayer_note_rpc_functions.sql`
+
+**Test Files Created**:
+- `supabase/tests/prayer_note_test.sql` (20 pgTAP tests)
+
+**Edge Function Created**:
+- `supabase/functions/cleanup-old-notes/index.ts`
+
+### 3-2. Prayer Note Feature (TDD) ✅
+- [x] **[Domain]** Define `PrayerNote` Entity (freezed)
+- [x] **[Domain]** Define `PrayerNoteRepository` Interface (CRUD + isDateAccessible)
+- [x] **[Test]** Write `PrayerNoteRepository` Tests (23 tests passing)
+- [x] **[Data]** Implement `SupabasePrayerNoteRepository` with `SupabasePrayerNoteDataSource`
+- [x] **[State]** Implement Providers (PrayerNoteList, FormController, DateAccessibility)
+
+**Implementation Files Created**:
+- `lib/features/prayer_note/domain/entities/prayer_note.dart` - PrayerNote entity with freezed
+- `lib/features/prayer_note/domain/repositories/prayer_note_repository.dart` - Repository interface
+- `lib/features/prayer_note/data/datasources/prayer_note_datasource.dart` - DataSource interface
+- `lib/features/prayer_note/data/datasources/supabase_prayer_note_datasource.dart` - Supabase implementation
+- `lib/features/prayer_note/data/repositories/supabase_prayer_note_repository.dart` - Repository implementation
+- `lib/features/prayer_note/presentation/providers/prayer_note_providers.dart` - Riverpod providers
+
+**Test Files Created**:
+- `test/features/prayer_note/data/repositories/prayer_note_repository_test.dart` (23 tests)
 
 ### 3-3. UI Implementation
 - [ ] **[UI]** Implement 'Leave Meditation' input form Widget at bottom of scripture card
