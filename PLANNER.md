@@ -116,11 +116,26 @@
 **Test Files Created**:
 - `test/features/prayer_note/data/repositories/prayer_note_repository_test.dart` (23 tests)
 
-### 3-3. UI Implementation
-- [ ] **[UI]** Implement 'Leave Meditation' input form Widget at bottom of scripture card
-- [ ] **[UI]** Implement `MyLibraryScreen` tab
-- [ ] **[UI]** Integrate `TableCalendar` and display meditations by date
-- [ ] **[Logic]** Implement logic to display Lock icon for past records for Member tier
+### 3-3. UI Implementation ✅
+- [x] **[UI]** Implement 'Leave Meditation' input form Widget at bottom of scripture card (PrayerNoteInput - 9 tests)
+- [x] **[UI]** Implement `MyLibraryScreen` tab (6 tests passing)
+- [x] **[UI]** Integrate `TableCalendar` and display meditations by date (PrayerCalendar - 5 tests)
+- [x] **[UI]** Implement logic to display Lock icon for past records for Member tier (DateAccessibilityIndicator - 6 tests)
+- [x] **[UI]** Implement `PrayerNoteCard` widget (10 tests)
+
+**Implementation Files Created**:
+- `lib/features/prayer_note/presentation/widgets/prayer_note_input.dart` - Meditation input widget
+- `lib/features/prayer_note/presentation/widgets/prayer_note_card.dart` - Note card display widget
+- `lib/features/prayer_note/presentation/widgets/prayer_calendar.dart` - Calendar with table_calendar
+- `lib/features/prayer_note/presentation/widgets/date_accessibility_indicator.dart` - Lock/unlock indicator
+- `lib/features/prayer_note/presentation/screens/my_library_screen.dart` - My Library screen
+
+**Test Files Created**:
+- `test/features/prayer_note/presentation/widgets/prayer_note_input_test.dart` (9 tests)
+- `test/features/prayer_note/presentation/widgets/prayer_note_card_test.dart` (10 tests)
+- `test/features/prayer_note/presentation/widgets/prayer_calendar_test.dart` (5 tests)
+- `test/features/prayer_note/presentation/widgets/date_accessibility_indicator_test.dart` (6 tests)
+- `test/features/prayer_note/presentation/screens/my_library_screen_test.dart` (6 tests)
 
 ---
 

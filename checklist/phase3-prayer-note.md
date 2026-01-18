@@ -377,72 +377,72 @@ abstract class PrayerNoteRepository {
 #### PrayerNoteInput Widget Tests
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 4.1 | 🔴 RED | Widget test: renders text field | [ ] |
-| 4.1 | 🔴 RED | Widget test: shows character count | [ ] |
-| 4.1 | 🔴 RED | Widget test: disables for guest tier | [ ] |
-| 4.1 | 🔴 RED | Widget test: shows save button | [ ] |
-| 4.1 | 🔴 RED | Widget test: calls onSave callback | [ ] |
-| 4.1 | 🔴 RED | Widget test: validates empty content | [ ] |
-| 4.1 | 🟢 GREEN | Implement `PrayerNoteInput` widget | [ ] |
+| 4.1 | 🔴 RED | Widget test: renders text field | [x] |
+| 4.1 | 🔴 RED | Widget test: shows character count | [x] |
+| 4.1 | 🔴 RED | Widget test: disables for guest tier | [x] |
+| 4.1 | 🔴 RED | Widget test: shows save button | [x] |
+| 4.1 | 🔴 RED | Widget test: calls onSave callback | [x] |
+| 4.1 | 🔴 RED | Widget test: validates empty content | [x] |
+| 4.1 | 🟢 GREEN | Implement `PrayerNoteInput` widget | [x] |
 | 4.1 | 🔵 REFACTOR | Add auto-save feature (optional) | [ ] |
 
-**Widget File**: `lib/features/prayer_note/presentation/widgets/prayer_note_input.dart`
+**Widget File**: `lib/features/prayer_note/presentation/widgets/prayer_note_input.dart` (9 tests passing)
 
 ### PrayerNoteCard Widget
 
 #### PrayerNoteCard Widget Tests
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 4.2 | 🔴 RED | Widget test: renders note content | [ ] |
-| 4.2 | 🔴 RED | Widget test: renders scripture reference (if present) | [ ] |
-| 4.2 | 🔴 RED | Widget test: renders created date | [ ] |
-| 4.2 | 🔴 RED | Widget test: shows edit button | [ ] |
-| 4.2 | 🔴 RED | Widget test: shows delete button | [ ] |
-| 4.2 | 🔴 RED | Widget test: calls onEdit callback | [ ] |
-| 4.2 | 🔴 RED | Widget test: calls onDelete callback | [ ] |
-| 4.2 | 🟢 GREEN | Implement `PrayerNoteCard` widget | [ ] |
+| 4.2 | 🔴 RED | Widget test: renders note content | [x] |
+| 4.2 | 🔴 RED | Widget test: renders scripture reference (if present) | [x] |
+| 4.2 | 🔴 RED | Widget test: renders created date | [x] |
+| 4.2 | 🔴 RED | Widget test: shows edit button | [x] |
+| 4.2 | 🔴 RED | Widget test: shows delete button | [x] |
+| 4.2 | 🔴 RED | Widget test: calls onEdit callback | [x] |
+| 4.2 | 🔴 RED | Widget test: calls onDelete callback | [x] |
+| 4.2 | 🟢 GREEN | Implement `PrayerNoteCard` widget | [x] |
 
-**Widget File**: `lib/features/prayer_note/presentation/widgets/prayer_note_card.dart`
+**Widget File**: `lib/features/prayer_note/presentation/widgets/prayer_note_card.dart` (10 tests passing)
 
 ### MyLibraryScreen
 
 #### MyLibraryScreen Widget Tests
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 4.3 | 🔴 RED | Widget test: shows loading indicator | [ ] |
-| 4.3 | 🔴 RED | Widget test: renders calendar | [ ] |
-| 4.3 | 🔴 RED | Widget test: shows notes list for selected date | [ ] |
-| 4.3 | 🔴 RED | Widget test: shows empty state when no notes | [ ] |
-| 4.3 | 🔴 RED | Widget test: shows error state | [ ] |
-| 4.3 | 🔴 RED | Widget test: updates on date selection | [ ] |
-| 4.3 | 🟢 GREEN | Implement `MyLibraryScreen` | [ ] |
+| 4.3 | 🔴 RED | Widget test: shows loading indicator | [x] |
+| 4.3 | 🔴 RED | Widget test: renders calendar | [x] |
+| 4.3 | 🔴 RED | Widget test: shows notes list for selected date | [x] |
+| 4.3 | 🔴 RED | Widget test: shows empty state when no notes | [x] |
+| 4.3 | 🔴 RED | Widget test: shows error state | [x] |
+| 4.3 | 🔴 RED | Widget test: updates on date selection | [x] |
+| 4.3 | 🟢 GREEN | Implement `MyLibraryScreen` | [x] |
 
-**Screen File**: `lib/features/prayer_note/presentation/screens/my_library_screen.dart`
+**Screen File**: `lib/features/prayer_note/presentation/screens/my_library_screen.dart` (6 tests passing)
 
 ### Calendar Integration
 
 #### Calendar Widget Tests
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 4.4 | 🔴 RED | Widget test: displays current month | [ ] |
-| 4.4 | 🔴 RED | Widget test: highlights dates with notes | [ ] |
-| 4.4 | 🔴 RED | Widget test: allows date selection | [ ] |
-| 4.4 | 🔴 RED | Widget test: navigates months | [ ] |
-| 4.4 | 🟢 GREEN | Implement calendar with `table_calendar` | [ ] |
+| 4.4 | 🔴 RED | Widget test: displays current month | [x] |
+| 4.4 | 🔴 RED | Widget test: highlights dates with notes | [x] |
+| 4.4 | 🔴 RED | Widget test: allows date selection | [x] |
+| 4.4 | 🔴 RED | Widget test: navigates months | [x] |
+| 4.4 | 🟢 GREEN | Implement calendar with `table_calendar` | [x] |
 
-**Widget File**: `lib/features/prayer_note/presentation/widgets/prayer_calendar.dart`
+**Widget File**: `lib/features/prayer_note/presentation/widgets/prayer_calendar.dart` (5 tests passing)
 
 ### Lock Icon for Member Tier
 
 #### DateAccessibilityIndicator Tests
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 4.5 | 🔴 RED | Widget test: shows lock icon for inaccessible dates | [ ] |
-| 4.5 | 🔴 RED | Widget test: shows unlock/normal for accessible dates | [ ] |
-| 4.5 | 🔴 RED | Widget test: shows premium upsell on locked date tap | [ ] |
-| 4.5 | 🟢 GREEN | Implement `DateAccessibilityIndicator` widget | [ ] |
+| 4.5 | 🔴 RED | Widget test: shows lock icon for inaccessible dates | [x] |
+| 4.5 | 🔴 RED | Widget test: shows unlock/normal for accessible dates | [x] |
+| 4.5 | 🔴 RED | Widget test: shows premium upsell on locked date tap | [x] |
+| 4.5 | 🟢 GREEN | Implement `DateAccessibilityIndicator` widget | [x] |
 
-**Widget File**: `lib/features/prayer_note/presentation/widgets/date_accessibility_indicator.dart`
+**Widget File**: `lib/features/prayer_note/presentation/widgets/date_accessibility_indicator.dart` (6 tests passing)
 
 ### Integration Tests
 
