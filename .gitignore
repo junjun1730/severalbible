@@ -53,3 +53,7 @@ app.*.map.json
 *.p8
 *.py
 *.rb
+
+# Supabase local development
+supabase/.branches/
+supabase/.temp/
