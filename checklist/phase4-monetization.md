@@ -15,9 +15,9 @@
 #### Create User Subscriptions Table
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 1.1 | 🟢 GREEN | Create `user_subscriptions` table with schema | [ ] |
-| 1.1 | 🟢 GREEN | Add foreign key to `user_profiles` table | [ ] |
-| 1.1 | 🔵 REFACTOR | Verify data integrity and indexes | [ ] |
+| 1.1 | 🟢 GREEN | Create `user_subscriptions` table with schema | [x] |
+| 1.1 | 🟢 GREEN | Add foreign key to `user_profiles` table | [x] |
+| 1.1 | 🔵 REFACTOR | Verify data integrity and indexes | [x] |
 
 **SQL Schema**:
 ```sql
@@ -48,8 +48,8 @@ CREATE INDEX idx_user_subscriptions_expires_at ON user_subscriptions(expires_at)
 #### Create Subscription Products Table
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 1.2 | 🟢 GREEN | Create `subscription_products` table for product definitions | [ ] |
-| 1.2 | 🟢 GREEN | Insert product definitions (monthly, annual) | [ ] |
+| 1.2 | 🟢 GREEN | Create `subscription_products` table for product definitions | [x] |
+| 1.2 | 🟢 GREEN | Insert product definitions (monthly, annual) | [x] |
 
 **SQL Schema**:
 ```sql
@@ -77,11 +77,11 @@ INSERT INTO subscription_products (id, name, description, duration_days, price_k
 #### User Subscriptions RLS
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 1.3 | 🔴 RED | Write SQL test: User can view own subscription | [ ] |
-| 1.3 | 🔴 RED | Write SQL test: User cannot view other subscriptions | [ ] |
-| 1.3 | 🔴 RED | Write SQL test: User cannot directly insert subscription | [ ] |
-| 1.3 | 🔴 RED | Write SQL test: User cannot directly delete subscription | [ ] |
-| 1.3 | 🟢 GREEN | Implement RLS policies for user_subscriptions | [ ] |
+| 1.3 | 🔴 RED | Write SQL test: User can view own subscription | [x] |
+| 1.3 | 🔴 RED | Write SQL test: User cannot view other subscriptions | [x] |
+| 1.3 | 🔴 RED | Write SQL test: User cannot directly insert subscription | [x] |
+| 1.3 | 🔴 RED | Write SQL test: User cannot directly delete subscription | [x] |
+| 1.3 | 🟢 GREEN | Implement RLS policies for user_subscriptions | [x] |
 
 **RLS Policy Example**:
 ```sql
@@ -100,8 +100,8 @@ CREATE POLICY "Service role can manage subscriptions" ON user_subscriptions
 #### Subscription Products RLS
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 1.4 | 🔴 RED | Write SQL test: All users can view active products | [ ] |
-| 1.4 | 🟢 GREEN | Implement RLS policy for public product viewing | [ ] |
+| 1.4 | 🔴 RED | Write SQL test: All users can view active products | [x] |
+| 1.4 | 🟢 GREEN | Implement RLS policy for public product viewing | [x] |
 
 **RLS Policy Example**:
 ```sql
@@ -117,11 +117,11 @@ CREATE POLICY "Anyone can view active products" ON subscription_products
 #### RPC: get_subscription_status
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 1.5 | 🔴 RED | Write SQL test: returns active subscription | [ ] |
-| 1.5 | 🔴 RED | Write SQL test: returns null for no subscription | [ ] |
-| 1.5 | 🔴 RED | Write SQL test: checks expiration date | [ ] |
-| 1.5 | 🔴 RED | Write SQL test: validates user authentication | [ ] |
-| 1.5 | 🟢 GREEN | Implement `get_subscription_status` RPC | [ ] |
+| 1.5 | 🔴 RED | Write SQL test: returns active subscription | [x] |
+| 1.5 | 🔴 RED | Write SQL test: returns null for no subscription | [x] |
+| 1.5 | 🔴 RED | Write SQL test: checks expiration date | [x] |
+| 1.5 | 🔴 RED | Write SQL test: validates user authentication | [x] |
+| 1.5 | 🟢 GREEN | Implement `get_subscription_status` RPC | [x] |
 
 **RPC Function**:
 ```sql
@@ -154,12 +154,12 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 #### RPC: activate_subscription
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 1.6 | 🔴 RED | Write SQL test: activates new subscription | [ ] |
-| 1.6 | 🔴 RED | Write SQL test: updates user_profiles tier to premium | [ ] |
-| 1.6 | 🔴 RED | Write SQL test: handles subscription renewal | [ ] |
-| 1.6 | 🔴 RED | Write SQL test: validates product_id exists | [ ] |
-| 1.6 | 🔴 RED | Write SQL test: returns error for invalid transaction | [ ] |
-| 1.6 | 🟢 GREEN | Implement `activate_subscription` RPC | [ ] |
+| 1.6 | 🔴 RED | Write SQL test: activates new subscription | [x] |
+| 1.6 | 🔴 RED | Write SQL test: updates user_profiles tier to premium | [x] |
+| 1.6 | 🔴 RED | Write SQL test: handles subscription renewal | [x] |
+| 1.6 | 🔴 RED | Write SQL test: validates product_id exists | [x] |
+| 1.6 | 🔴 RED | Write SQL test: returns error for invalid transaction | [x] |
+| 1.6 | 🟢 GREEN | Implement `activate_subscription` RPC | [x] |
 
 **RPC Function**:
 ```sql
@@ -221,30 +221,30 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 #### RPC: cancel_subscription
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 1.7 | 🔴 RED | Write SQL test: cancels active subscription | [ ] |
-| 1.7 | 🔴 RED | Write SQL test: keeps access until expiration | [ ] |
-| 1.7 | 🔴 RED | Write SQL test: records cancellation reason | [ ] |
-| 1.7 | 🔴 RED | Write SQL test: sets auto_renew to false | [ ] |
-| 1.7 | 🟢 GREEN | Implement `cancel_subscription` RPC | [ ] |
+| 1.7 | 🔴 RED | Write SQL test: cancels active subscription | [x] |
+| 1.7 | 🔴 RED | Write SQL test: keeps access until expiration | [x] |
+| 1.7 | 🔴 RED | Write SQL test: records cancellation reason | [x] |
+| 1.7 | 🔴 RED | Write SQL test: sets auto_renew to false | [x] |
+| 1.7 | 🟢 GREEN | Implement `cancel_subscription` RPC | [x] |
 
 #### RPC: get_available_products
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 1.8 | 🔴 RED | Write SQL test: returns all active products | [ ] |
-| 1.8 | 🔴 RED | Write SQL test: includes pricing information | [ ] |
-| 1.8 | 🔴 RED | Write SQL test: filters by platform (optional) | [ ] |
-| 1.8 | 🟢 GREEN | Implement `get_available_products` RPC | [ ] |
+| 1.8 | 🔴 RED | Write SQL test: returns all active products | [x] |
+| 1.8 | 🔴 RED | Write SQL test: includes pricing information | [x] |
+| 1.8 | 🔴 RED | Write SQL test: filters by platform (optional) | [x] |
+| 1.8 | 🟢 GREEN | Implement `get_available_products` RPC | [x] |
 
 ### Edge Function: Receipt Verification
 
 #### Edge Function: verify-ios-receipt
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 1.9 | 🔴 RED | Write test: verifies valid iOS receipt with Apple | [ ] |
-| 1.9 | 🔴 RED | Write test: handles sandbox vs production environment | [ ] |
-| 1.9 | 🔴 RED | Write test: returns error for invalid receipt | [ ] |
-| 1.9 | 🔴 RED | Write test: extracts transaction details | [ ] |
-| 1.9 | 🟢 GREEN | Implement `verify-ios-receipt` Edge Function | [ ] |
+| 1.9 | 🔴 RED | Write test: verifies valid iOS receipt with Apple | [x] |
+| 1.9 | 🔴 RED | Write test: handles sandbox vs production environment | [x] |
+| 1.9 | 🔴 RED | Write test: returns error for invalid receipt | [x] |
+| 1.9 | 🔴 RED | Write test: extracts transaction details | [x] |
+| 1.9 | 🟢 GREEN | Implement `verify-ios-receipt` Edge Function | [x] |
 
 **Edge Function Example**:
 ```typescript
@@ -304,31 +304,31 @@ Deno.serve(async (req) => {
 #### Edge Function: verify-android-receipt
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 1.10 | 🔴 RED | Write test: verifies valid Android purchase with Google Play | [ ] |
-| 1.10 | 🔴 RED | Write test: handles subscription acknowledgment | [ ] |
-| 1.10 | 🔴 RED | Write test: returns error for invalid token | [ ] |
-| 1.10 | 🟢 GREEN | Implement `verify-android-receipt` Edge Function | [ ] |
+| 1.10 | 🔴 RED | Write test: verifies valid Android purchase with Google Play | [x] |
+| 1.10 | 🔴 RED | Write test: handles subscription acknowledgment | [x] |
+| 1.10 | 🔴 RED | Write test: returns error for invalid token | [x] |
+| 1.10 | 🟢 GREEN | Implement `verify-android-receipt` Edge Function | [x] |
 
 #### Edge Function: subscription-webhook
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 1.11 | 🔴 RED | Write test: handles subscription renewal notification | [ ] |
-| 1.11 | 🔴 RED | Write test: handles subscription cancellation | [ ] |
-| 1.11 | 🔴 RED | Write test: handles subscription expiration | [ ] |
-| 1.11 | 🔴 RED | Write test: validates webhook signature | [ ] |
-| 1.11 | 🟢 GREEN | Implement `subscription-webhook` Edge Function | [ ] |
+| 1.11 | 🔴 RED | Write test: handles subscription renewal notification | [x] |
+| 1.11 | 🔴 RED | Write test: handles subscription cancellation | [x] |
+| 1.11 | 🔴 RED | Write test: handles subscription expiration | [x] |
+| 1.11 | 🔴 RED | Write test: validates webhook signature | [x] |
+| 1.11 | 🟢 GREEN | Implement `subscription-webhook` Edge Function | [x] |
 
 ### Edge Function: Check Expired Subscriptions
 
 #### Edge Function: check-expired-subscriptions
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 1.12 | 🔴 RED | Write test: detects expired subscriptions | [ ] |
-| 1.12 | 🔴 RED | Write test: downgrades user tier to member | [ ] |
-| 1.12 | 🔴 RED | Write test: preserves grace period | [ ] |
-| 1.12 | 🔴 RED | Write test: runs on schedule (cron) | [ ] |
-| 1.12 | 🟢 GREEN | Implement `check-expired-subscriptions` Edge Function | [ ] |
-| 1.12 | 🟢 GREEN | Configure cron schedule (daily at 2 AM) | [ ] |
+| 1.12 | 🔴 RED | Write test: detects expired subscriptions | [x] |
+| 1.12 | 🔴 RED | Write test: downgrades user tier to member | [x] |
+| 1.12 | 🔴 RED | Write test: preserves grace period | [x] |
+| 1.12 | 🔴 RED | Write test: runs on schedule (cron) | [x] |
+| 1.12 | 🟢 GREEN | Implement `check-expired-subscriptions` Edge Function | [x] |
+| 1.12 | 🟢 GREEN | Configure cron schedule (daily at 2 AM) | [x] |
 
 **Edge Function Example**:
 ```typescript

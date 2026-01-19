@@ -15,9 +15,9 @@
 #### Create Prayer Notes Table
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 1.1 | 🟢 GREEN | Create `prayer_notes` table with schema | [ ] |
-| 1.1 | 🟢 GREEN | Add foreign key to `scriptures` table | [ ] |
-| 1.1 | 🔵 REFACTOR | Verify data integrity and indexes | [ ] |
+| 1.1 | 🟢 GREEN | Create `prayer_notes` table with schema | [x] |
+| 1.1 | 🟢 GREEN | Add foreign key to `scriptures` table | [x] |
+| 1.1 | 🔵 REFACTOR | Verify data integrity and indexes | [x] |
 
 **SQL Schema**:
 ```sql
@@ -41,19 +41,19 @@ CREATE INDEX idx_prayer_notes_user_date ON prayer_notes(user_id, DATE(created_at
 #### Guest RLS (Forbidden)
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 1.2 | 🔴 RED | Write SQL test: Guest cannot insert prayer notes | [ ] |
-| 1.2 | 🔴 RED | Write SQL test: Guest cannot select prayer notes | [ ] |
-| 1.2 | 🟢 GREEN | Implement RLS policy: deny all for unauthenticated | [ ] |
+| 1.2 | 🔴 RED | Write SQL test: Guest cannot insert prayer notes | [x] |
+| 1.2 | 🔴 RED | Write SQL test: Guest cannot select prayer notes | [x] |
+| 1.2 | 🟢 GREEN | Implement RLS policy: deny all for unauthenticated | [x] |
 
 #### Member RLS (Last 3 Days)
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 1.3 | 🔴 RED | Write SQL test: Member can insert own prayer notes | [ ] |
-| 1.3 | 🔴 RED | Write SQL test: Member can view last 3 days notes | [ ] |
-| 1.3 | 🔴 RED | Write SQL test: Member cannot view notes older than 3 days | [ ] |
-| 1.3 | 🔴 RED | Write SQL test: Member can update own recent notes | [ ] |
-| 1.3 | 🔴 RED | Write SQL test: Member can delete own recent notes | [ ] |
-| 1.3 | 🟢 GREEN | Implement RLS policy for Member tier | [ ] |
+| 1.3 | 🔴 RED | Write SQL test: Member can insert own prayer notes | [x] |
+| 1.3 | 🔴 RED | Write SQL test: Member can view last 3 days notes | [x] |
+| 1.3 | 🔴 RED | Write SQL test: Member cannot view notes older than 3 days | [x] |
+| 1.3 | 🔴 RED | Write SQL test: Member can update own recent notes | [x] |
+| 1.3 | 🔴 RED | Write SQL test: Member can delete own recent notes | [x] |
+| 1.3 | 🟢 GREEN | Implement RLS policy for Member tier | [x] |
 
 **RLS Policy Example**:
 ```sql
@@ -68,10 +68,10 @@ CREATE POLICY "Members can view recent notes" ON prayer_notes
 #### Premium RLS (All Time)
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 1.4 | 🔴 RED | Write SQL test: Premium can view all prayer notes | [ ] |
-| 1.4 | 🔴 RED | Write SQL test: Premium can update any own note | [ ] |
-| 1.4 | 🔴 RED | Write SQL test: Premium can delete any own note | [ ] |
-| 1.4 | 🟢 GREEN | Implement RLS policy for Premium tier | [ ] |
+| 1.4 | 🔴 RED | Write SQL test: Premium can view all prayer notes | [x] |
+| 1.4 | 🔴 RED | Write SQL test: Premium can update any own note | [x] |
+| 1.4 | 🔴 RED | Write SQL test: Premium can delete any own note | [x] |
+| 1.4 | 🟢 GREEN | Implement RLS policy for Premium tier | [x] |
 
 **RLS Policy Example**:
 ```sql
@@ -91,51 +91,51 @@ CREATE POLICY "Premium can view all notes" ON prayer_notes
 #### RPC: create_prayer_note
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 1.5 | 🔴 RED | Write SQL test: creates prayer note | [ ] |
-| 1.5 | 🔴 RED | Write SQL test: validates user authentication | [ ] |
-| 1.5 | 🔴 RED | Write SQL test: returns created note | [ ] |
-| 1.5 | 🟢 GREEN | Implement `create_prayer_note` RPC | [ ] |
+| 1.5 | 🔴 RED | Write SQL test: creates prayer note | [x] |
+| 1.5 | 🔴 RED | Write SQL test: validates user authentication | [x] |
+| 1.5 | 🔴 RED | Write SQL test: returns created note | [x] |
+| 1.5 | 🟢 GREEN | Implement `create_prayer_note` RPC | [x] |
 
 #### RPC: get_prayer_notes
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 1.6 | 🔴 RED | Write SQL test: returns notes for date range | [ ] |
-| 1.6 | 🔴 RED | Write SQL test: applies tier-based filtering | [ ] |
-| 1.6 | 🔴 RED | Write SQL test: returns notes with scripture details | [ ] |
-| 1.6 | 🟢 GREEN | Implement `get_prayer_notes` RPC | [ ] |
+| 1.6 | 🔴 RED | Write SQL test: returns notes for date range | [x] |
+| 1.6 | 🔴 RED | Write SQL test: applies tier-based filtering | [x] |
+| 1.6 | 🔴 RED | Write SQL test: returns notes with scripture details | [x] |
+| 1.6 | 🟢 GREEN | Implement `get_prayer_notes` RPC | [x] |
 
 #### RPC: get_prayer_notes_by_date
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 1.7 | 🔴 RED | Write SQL test: returns notes for specific date | [ ] |
-| 1.7 | 🔴 RED | Write SQL test: returns empty for date with no notes | [ ] |
-| 1.7 | 🟢 GREEN | Implement `get_prayer_notes_by_date` RPC | [ ] |
+| 1.7 | 🔴 RED | Write SQL test: returns notes for specific date | [x] |
+| 1.7 | 🔴 RED | Write SQL test: returns empty for date with no notes | [x] |
+| 1.7 | 🟢 GREEN | Implement `get_prayer_notes_by_date` RPC | [x] |
 
 #### RPC: update_prayer_note
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 1.8 | 🔴 RED | Write SQL test: updates note content | [ ] |
-| 1.8 | 🔴 RED | Write SQL test: updates updated_at timestamp | [ ] |
-| 1.8 | 🔴 RED | Write SQL test: validates ownership | [ ] |
-| 1.8 | 🟢 GREEN | Implement `update_prayer_note` RPC | [ ] |
+| 1.8 | 🔴 RED | Write SQL test: updates note content | [x] |
+| 1.8 | 🔴 RED | Write SQL test: updates updated_at timestamp | [x] |
+| 1.8 | 🔴 RED | Write SQL test: validates ownership | [x] |
+| 1.8 | 🟢 GREEN | Implement `update_prayer_note` RPC | [x] |
 
 #### RPC: delete_prayer_note
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 1.9 | 🔴 RED | Write SQL test: deletes note | [ ] |
-| 1.9 | 🔴 RED | Write SQL test: validates ownership | [ ] |
-| 1.9 | 🟢 GREEN | Implement `delete_prayer_note` RPC | [ ] |
+| 1.9 | 🔴 RED | Write SQL test: deletes note | [x] |
+| 1.9 | 🔴 RED | Write SQL test: validates ownership | [x] |
+| 1.9 | 🟢 GREEN | Implement `delete_prayer_note` RPC | [x] |
 
 ### Edge Function: Auto-Delete Old Notes
 
 #### Edge Function Setup
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 1.10 | 🔴 RED | Write test: deletes Member notes older than 7 days | [ ] |
-| 1.10 | 🔴 RED | Write test: preserves Premium notes | [ ] |
-| 1.10 | 🔴 RED | Write test: runs on schedule (cron) | [ ] |
-| 1.10 | 🟢 GREEN | Implement `cleanup_old_notes` Edge Function | [ ] |
-| 1.10 | 🟢 GREEN | Configure cron schedule (daily at midnight) | [ ] |
+| 1.10 | 🔴 RED | Write test: deletes Member notes older than 7 days | [x] |
+| 1.10 | 🔴 RED | Write test: preserves Premium notes | [x] |
+| 1.10 | 🔴 RED | Write test: runs on schedule (cron) | [x] |
+| 1.10 | 🟢 GREEN | Implement `cleanup_old_notes` Edge Function | [x] |
+| 1.10 | 🟢 GREEN | Configure cron schedule (daily at midnight) | [x] |
 
 **Edge Function Example**:
 ```typescript
@@ -337,26 +337,26 @@ abstract class PrayerNoteRepository {
 #### PrayerNoteListProvider
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 3.1 | 🔴 RED | Test provider loads notes for selected date | [ ] |
-| 3.1 | 🔴 RED | Test provider handles loading state | [ ] |
-| 3.1 | 🔴 RED | Test provider handles error state | [ ] |
-| 3.1 | 🔴 RED | Test provider refreshes on date change | [ ] |
+| 3.1 | 🔴 RED | Test provider loads notes for selected date | [x] |
+| 3.1 | 🔴 RED | Test provider handles loading state | [x] |
+| 3.1 | 🔴 RED | Test provider handles error state | [x] |
+| 3.1 | 🔴 RED | Test provider refreshes on date change | [x] |
 | 3.1 | 🟢 GREEN | Implement `PrayerNoteListProvider` | [x] |
 
 #### PrayerNoteFormController
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 3.2 | 🔴 RED | Test controller creates new note | [ ] |
-| 3.2 | 🔴 RED | Test controller updates existing note | [ ] |
-| 3.2 | 🔴 RED | Test controller deletes note | [ ] |
-| 3.2 | 🔴 RED | Test controller validates content | [ ] |
+| 3.2 | 🔴 RED | Test controller creates new note | [x] |
+| 3.2 | 🔴 RED | Test controller updates existing note | [x] |
+| 3.2 | 🔴 RED | Test controller deletes note | [x] |
+| 3.2 | 🔴 RED | Test controller validates content | [x] |
 | 3.2 | 🟢 GREEN | Implement `PrayerNoteFormController` | [x] |
 
 #### DateAccessibilityProvider
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 3.3 | 🔴 RED | Test provider returns accessibility for date | [ ] |
-| 3.3 | 🔴 RED | Test provider handles tier changes | [ ] |
+| 3.3 | 🔴 RED | Test provider returns accessibility for date | [x] |
+| 3.3 | 🔴 RED | Test provider handles tier changes | [x] |
 | 3.3 | 🟢 GREEN | Implement `DateAccessibilityProvider` | [x] |
 
 #### Provider Setup
@@ -384,7 +384,7 @@ abstract class PrayerNoteRepository {
 | 4.1 | 🔴 RED | Widget test: calls onSave callback | [x] |
 | 4.1 | 🔴 RED | Widget test: validates empty content | [x] |
 | 4.1 | 🟢 GREEN | Implement `PrayerNoteInput` widget | [x] |
-| 4.1 | 🔵 REFACTOR | Add auto-save feature (optional) | [ ] |
+| 4.1 | 🔵 REFACTOR | Add auto-save feature (optional) | [x] |
 
 **Widget File**: `lib/features/prayer_note/presentation/widgets/prayer_note_input.dart` (9 tests passing)
 
@@ -449,26 +449,26 @@ abstract class PrayerNoteRepository {
 #### Guest Tier Integration
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 4.6 | 🔴 RED | Integration test: guest sees disabled input | [ ] |
-| 4.6 | 🔴 RED | Integration test: guest sees login prompt | [ ] |
-| 4.6 | 🟢 GREEN | Implement guest tier restrictions | [ ] |
+| 4.6 | 🔴 RED | Integration test: guest sees disabled input | [x] |
+| 4.6 | 🔴 RED | Integration test: guest sees login prompt | [x] |
+| 4.6 | 🟢 GREEN | Implement guest tier restrictions | [x] |
 
 #### Member Tier Integration
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 4.7 | 🔴 RED | Integration test: member can create note | [ ] |
-| 4.7 | 🔴 RED | Integration test: member sees last 3 days notes | [ ] |
-| 4.7 | 🔴 RED | Integration test: member sees lock on older dates | [ ] |
-| 4.7 | 🔴 RED | Integration test: member sees premium upsell | [ ] |
-| 4.7 | 🟢 GREEN | Implement member tier logic | [ ] |
+| 4.7 | 🔴 RED | Integration test: member can create note | [x] |
+| 4.7 | 🔴 RED | Integration test: member sees last 3 days notes | [x] |
+| 4.7 | 🔴 RED | Integration test: member sees lock on older dates | [x] |
+| 4.7 | 🔴 RED | Integration test: member sees premium upsell | [x] |
+| 4.7 | 🟢 GREEN | Implement member tier logic | [x] |
 
 #### Premium Tier Integration
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 4.8 | 🔴 RED | Integration test: premium can view all notes | [ ] |
-| 4.8 | 🔴 RED | Integration test: premium sees no locks | [ ] |
-| 4.8 | 🔴 RED | Integration test: premium can edit any note | [ ] |
-| 4.8 | 🟢 GREEN | Implement premium tier logic | [ ] |
+| 4.8 | 🔴 RED | Integration test: premium can view all notes | [x] |
+| 4.8 | 🔴 RED | Integration test: premium sees no locks | [x] |
+| 4.8 | 🔴 RED | Integration test: premium can edit any note | [x] |
+| 4.8 | 🟢 GREEN | Implement premium tier logic | [x] |
 
 ---
 
