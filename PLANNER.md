@@ -141,20 +141,47 @@
 
 ## Phase 4: Monetization
 **Goal**: Attach revenue model and induce conversion to Premium users.
+**Detailed TDD Checklist**: See `checklist/phase4-monetization.md` (112 items, 143 tests, 8-10 days)
 
-### 4-1. In-App Purchase Setup
-- [ ] **[Setup]** Register app and create products (subscriptions) in App Store Connect / Google Play Console
-- [ ] **[Pkg]** Configure `in_app_purchase` package
+### 4-1. Database & Subscription Schema ✅
+- [x] **[DB]** Create `subscription_products` table with pricing info
+- [x] **[DB]** Create `user_subscriptions` table with status tracking
+- [x] **[DB]** Implement RLS policies for subscription tables
+- [x] **[DB]** Implement RPC functions (get_subscription_status, activate_subscription, cancel_subscription, get_available_products, has_active_premium)
+- [x] **[Test]** Write pgTAP tests for RLS and RPC functions (25 tests)
+- [x] **[Edge]** Create Edge Functions (verify-ios-receipt, verify-android-receipt, subscription-webhook, check-expired-subscriptions)
 
-### 4-2. Payment Feature (TDD)
+**Migration Files Created**:
+- `008_create_user_subscriptions.sql`
+- `009_create_subscription_rpc_functions.sql`
+
+**Test Files Created**:
+- `supabase/tests/subscription_test.sql` (25 pgTAP tests)
+
+**Edge Functions Created**:
+- `supabase/functions/verify-ios-receipt/index.ts`
+- `supabase/functions/verify-android-receipt/index.ts`
+- `supabase/functions/subscription-webhook/index.ts`
+- `supabase/functions/check-expired-subscriptions/index.ts`
+
+### 4-2. Subscription Feature (TDD)
+- [ ] **[Domain]** Define `Subscription` and `SubscriptionProduct` Entities (freezed)
 - [ ] **[Domain]** Define `SubscriptionRepository` Interface
-- [ ] **[Data]** Implement IAP verification and processing logic
-- [ ] **[DB]** Logic to update `tier` in `user_profiles` upon payment success (or Webhook)
+- [ ] **[Domain]** Define `IAPService` Interface
+- [ ] **[Test]** Write `SubscriptionRepository` Unit Tests (30 tests)
+- [ ] **[Test]** Write `IAPService` Unit Tests (7 tests)
+- [ ] **[Data]** Implement `SupabaseSubscriptionRepository`
+- [ ] **[Data]** Implement `IAPService` for iOS/Android
+- [ ] **[State]** Implement Providers (SubscriptionStatus, AvailableProducts, PurchaseController)
 
 ### 4-3. UI Implementation
 - [ ] **[UI]** Implement `PremiumLandingScreen` (Subscription guide page)
-- [ ] **[UI]** Connect Upselling popup when clicking "See More Words" or "View Past Records"
-- [ ] **[UI]** Implement 'Manage Subscription' menu in Settings page
+- [ ] **[UI]** Implement `SubscriptionProductCard` widget
+- [ ] **[UI]** Implement `PurchaseButton` widget
+- [ ] **[UI]** Implement `UpsellDialog` widget
+- [ ] **[UI]** Implement `ManageSubscriptionScreen`
+- [ ] **[UI]** Integrate upselling into Scripture Feed and Prayer Archive
+- [ ] **[Test]** Write integration tests for purchase flows (iOS/Android)
 
 ---
 
