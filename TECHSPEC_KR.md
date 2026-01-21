@@ -1,17 +1,17 @@
 ### 기술 스택
 
-**Frontend (Mobile)**:
+**프론트엔드 (모바일)**:
 
 ```yaml
 name: one_message
-description: Daily spiritual content app
+description: 매일 영적인 콘텐츠를 제공하는 앱
 
 dependencies:
   flutter:
     sdk: flutter
 
-  # State Management
-  flutter_riverpod: ^2.4.0 # or flutter_bloc: ^8.1.0
+  # 상태 관리
+  flutter_riverpod: ^2.4.0 # 또는 flutter_bloc: ^8.1.0
 
   # Supabase
   supabase_flutter: ^2.0.0
@@ -21,14 +21,14 @@ dependencies:
   flutter_svg: ^2.0.9
   cached_network_image: ^3.3.0
 
-  # Navigation
+  # 네비게이션
   go_router: ^12.0.0
 
-  # Payment
+  # 결제
   in_app_purchase: ^3.1.0
-  # or purchases_flutter: ^6.0.0  (RevenueCat)
+  # 또는 purchases_flutter: ^6.0.0  (RevenueCat)
 
-  # Utilities
+  # 유틸리티
   intl: ^0.18.1
   shared_preferences: ^2.2.2
   freezed_annotation: ^2.4.1
@@ -46,32 +46,32 @@ dev_dependencies:
   json_serializable: ^6.7.1
 ```
 
-**Backend (Supabase)**:
+**백엔드 (Supabase)**:
 
-- **Database**: PostgreSQL 15+
-- **Auth**: Supabase Auth (OAuth + Email)
-- **Storage**: Supabase Storage (미디어 파일, 향후 확장용)
-- **Edge Functions**: Deno (TypeScript)
-- **Realtime**: Supabase Realtime Subscriptions
+- **데이터베이스**: PostgreSQL 15+
+- **인증**: Supabase Auth (OAuth + 이메일)
+- **스토리지**: Supabase Storage (미디어 파일, 향후 확장용)
+- **엣지 함수**: Deno (TypeScript)
+- **실시간**: Supabase Realtime Subscriptions
 
 ### 아키텍처 패턴
 
-**Clean Architecture + Repository Pattern**
+**클린 아키텍처 + 리포지토리 패턴**
 
 **상태 관리**:
 
-- **Option 1**: Riverpod (권장)
-  - 간결한 문법
-  - 자동 dispose
-  - 테스트 용이
-- **Option 2**: BLoC
+- **옵션 1**: Riverpod (권장)
+  - 간결한 구문
+  - 자동 메모리 해제
+  - 쉬운 테스트
+- **옵션 2**: BLoC
   - 명확한 Event-State 패턴
   - 복잡한 상태 관리에 유리
 
 ### Supabase 데이터베이스 스키마
 
 ```sql
--- Users (Supabase Auth 자동 생성, 확장용 테이블)
+-- 사용자 (Supabase Auth에 의해 자동 생성, 확장을 위한 테이블)
 CREATE TABLE public.user_profiles (
   id UUID REFERENCES auth.users PRIMARY KEY,
   tier TEXT NOT NULL DEFAULT 'guest' CHECK (tier IN ('guest', 'member', 'premium')),
@@ -80,7 +80,7 @@ CREATE TABLE public.user_profiles (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Scriptures (경전 콘텐츠)
+-- 성경 구절 (성경 콘텐츠)
 CREATE TABLE public.scriptures (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   title TEXT NOT NULL,
@@ -91,7 +91,7 @@ CREATE TABLE public.scriptures (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- User Scripture History (읽은 기록)
+-- 사용자 성경 읽기 기록 (읽기 기록)
 CREATE TABLE public.user_scripture_history (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   user_id UUID REFERENCES auth.users NOT NULL,
@@ -101,7 +101,7 @@ CREATE TABLE public.user_scripture_history (
   UNIQUE(user_id, scripture_id)
 );
 
--- Prayer Notes (기도 노트)
+-- 기도 노트 (기도/묵상 노트)
 CREATE TABLE public.prayer_notes (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   user_id UUID REFERENCES auth.users NOT NULL,
@@ -111,16 +111,16 @@ CREATE TABLE public.prayer_notes (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Indexes
+-- 인덱스
 CREATE INDEX idx_user_scripture_history_user_id ON public.user_scripture_history(user_id);
 CREATE INDEX idx_prayer_notes_user_id ON public.prayer_notes(user_id);
 CREATE INDEX idx_prayer_notes_created_at ON public.prayer_notes(created_at);
 ```
 
-### Row Level Security (RLS) 정책
+### 행 수준 보안 (RLS) 정책
 
 ```sql
--- user_profiles: 본인 것만 조회/수정
+-- user_profiles: 자신의 프로필만 보고 편집
 ALTER TABLE public.user_profiles ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "Users can view own profile"
@@ -131,21 +131,21 @@ CREATE POLICY "Users can update own profile"
   ON public.user_profiles FOR UPDATE
   USING (auth.uid() = id);
 
--- scriptures: 모두 읽기 가능
+-- scriptures: 누구나 읽기 가능
 ALTER TABLE public.scriptures ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "Anyone can read scriptures"
   ON public.scriptures FOR SELECT
   USING (true);
 
--- user_scripture_history: 본인 기록만 CRUD
+-- user_scripture_history: 자신의 기록만 CRUD
 ALTER TABLE public.user_scripture_history ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "Users can manage own history"
   ON public.user_scripture_history FOR ALL
   USING (auth.uid() = user_id);
 
--- prayer_notes: 본인 기록만 CRUD + Tier별 조회 제한
+-- prayer_notes: 자신의 노트만 CRUD + 등급별 보기 제한
 ALTER TABLE public.prayer_notes ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "Users can insert own notes"
@@ -156,10 +156,10 @@ CREATE POLICY "Users can view own notes"
   ON public.prayer_notes FOR SELECT
   USING (
     auth.uid() = user_id AND (
-      -- Premium: 모든 기록 조회
+      -- Premium: 모든 기록 보기
       (SELECT tier FROM public.user_profiles WHERE id = auth.uid()) = 'premium'
       OR
-      -- Member: 최근 3일만 조회
+      -- Member: 최근 3일 기록만 보기
       (
         (SELECT tier FROM public.user_profiles WHERE id = auth.uid()) = 'member'
         AND created_at >= NOW() - INTERVAL '3 days'
@@ -179,7 +179,7 @@ CREATE POLICY "Users can delete own notes"
 ### Supabase RPC 함수
 
 ```sql
--- 랜덤 경전 가져오기 (Guest용)
+-- 무작위 성경 구절 가져오기 (게스트용)
 CREATE OR REPLACE FUNCTION get_random_scripture(limit_count INT)
 RETURNS SETOF scriptures
 LANGUAGE sql
@@ -190,7 +190,7 @@ AS $$
   LIMIT limit_count;
 $$;
 
--- 중복 방지 경전 가져오기 (Member용)
+-- 오늘의 성경 구절 가져오기 (멤버용 - 중복 없음)
 CREATE OR REPLACE FUNCTION get_daily_scriptures(
   p_user_id UUID,
   limit_count INT
@@ -209,7 +209,7 @@ AS $$
   LIMIT limit_count;
 $$;
 
--- 프리미엄 경전 가져오기 (Premium용)
+-- 프리미엄 성경 구절 가져오기 (프리미엄용)
 CREATE OR REPLACE FUNCTION get_premium_scriptures(
   p_user_id UUID,
   limit_count INT
@@ -229,7 +229,7 @@ AS $$
 $$;
 ```
 
-### Supabase Edge Function (자동 삭제)
+### Supabase 엣지 함수 (자동 삭제)
 
 ```typescript
 // supabase/functions/delete-old-prayer-notes/index.ts
@@ -242,7 +242,7 @@ serve(async (req) => {
     Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
   );
 
-  // Member 회원의 7일 이전 기록 삭제
+  // Member 등급 사용자의 7일 이상된 기록 삭제
   const { data, error } = await supabaseClient
     .from("prayer_notes")
     .delete()

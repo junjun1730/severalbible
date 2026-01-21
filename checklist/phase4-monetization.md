@@ -377,9 +377,9 @@ Deno.serve(async () => {
 #### Subscription Entity
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 2.1 | 🟢 GREEN | Create `Subscription` entity with freezed | [ ] |
-| 2.1 | 🟢 GREEN | Create `SubscriptionProduct` entity with freezed | [ ] |
-| 2.1 | 🔵 REFACTOR | Verify immutability and copyWith | [ ] |
+| 2.1 | 🟢 GREEN | Create `Subscription` entity with freezed | [x] |
+| 2.1 | 🟢 GREEN | Create `SubscriptionProduct` entity with freezed | [x] |
+| 2.1 | 🔵 REFACTOR | Verify immutability and copyWith | [x] |
 
 **Entity Definition** (`lib/features/subscription/domain/entities/subscription.dart`):
 ```dart
@@ -447,7 +447,7 @@ class SubscriptionProduct with _$SubscriptionProduct {
 #### SubscriptionRepository Interface
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 2.2 | 🟢 GREEN | Create `SubscriptionRepository` interface | [ ] |
+| 2.2 | 🟢 GREEN | Create `SubscriptionRepository` interface | [x] |
 
 **Repository Interface** (`lib/features/subscription/domain/repositories/subscription_repository.dart`):
 ```dart
@@ -506,96 +506,96 @@ abstract class SubscriptionRepository {
 #### Test Setup & Mocks
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 2.3 | 🔴 RED | Setup test file and mocks | [ ] |
-| 2.3 | 🔴 RED | Create `MockSubscriptionDataSource` | [ ] |
-| 2.3 | 🔴 RED | Create test fixtures for subscriptions | [ ] |
+| 2.3 | 🔴 RED | Setup test file and mocks | [x] |
+| 2.3 | 🔴 RED | Create `MockSubscriptionDataSource` | [x] |
+| 2.3 | 🔴 RED | Create test fixtures for subscriptions | [x] |
 
 **Test File**: `test/features/subscription/data/repositories/subscription_repository_test.dart`
 
 #### getSubscriptionStatus Tests
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 2.4 | 🔴 RED | Test `getSubscriptionStatus` returns Right(subscription) for active | [ ] |
-| 2.4 | 🔴 RED | Test `getSubscriptionStatus` returns Right(null) for no subscription | [ ] |
-| 2.4 | 🔴 RED | Test `getSubscriptionStatus` returns Left(failure) on error | [ ] |
-| 2.4 | 🔴 RED | Test `getSubscriptionStatus` checks expiration correctly | [ ] |
-| 2.4 | 🟢 GREEN | Implement `getSubscriptionStatus` | [ ] |
+| 2.4 | 🔴 RED | Test `getSubscriptionStatus` returns Right(subscription) for active | [x] |
+| 2.4 | 🔴 RED | Test `getSubscriptionStatus` returns Right(null) for no subscription | [x] |
+| 2.4 | 🔴 RED | Test `getSubscriptionStatus` returns Left(failure) on error | [x] |
+| 2.4 | 🔴 RED | Test `getSubscriptionStatus` checks expiration correctly | [x] |
+| 2.4 | 🟢 GREEN | Implement `getSubscriptionStatus` | [x] |
 
 #### getAvailableProducts Tests
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 2.5 | 🔴 RED | Test `getAvailableProducts` returns Right(products) on success | [ ] |
-| 2.5 | 🔴 RED | Test `getAvailableProducts` filters by platform | [ ] |
-| 2.5 | 🔴 RED | Test `getAvailableProducts` includes pricing info | [ ] |
-| 2.5 | 🔴 RED | Test `getAvailableProducts` returns Left(failure) on error | [ ] |
-| 2.5 | 🟢 GREEN | Implement `getAvailableProducts` | [ ] |
+| 2.5 | 🔴 RED | Test `getAvailableProducts` returns Right(products) on success | [x] |
+| 2.5 | 🔴 RED | Test `getAvailableProducts` filters by platform | [x] |
+| 2.5 | 🔴 RED | Test `getAvailableProducts` includes pricing info | [x] |
+| 2.5 | 🔴 RED | Test `getAvailableProducts` returns Left(failure) on error | [x] |
+| 2.5 | 🟢 GREEN | Implement `getAvailableProducts` | [x] |
 
 #### activateSubscription Tests
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 2.6 | 🔴 RED | Test `activateSubscription` returns Right(subscription) on success | [ ] |
-| 2.6 | 🔴 RED | Test `activateSubscription` calls RPC with correct params | [ ] |
-| 2.6 | 🔴 RED | Test `activateSubscription` handles renewal correctly | [ ] |
-| 2.6 | 🔴 RED | Test `activateSubscription` returns Left(failure) for invalid product | [ ] |
-| 2.6 | 🔴 RED | Test `activateSubscription` returns Left(failure) on error | [ ] |
-| 2.6 | 🟢 GREEN | Implement `activateSubscription` | [ ] |
+| 2.6 | 🔴 RED | Test `activateSubscription` returns Right(subscription) on success | [x] |
+| 2.6 | 🔴 RED | Test `activateSubscription` calls RPC with correct params | [x] |
+| 2.6 | 🔴 RED | Test `activateSubscription` handles renewal correctly | [x] |
+| 2.6 | 🔴 RED | Test `activateSubscription` returns Left(failure) for invalid product | [x] |
+| 2.6 | 🔴 RED | Test `activateSubscription` returns Left(failure) on error | [x] |
+| 2.6 | 🟢 GREEN | Implement `activateSubscription` | [x] |
 
 #### cancelSubscription Tests
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 2.7 | 🔴 RED | Test `cancelSubscription` returns Right(void) on success | [ ] |
-| 2.7 | 🔴 RED | Test `cancelSubscription` calls RPC with reason | [ ] |
-| 2.7 | 🔴 RED | Test `cancelSubscription` returns Left(failure) on no subscription | [ ] |
-| 2.7 | 🔴 RED | Test `cancelSubscription` returns Left(failure) on error | [ ] |
-| 2.7 | 🟢 GREEN | Implement `cancelSubscription` | [ ] |
+| 2.7 | 🔴 RED | Test `cancelSubscription` returns Right(void) on success | [x] |
+| 2.7 | 🔴 RED | Test `cancelSubscription` calls RPC with reason | [x] |
+| 2.7 | 🔴 RED | Test `cancelSubscription` returns Left(failure) on no subscription | [x] |
+| 2.7 | 🔴 RED | Test `cancelSubscription` returns Left(failure) on error | [x] |
+| 2.7 | 🟢 GREEN | Implement `cancelSubscription` | [x] |
 
 #### verifyIosReceipt Tests
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 2.8 | 🔴 RED | Test `verifyIosReceipt` returns Right(data) for valid receipt | [ ] |
-| 2.8 | 🔴 RED | Test `verifyIosReceipt` calls Edge Function | [ ] |
-| 2.8 | 🔴 RED | Test `verifyIosReceipt` extracts transaction details | [ ] |
-| 2.8 | 🔴 RED | Test `verifyIosReceipt` returns Left(failure) for invalid receipt | [ ] |
-| 2.8 | 🔴 RED | Test `verifyIosReceipt` returns Left(failure) on error | [ ] |
-| 2.8 | 🟢 GREEN | Implement `verifyIosReceipt` | [ ] |
+| 2.8 | 🔴 RED | Test `verifyIosReceipt` returns Right(data) for valid receipt | [x] |
+| 2.8 | 🔴 RED | Test `verifyIosReceipt` calls Edge Function | [x] |
+| 2.8 | 🔴 RED | Test `verifyIosReceipt` extracts transaction details | [x] |
+| 2.8 | 🔴 RED | Test `verifyIosReceipt` returns Left(failure) for invalid receipt | [x] |
+| 2.8 | 🔴 RED | Test `verifyIosReceipt` returns Left(failure) on error | [x] |
+| 2.8 | 🟢 GREEN | Implement `verifyIosReceipt` | [x] |
 
 #### verifyAndroidPurchase Tests
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 2.9 | 🔴 RED | Test `verifyAndroidPurchase` returns Right(data) for valid purchase | [ ] |
-| 2.9 | 🔴 RED | Test `verifyAndroidPurchase` calls Edge Function | [ ] |
-| 2.9 | 🔴 RED | Test `verifyAndroidPurchase` extracts purchase details | [ ] |
-| 2.9 | 🔴 RED | Test `verifyAndroidPurchase` returns Left(failure) for invalid token | [ ] |
-| 2.9 | 🔴 RED | Test `verifyAndroidPurchase` returns Left(failure) on error | [ ] |
-| 2.9 | 🟢 GREEN | Implement `verifyAndroidPurchase` | [ ] |
+| 2.9 | 🔴 RED | Test `verifyAndroidPurchase` returns Right(data) for valid purchase | [x] |
+| 2.9 | 🔴 RED | Test `verifyAndroidPurchase` calls Edge Function | [x] |
+| 2.9 | 🔴 RED | Test `verifyAndroidPurchase` extracts purchase details | [x] |
+| 2.9 | 🔴 RED | Test `verifyAndroidPurchase` returns Left(failure) for invalid token | [x] |
+| 2.9 | 🔴 RED | Test `verifyAndroidPurchase` returns Left(failure) on error | [x] |
+| 2.9 | 🟢 GREEN | Implement `verifyAndroidPurchase` | [x] |
 
 #### hasActivePremium Tests
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 2.10 | 🔴 RED | Test `hasActivePremium` returns true for active subscription | [ ] |
-| 2.10 | 🔴 RED | Test `hasActivePremium` returns false for no subscription | [ ] |
-| 2.10 | 🔴 RED | Test `hasActivePremium` returns false for expired subscription | [ ] |
-| 2.10 | 🔴 RED | Test `hasActivePremium` checks expiration date | [ ] |
-| 2.10 | 🔴 RED | Test `hasActivePremium` returns Left(failure) on error | [ ] |
-| 2.10 | 🟢 GREEN | Implement `hasActivePremium` | [ ] |
+| 2.10 | 🔴 RED | Test `hasActivePremium` returns true for active subscription | [x] |
+| 2.10 | 🔴 RED | Test `hasActivePremium` returns false for no subscription | [x] |
+| 2.10 | 🔴 RED | Test `hasActivePremium` returns false for expired subscription | [x] |
+| 2.10 | 🔴 RED | Test `hasActivePremium` checks expiration date | [x] |
+| 2.10 | 🔴 RED | Test `hasActivePremium` returns Left(failure) on error | [x] |
+| 2.10 | 🟢 GREEN | Implement `hasActivePremium` | [x] |
 
 ### Data Layer - Implementation
 
 #### SubscriptionDataSource
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 2.11 | 🟢 GREEN | Create `SubscriptionDataSource` interface | [ ] |
-| 2.11 | 🟢 GREEN | Implement `SupabaseSubscriptionDataSource` | [ ] |
-| 2.11 | 🔵 REFACTOR | Extract JSON mapping logic | [ ] |
+| 2.11 | 🟢 GREEN | Create `SubscriptionDataSource` interface | [x] |
+| 2.11 | 🟢 GREEN | Implement `SupabaseSubscriptionDataSource` | [x] |
+| 2.11 | 🔵 REFACTOR | Extract JSON mapping logic | [x] |
 
 **DataSource File**: `lib/features/subscription/data/datasources/subscription_datasource.dart`
 
 #### SubscriptionRepository Implementation
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 2.12 | 🟢 GREEN | Implement `SupabaseSubscriptionRepository` | [ ] |
-| 2.12 | 🔵 REFACTOR | Add comprehensive error handling | [ ] |
-| 2.12 | 🔵 REFACTOR | Verify all tests pass (30+ tests passing) | [ ] |
+| 2.12 | 🟢 GREEN | Implement `SupabaseSubscriptionRepository` | [x] |
+| 2.12 | 🔵 REFACTOR | Add comprehensive error handling | [x] |
+| 2.12 | 🔵 REFACTOR | Verify all tests pass (32 tests passing) | [x] |
 
 **Repository File**: `lib/features/subscription/data/repositories/supabase_subscription_repository.dart`
 
@@ -604,7 +604,7 @@ abstract class SubscriptionRepository {
 #### IAPService Interface
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 2.13 | 🟢 GREEN | Create `IAPService` interface | [ ] |
+| 2.13 | 🟢 GREEN | Create `IAPService` interface | [x] |
 
 **Service Interface** (`lib/features/subscription/domain/services/iap_service.dart`):
 ```dart
@@ -659,15 +659,15 @@ enum PurchaseStatus {
 #### IAPService Tests
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 2.14 | 🔴 RED | Test `initialize` succeeds on iOS | [ ] |
-| 2.14 | 🔴 RED | Test `initialize` succeeds on Android | [ ] |
-| 2.14 | 🔴 RED | Test `fetchProducts` returns available products | [ ] |
-| 2.14 | 🔴 RED | Test `purchaseSubscription` completes purchase flow | [ ] |
-| 2.14 | 🔴 RED | Test `purchaseSubscription` handles user cancellation | [ ] |
-| 2.14 | 🔴 RED | Test `restorePurchases` returns previous purchases | [ ] |
-| 2.14 | 🔴 RED | Test `getPendingPurchases` returns incomplete transactions | [ ] |
-| 2.14 | 🟢 GREEN | Implement `IAPService` for iOS using `in_app_purchase` | [ ] |
-| 2.14 | 🟢 GREEN | Implement `IAPService` for Android using `in_app_purchase` | [ ] |
+| 2.14 | 🔴 RED | Test `initialize` succeeds on iOS | [x] |
+| 2.14 | 🔴 RED | Test `initialize` succeeds on Android | [x] |
+| 2.14 | 🔴 RED | Test `fetchProducts` returns available products | [x] |
+| 2.14 | 🔴 RED | Test `purchaseSubscription` completes purchase flow | [x] |
+| 2.14 | 🔴 RED | Test `purchaseSubscription` handles user cancellation | [x] |
+| 2.14 | 🔴 RED | Test `restorePurchases` returns previous purchases | [x] |
+| 2.14 | 🔴 RED | Test `getPendingPurchases` returns incomplete transactions | [x] |
+| 2.14 | 🟢 GREEN | Implement `IAPService` for iOS using `in_app_purchase` | [x] |
+| 2.14 | 🟢 GREEN | Implement `IAPService` for Android using `in_app_purchase` | [x] |
 
 **Service File**: `lib/features/subscription/data/services/iap_service_impl.dart`
 
@@ -676,57 +676,57 @@ enum PurchaseStatus {
 #### SubscriptionStatusProvider
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 3.1 | 🔴 RED | Test provider loads subscription status | [ ] |
-| 3.1 | 🔴 RED | Test provider handles loading state | [ ] |
-| 3.1 | 🔴 RED | Test provider handles error state | [ ] |
-| 3.1 | 🔴 RED | Test provider refreshes on activation | [ ] |
-| 3.1 | 🟢 GREEN | Implement `SubscriptionStatusProvider` | [ ] |
+| 3.1 | 🔴 RED | Test provider loads subscription status | [x] |
+| 3.1 | 🔴 RED | Test provider handles loading state | [x] |
+| 3.1 | 🔴 RED | Test provider handles error state | [x] |
+| 3.1 | 🔴 RED | Test provider refreshes on activation | [x] |
+| 3.1 | 🟢 GREEN | Implement `SubscriptionStatusProvider` | [x] |
 
 #### AvailableProductsProvider
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 3.2 | 🔴 RED | Test provider loads available products | [ ] |
-| 3.2 | 🔴 RED | Test provider filters by current platform | [ ] |
-| 3.2 | 🔴 RED | Test provider handles error state | [ ] |
-| 3.2 | 🟢 GREEN | Implement `AvailableProductsProvider` | [ ] |
+| 3.2 | 🔴 RED | Test provider loads available products | [x] |
+| 3.2 | 🔴 RED | Test provider filters by current platform | [x] |
+| 3.2 | 🔴 RED | Test provider handles error state | [x] |
+| 3.2 | 🟢 GREEN | Implement `AvailableProductsProvider` | [x] |
 
 #### PurchaseController
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 3.3 | 🔴 RED | Test controller initiates purchase | [ ] |
-| 3.3 | 🔴 RED | Test controller verifies receipt (iOS) | [ ] |
-| 3.3 | 🔴 RED | Test controller verifies purchase (Android) | [ ] |
-| 3.3 | 🔴 RED | Test controller activates subscription | [ ] |
-| 3.3 | 🔴 RED | Test controller handles purchase errors | [ ] |
-| 3.3 | 🔴 RED | Test controller handles user cancellation | [ ] |
-| 3.3 | 🟢 GREEN | Implement `PurchaseController` | [ ] |
+| 3.3 | 🔴 RED | Test controller initiates purchase | [x] |
+| 3.3 | 🔴 RED | Test controller verifies receipt (iOS) | [x] |
+| 3.3 | 🔴 RED | Test controller verifies purchase (Android) | [x] |
+| 3.3 | 🔴 RED | Test controller activates subscription | [x] |
+| 3.3 | 🔴 RED | Test controller handles purchase errors | [x] |
+| 3.3 | 🔴 RED | Test controller handles user cancellation | [x] |
+| 3.3 | 🟢 GREEN | Implement `PurchaseController` | [x] |
 
 #### RestorePurchaseController
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 3.4 | 🔴 RED | Test controller restores previous purchases | [ ] |
-| 3.4 | 🔴 RED | Test controller activates restored subscription | [ ] |
-| 3.4 | 🔴 RED | Test controller handles no purchases found | [ ] |
-| 3.4 | 🟢 GREEN | Implement `RestorePurchaseController` | [ ] |
+| 3.4 | 🔴 RED | Test controller restores previous purchases | [x] |
+| 3.4 | 🔴 RED | Test controller activates restored subscription | [x] |
+| 3.4 | 🔴 RED | Test controller handles no purchases found | [x] |
+| 3.4 | 🟢 GREEN | Implement `RestorePurchaseController` | [x] |
 
 #### HasPremiumProvider
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 3.5 | 🔴 RED | Test provider returns true for premium users | [ ] |
-| 3.5 | 🔴 RED | Test provider returns false for free users | [ ] |
-| 3.5 | 🔴 RED | Test provider checks subscription expiration | [ ] |
-| 3.5 | 🟢 GREEN | Implement `HasPremiumProvider` | [ ] |
+| 3.5 | 🔴 RED | Test provider returns true for premium users | [x] |
+| 3.5 | 🔴 RED | Test provider returns false for free users | [x] |
+| 3.5 | 🔴 RED | Test provider checks subscription expiration | [x] |
+| 3.5 | 🟢 GREEN | Implement `HasPremiumProvider` | [x] |
 
 #### Provider Setup
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 3.6 | 🟢 GREEN | Create `subscriptionRepositoryProvider` | [ ] |
-| 3.6 | 🟢 GREEN | Create `subscriptionDataSourceProvider` | [ ] |
-| 3.6 | 🟢 GREEN | Create `iapServiceProvider` | [ ] |
-| 3.6 | 🟢 GREEN | Create `subscriptionStatusProvider` | [ ] |
-| 3.6 | 🟢 GREEN | Create `availableProductsProvider` | [ ] |
-| 3.6 | 🟢 GREEN | Create `purchaseControllerProvider` | [ ] |
-| 3.6 | 🟢 GREEN | Create `hasPremiumProvider` | [ ] |
+| 3.6 | 🟢 GREEN | Create `subscriptionRepositoryProvider` | [x] |
+| 3.6 | 🟢 GREEN | Create `subscriptionDataSourceProvider` | [x] |
+| 3.6 | 🟢 GREEN | Create `iapServiceProvider` | [x] |
+| 3.6 | 🟢 GREEN | Create `subscriptionStatusProvider` | [x] |
+| 3.6 | 🟢 GREEN | Create `availableProductsProvider` | [x] |
+| 3.6 | 🟢 GREEN | Create `purchaseControllerProvider` | [x] |
+| 3.6 | 🟢 GREEN | Create `hasPremiumProvider` | [x] |
 
 ---
 
@@ -898,12 +898,9 @@ enum UpsellTrigger {
 | Edge Function Tests (Android) | `supabase/functions/verify-android-receipt/test.ts` | 4 |
 | Edge Function Tests (Webhook) | `supabase/functions/subscription-webhook/test.ts` | 4 |
 | Edge Function Tests (Expiry) | `supabase/functions/check-expired-subscriptions/test.ts` | 4 |
-| SubscriptionRepository | `test/features/subscription/data/repositories/subscription_repository_test.dart` | 30 |
+| SubscriptionRepository | `test/features/subscription/data/repositories/subscription_repository_test.dart` | 32 |
 | IAPService | `test/features/subscription/data/services/iap_service_test.dart` | 7 |
-| SubscriptionStatusProvider | `test/features/subscription/presentation/providers/subscription_status_provider_test.dart` | 4 |
-| AvailableProductsProvider | `test/features/subscription/presentation/providers/available_products_provider_test.dart` | 3 |
-| PurchaseController | `test/features/subscription/presentation/providers/purchase_controller_test.dart` | 6 |
-| RestorePurchaseController | `test/features/subscription/presentation/providers/restore_purchase_controller_test.dart` | 3 |
+| Subscription Providers (All) | `test/features/subscription/presentation/providers/subscription_providers_test.dart` | 16 |
 | PremiumLandingScreen | `test/features/subscription/presentation/screens/premium_landing_screen_test.dart` | 7 |
 | ManageSubscriptionScreen | `test/features/subscription/presentation/screens/manage_subscription_screen_test.dart` | 6 |
 | SubscriptionProductCard | `test/features/subscription/presentation/widgets/subscription_product_card_test.dart` | 5 |
@@ -915,7 +912,7 @@ enum UpsellTrigger {
 | Android Purchase Flow | `integration_test/android_purchase_flow_test.dart` | 6 |
 | Restore Purchase Flow | `integration_test/restore_purchase_flow_test.dart` | 5 |
 
-**Total Test Cases**: 143 tests
+**Total Test Cases**: 145 tests (55 implemented, 90 pending for UI)
 
 ---
 
@@ -1142,9 +1139,9 @@ CREATE POLICY "Anyone can view active products" ON subscription_products
 | Section | Total | Completed | Progress |
 |---------|-------|-----------|----------|
 | 4-1. Database & Subscription Schema | 30 | 30 | 100% |
-| 4-2. Subscription Feature (TDD) | 40 | 0 | 0% |
+| 4-2. Subscription Feature (TDD) | 70 | 70 | 100% |
 | 4-3. UI Implementation | 42 | 0 | 0% |
-| **Total** | **112** | **30** | **27%** |
+| **Total** | **142** | **100** | **70%** |
 
 ---
 
@@ -1182,6 +1179,6 @@ CREATE POLICY "Anyone can view active products" ON subscription_products
 
 ---
 
-**Last Updated**: 2026-01-19
-**Phase Status**: In Progress (Phase 4-1 Complete)
-**Next Step**: Implement Subscription Feature with TDD (Section 4-2)
+**Last Updated**: 2026-01-21
+**Phase Status**: In Progress (Phase 4-1 & 4-2 Complete - 70%)
+**Next Step**: Implement UI (Section 4-3 - PremiumLandingScreen, ManageSubscriptionScreen, Widgets)

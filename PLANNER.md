@@ -164,15 +164,30 @@
 - `supabase/functions/subscription-webhook/index.ts`
 - `supabase/functions/check-expired-subscriptions/index.ts`
 
-### 4-2. Subscription Feature (TDD)
-- [ ] **[Domain]** Define `Subscription` and `SubscriptionProduct` Entities (freezed)
-- [ ] **[Domain]** Define `SubscriptionRepository` Interface
-- [ ] **[Domain]** Define `IAPService` Interface
-- [ ] **[Test]** Write `SubscriptionRepository` Unit Tests (30 tests)
-- [ ] **[Test]** Write `IAPService` Unit Tests (7 tests)
-- [ ] **[Data]** Implement `SupabaseSubscriptionRepository`
-- [ ] **[Data]** Implement `IAPService` for iOS/Android
-- [ ] **[State]** Implement Providers (SubscriptionStatus, AvailableProducts, PurchaseController)
+### 4-2. Subscription Feature (TDD) ✅
+- [x] **[Domain]** Define `Subscription` and `SubscriptionProduct` Entities (freezed)
+- [x] **[Domain]** Define `SubscriptionRepository` Interface
+- [x] **[Domain]** Define `IAPService` Interface
+- [x] **[Test]** Write `SubscriptionRepository` Unit Tests (32 tests passing)
+- [x] **[Test]** Write `IAPService` Unit Tests (7 tests passing)
+- [x] **[Data]** Implement `SupabaseSubscriptionRepository` with `SupabaseSubscriptionDataSource`
+- [x] **[Data]** Implement `IAPService` for iOS/Android using `in_app_purchase`
+- [x] **[State]** Implement Providers (16 tests passing: SubscriptionStatus, AvailableProducts, PurchaseController, RestorePurchaseController, HasPremium)
+
+**Implementation Files Created**:
+- `lib/features/subscription/domain/entities/subscription.dart` - Subscription, SubscriptionProduct, PurchaseResult entities with freezed
+- `lib/features/subscription/domain/repositories/subscription_repository.dart` - Repository interface
+- `lib/features/subscription/domain/services/iap_service.dart` - IAP service interface
+- `lib/features/subscription/data/datasources/subscription_datasource.dart` - DataSource interface
+- `lib/features/subscription/data/datasources/supabase_subscription_datasource.dart` - Supabase implementation
+- `lib/features/subscription/data/repositories/supabase_subscription_repository.dart` - Repository implementation
+- `lib/features/subscription/data/services/iap_service_impl.dart` - IAP service implementation
+- `lib/features/subscription/presentation/providers/subscription_providers.dart` - All Riverpod providers
+
+**Test Files Created**:
+- `test/features/subscription/data/repositories/subscription_repository_test.dart` (32 tests)
+- `test/features/subscription/data/services/iap_service_test.dart` (7 tests)
+- `test/features/subscription/presentation/providers/subscription_providers_test.dart` (16 tests)
 
 ### 4-3. UI Implementation
 - [ ] **[UI]** Implement `PremiumLandingScreen` (Subscription guide page)
