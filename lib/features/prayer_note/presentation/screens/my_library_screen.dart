@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/prayer_note_providers.dart';
 import '../widgets/prayer_calendar.dart';
 import '../widgets/prayer_note_card.dart';
-import '../../subscription/presentation/widgets/upsell_dialog.dart';
+import 'package:severalbible/features/subscription/presentation/widgets/upsell_dialog.dart';
 import '../../../auth/domain/user_tier.dart';
 import '../../../auth/providers/auth_providers.dart';
 

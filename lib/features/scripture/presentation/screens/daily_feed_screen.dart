@@ -9,7 +9,7 @@ import '../providers/scripture_providers.dart';
 import '../widgets/scripture_card.dart';
 import '../widgets/page_indicator.dart';
 import '../widgets/content_blocker.dart';
-import '../../subscription/presentation/widgets/upsell_dialog.dart';
+import 'package:severalbible/features/subscription/presentation/widgets/upsell_dialog.dart';
 
 /// Main screen displaying daily scriptures in a PageView
 class DailyFeedScreen extends ConsumerStatefulWidget {

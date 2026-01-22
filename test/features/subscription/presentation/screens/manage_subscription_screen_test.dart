@@ -34,7 +34,7 @@ void main() {
       overrides: [
         subscriptionRepositoryProvider.overrideWith((ref) => mockSubscriptionRepository),
         subscriptionStatusProvider.overrideWith((ref) => Future.value(subscription)),
-        currentUserProvider.overrideWith((ref) => UserProfile(id: 'test_user', tier: UserTier.premium, createdAt: DateTime.now(), updatedAt: DateTime.now()) as dynamic),
+        currentUserProvider.overrideWith((ref) => null),
       ],
       child: const MaterialApp(
         home: ManageSubscriptionScreen(),
