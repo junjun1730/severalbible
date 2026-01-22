@@ -83,7 +83,10 @@ class AuthRepository {
   /// Sign in with Google OAuth
   Future<Either<String, Unit>> signInWithGoogle() async {
     try {
-      await _supabaseService.auth.signInWithOAuth(OAuthProvider.google);
+      await _supabaseService.auth.signInWithOAuth(
+        OAuthProvider.google,
+        redirectTo: 'com.example.severalbible://login-callback',
+      );
       return const Right(unit);
     } on AuthException catch (e) {
       return Left(e.message);
@@ -95,7 +98,10 @@ class AuthRepository {
   /// Sign in with Apple OAuth
   Future<Either<String, Unit>> signInWithApple() async {
     try {
-      await _supabaseService.auth.signInWithOAuth(OAuthProvider.apple);
+      await _supabaseService.auth.signInWithOAuth(
+        OAuthProvider.apple,
+        redirectTo: 'com.example.severalbible://login-callback',
+      );
       return const Right(unit);
     } on AuthException catch (e) {
       return Left(e.message);

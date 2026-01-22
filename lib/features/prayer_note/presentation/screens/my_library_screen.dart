@@ -3,6 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/prayer_note_providers.dart';
 import '../widgets/prayer_calendar.dart';
 import '../widgets/prayer_note_card.dart';
+import '../../subscription/presentation/widgets/upsell_dialog.dart';
+import '../../../auth/domain/user_tier.dart';
+import '../../../auth/providers/auth_providers.dart';
 
 /// My Library screen showing calendar and prayer notes
 class MyLibraryScreen extends ConsumerStatefulWidget {
@@ -79,15 +82,35 @@ class _MyLibraryScreenState extends ConsumerState<MyLibraryScreen> {
                 if (notes.isEmpty) {
                   return _buildEmptyState(context);
                 }
+                
+                final tierAsync = ref.watch(currentUserTierProvider);
+                final tier = tierAsync.valueOrNull ?? UserTier.guest;
+                
                 return ListView.builder(
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   itemCount: notes.length,
                   itemBuilder: (context, index) {
                     final note = notes[index];
+                    
+                    // Lock logic: Free users can only see notes from the last 3 days
+                    final isLocked = tier != UserTier.premium && 
+                        note.createdAt.isBefore(
+                          DateTime.now().subtract(const Duration(days: 3))
+                        );
+                    
                     return PrayerNoteCard(
                       note: note,
-                      onEdit: () => _handleEdit(note.id),
-                      onDelete: () => _handleDelete(note.id),
+                      isLocked: isLocked,
+                      onTap: isLocked 
+                          ? () => showDialog(
+                              context: context,
+                              builder: (context) => const UpsellDialog(
+                                trigger: UpsellTrigger.archiveLocked,
+                              ),
+                            )
+                          : null,
+                      onEdit: isLocked ? null : () => _handleEdit(note.id),
+                      onDelete: isLocked ? null : () => _handleDelete(note.id),
                     );
                   },
                 );

@@ -9,6 +9,7 @@ import '../providers/scripture_providers.dart';
 import '../widgets/scripture_card.dart';
 import '../widgets/page_indicator.dart';
 import '../widgets/content_blocker.dart';
+import '../../subscription/presentation/widgets/upsell_dialog.dart';
 
 /// Main screen displaying daily scriptures in a PageView
 class DailyFeedScreen extends ConsumerStatefulWidget {
@@ -201,9 +202,12 @@ class _DailyFeedScreenState extends ConsumerState<DailyFeedScreen> {
     if (tier == UserTier.guest) {
       context.go(AppRoutes.login);
     } else {
-      // Navigate to premium subscription page (to be implemented in Phase 4)
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Premium subscription coming soon!')),
+      // Show Upsell Dialog for premium features
+      showDialog(
+        context: context,
+        builder: (context) => const UpsellDialog(
+          trigger: UpsellTrigger.contentExhausted,
+        ),
       );
     }
   }
