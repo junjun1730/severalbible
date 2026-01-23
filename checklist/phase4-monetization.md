@@ -739,11 +739,11 @@ enum PurchaseStatus {
 |-------|-------|------|--------|
 | 4.1 | 🔴 RED | Widget test: renders premium benefits list | [x] |
 | 4.1 | 🔴 RED | Widget test: renders product cards (monthly/annual) | [x] |
-| 4.1 | 🔴 RED | Widget test: shows pricing with discount badge | [ ] |
-| 4.1 | 🔴 RED | Widget test: shows loading during purchase | [ ] |
-| 4.1 | 🔴 RED | Widget test: calls purchase callback on button tap | [ ] |
-| 4.1 | 🔴 RED | Widget test: shows error message on failure | [ ] |
-| 4.1 | 🔴 RED | Widget test: shows restore purchases button | [ ] |
+| 4.1 | 🟢 GREEN | Widget test: shows pricing with discount badge | [x] |
+| 4.1 | 🟢 GREEN | Widget test: shows loading during purchase | [x] |
+| 4.1 | 🟢 GREEN | Widget test: calls purchase callback on button tap | [x] |
+| 4.1 | 🟢 GREEN | Widget test: shows error message on failure | [x] |
+| 4.1 | 🟢 GREEN | Widget test: shows restore purchases button | [x] |
 | 4.1 | 🟢 GREEN | Implement `PremiumLandingScreen` | [x] |
 
 **Screen File**: `lib/features/subscription/presentation/screens/premium_landing_screen.dart`
@@ -769,11 +769,11 @@ enum PurchaseStatus {
 #### SubscriptionProductCard Widget Tests
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 4.2 | 🔴 RED | Widget test: renders product name and price | [ ] |
-| 4.2 | 🔴 RED | Widget test: shows discount badge for annual | [ ] |
-| 4.2 | 🔴 RED | Widget test: highlights selected product | [ ] |
-| 4.2 | 🔴 RED | Widget test: shows trial period info (if applicable) | [ ] |
-| 4.2 | 🔴 RED | Widget test: calls onTap callback | [ ] |
+| 4.2 | 🟢 GREEN | Widget test: renders product name and price | [x] |
+| 4.2 | 🟢 GREEN | Widget test: shows discount badge for annual | [x] |
+| 4.2 | 🟢 GREEN | Widget test: highlights selected product | [x] |
+| 4.2 | 🟢 GREEN | Widget test: shows trial period info (if applicable) | [x] |
+| 4.2 | 🟢 GREEN | Widget test: calls onTap callback | [x] |
 | 4.2 | 🟢 GREEN | Implement `SubscriptionProductCard` widget | [x] |
 
 **Widget File**: `lib/features/subscription/presentation/widgets/subscription_product_card.dart`
@@ -783,10 +783,10 @@ enum PurchaseStatus {
 #### PurchaseButton Widget Tests
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 4.3 | 🔴 RED | Widget test: renders button with product info | [ ] |
-| 4.3 | 🔴 RED | Widget test: shows loading indicator during purchase | [ ] |
-| 4.3 | 🔴 RED | Widget test: disables button when loading | [ ] |
-| 4.3 | 🔴 RED | Widget test: calls onPressed callback | [ ] |
+| 4.3 | 🟢 GREEN | Widget test: renders button with product info | [x] |
+| 4.3 | 🟢 GREEN | Widget test: shows loading indicator during purchase | [x] |
+| 4.3 | 🟢 GREEN | Widget test: disables button when loading | [x] |
+| 4.3 | 🟢 GREEN | Widget test: calls onPressed callback | [x] |
 | 4.3 | 🟢 GREEN | Implement `PurchaseButton` widget | [x] |
 
 **Widget File**: `lib/features/subscription/presentation/widgets/purchase_button.dart`
@@ -797,9 +797,9 @@ enum PurchaseStatus {
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
 | 4.4 | 🔴 RED | Widget test: renders dialog with upsell message | [x] |
-| 4.4 | 🔴 RED | Widget test: shows different messages for different triggers | [ ] |
-| 4.4 | 🔴 RED | Widget test: navigates to premium landing on "Upgrade" | [ ] |
-| 4.4 | 🔴 RED | Widget test: dismisses on "Maybe Later" | [ ] |
+| 4.4 | 🟢 GREEN | Widget test: shows different messages for different triggers | [x] |
+| 4.4 | 🟢 GREEN | Widget test: navigates to premium landing on "Upgrade" | [x] |
+| 4.4 | 🟢 GREEN | Widget test: dismisses on "Maybe Later" | [x] |
 | 4.4 | 🟢 GREEN | Implement `UpsellDialog` widget | [x] |
 
 **Widget File**: `lib/features/subscription/presentation/widgets/upsell_dialog.dart`
@@ -819,11 +819,11 @@ enum UpsellTrigger {
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
 | 4.5 | 🔴 RED | Widget test: shows current subscription status | [x] |
-| 4.5 | 🔴 RED | Widget test: shows expiration date | [ ] |
-| 4.5 | 🔴 RED | Widget test: shows cancel subscription button | [ ] |
-| 4.5 | 🔴 RED | Widget test: shows restore purchases button | [ ] |
-| 4.5 | 🔴 RED | Widget test: shows auto-renew status | [ ] |
-| 4.5 | 🔴 RED | Widget test: handles cancel confirmation | [ ] |
+| 4.5 | 🟢 GREEN | Widget test: shows expiration date | [x] |
+| 4.5 | 🟢 GREEN | Widget test: shows cancel subscription button | [x] |
+| 4.5 | 🟢 GREEN | Widget test: shows restore purchases button | [x] |
+| 4.5 | 🟢 GREEN | Widget test: shows auto-renew status | [x] |
+| 4.5 | 🟢 GREEN | Widget test: handles cancel confirmation | [x] |
 | 4.5 | 🟢 GREEN | Implement `ManageSubscriptionScreen` | [x] |
 
 **Screen File**: `lib/features/subscription/presentation/screens/manage_subscription_screen.dart`
@@ -833,17 +833,17 @@ enum UpsellTrigger {
 #### Scripture Feed Upselling
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 4.6 | 🔴 RED | Integration test: shows upsell after 3 scriptures (member) | [ ] |
-| 4.6 | 🔴 RED | Integration test: shows "See 3 More" for premium | [ ] |
-| 4.6 | 🔴 RED | Integration test: upsell dialog navigates to premium screen | [ ] |
+| 4.6 | 🟢 GREEN | Integration test: shows upsell after 3 scriptures (member) | [x] |
+| 4.6 | 🟢 GREEN | Integration test: shows "See 3 More" for premium | [x] |
+| 4.6 | 🟢 GREEN | Integration test: upsell dialog navigates to premium screen | [x] |
 | 4.6 | 🟢 GREEN | Integrate upsell into `DailyFeedScreen` | [x] |
 
 #### Prayer Note Archive Upselling
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 4.7 | 🔴 RED | Integration test: shows lock icon for old notes (member) | [ ] |
-| 4.7 | 🔴 RED | Integration test: tapping locked note shows upsell | [ ] |
-| 4.7 | 🔴 RED | Integration test: premium sees all notes unlocked | [ ] |
+| 4.7 | 🟢 GREEN | Integration test: shows lock icon for old notes (member) | [x] |
+| 4.7 | 🟢 GREEN | Integration test: tapping locked note shows upsell | [x] |
+| 4.7 | 🟢 GREEN | Integration test: premium sees all notes unlocked | [x] |
 | 4.7 | 🟢 GREEN | Integrate upsell into `MyLibraryScreen` | [x] |
 
 #### Settings Integration
@@ -1140,10 +1140,10 @@ CREATE POLICY "Anyone can view active products" ON subscription_products
 |---------|-------|-----------|----------|
 | 4-1. Database & Subscription Schema | 30 | 30 | 100% |
 | 4-2. Subscription Feature (TDD) | 70 | 70 | 100% |
-| 4-3. UI Implementation | 42 | 15 | 36% |
-| **Total** | **142** | **115** | **81%** |
+| 4-3. UI Implementation | 61 | 41 | 67% |
+| **Total** | **161** | **141** | **88%** |
 
-**Note**: UI Implementation - screens/widgets implemented, Settings integration complete (7 tests), remaining: additional widget tests and purchase flow integration tests
+**Note**: UI Implementation - screens/widgets implemented, Settings integration complete. Purchase flow integration tests pending environment setup.
 
 ---
 

@@ -190,13 +190,13 @@
 - `test/features/subscription/presentation/providers/subscription_providers_test.dart` (16개 테스트)
 
 ### 4-3. UI 구현
-- [ ] **[UI]** `PremiumLandingScreen` 구현 (구독 안내 페이지)
-- [ ] **[UI]** `SubscriptionProductCard` 위젯 구현
-- [ ] **[UI]** `PurchaseButton` 위젯 구현
-- [ ] **[UI]** `UpsellDialog` 위젯 구현
-- [ ] **[UI]** `ManageSubscriptionScreen` 구현
-- [ ] **[UI]** 성경 피드 및 기도 기록에 업셀링 통합
-- [ ] **[테스트]** 구매 흐름에 대한 통합 테스트 작성 (iOS/Android)
+- [x] **[UI]** `PremiumLandingScreen` 구현 (구독 안내 페이지)
+- [x] **[UI]** `SubscriptionProductCard` 위젯 구현
+- [x] **[UI]** `PurchaseButton` 위젯 구현
+- [x] **[UI]** `UpsellDialog` 위젯 구현
+- [x] **[UI]** `ManageSubscriptionScreen` 구현
+- [x] **[UI]** 성경 피드 및 기도 기록에 업셀링 통합
+- [/] **[테스트]** 구매 흐름에 대한 통합 테스트 작성 (iOS/Android)
 
 ---
 
