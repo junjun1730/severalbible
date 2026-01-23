@@ -196,6 +196,7 @@
 - [x] **[UI]** Implement `UpsellDialog` widget - 1 test passing
 - [x] **[UI]** Implement `ManageSubscriptionScreen` - 1 test passing
 - [x] **[UI]** Integrate upselling into Scripture Feed and Prayer Archive
+- [x] **[UI]** Add Settings screen with subscription management - 7 tests passing
 - [ ] **[Test]** Write integration tests for purchase flows (iOS/Android)
 
 **Implementation Files Created**:
@@ -204,11 +205,13 @@
 - `lib/features/subscription/presentation/widgets/subscription_product_card.dart`
 - `lib/features/subscription/presentation/widgets/purchase_button.dart`
 - `lib/features/subscription/presentation/widgets/upsell_dialog.dart`
+- `lib/features/settings/presentation/screens/settings_screen.dart`
 
 **Test Files Created**:
 - `test/features/subscription/presentation/screens/premium_landing_screen_test.dart` (2 tests)
 - `test/features/subscription/presentation/screens/manage_subscription_screen_test.dart`
 - `test/features/subscription/presentation/widgets/upsell_dialog_test.dart`
+- `test/features/settings/presentation/screens/settings_screen_test.dart` (7 tests)
 
 ---
 

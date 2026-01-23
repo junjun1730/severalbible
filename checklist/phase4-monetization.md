@@ -849,9 +849,9 @@ enum UpsellTrigger {
 #### Settings Integration
 | Cycle | Phase | Task | Status |
 |-------|-------|------|--------|
-| 4.8 | 🔴 RED | Integration test: shows "Manage Subscription" for premium | [ ] |
-| 4.8 | 🔴 RED | Integration test: shows "Upgrade to Premium" for free | [ ] |
-| 4.8 | 🟢 GREEN | Add subscription management to Settings | [ ] |
+| 4.8 | 🔴 RED | Integration test: shows "Manage Subscription" for premium | [x] |
+| 4.8 | 🔴 RED | Integration test: shows "Upgrade to Premium" for free | [x] |
+| 4.8 | 🟢 GREEN | Add subscription management to Settings | [x] |
 
 ### Purchase Flow Integration Tests
 
@@ -1140,10 +1140,10 @@ CREATE POLICY "Anyone can view active products" ON subscription_products
 |---------|-------|-----------|----------|
 | 4-1. Database & Subscription Schema | 30 | 30 | 100% |
 | 4-2. Subscription Feature (TDD) | 70 | 70 | 100% |
-| 4-3. UI Implementation | 42 | 12 | 29% |
-| **Total** | **142** | **112** | **79%** |
+| 4-3. UI Implementation | 42 | 15 | 36% |
+| **Total** | **142** | **115** | **81%** |
 
-**Note**: UI Implementation - screens/widgets implemented, some tests pending
+**Note**: UI Implementation - screens/widgets implemented, Settings integration complete (7 tests), remaining: additional widget tests and purchase flow integration tests
 
 ---
 
@@ -1182,5 +1182,5 @@ CREATE POLICY "Anyone can view active products" ON subscription_products
 ---
 
 **Last Updated**: 2026-01-23
-**Phase Status**: In Progress (Phase 4-1, 4-2 Complete, 4-3 UI Implementation ~80% - Overall 79%)
-**Next Step**: Complete remaining widget tests and Settings integration (Cycle 4.8)
+**Phase Status**: In Progress (Phase 4-1, 4-2 Complete, 4-3 UI + Settings Complete - Overall 81%)
+**Next Step**: Complete remaining widget tests and purchase flow integration tests (Cycle 4.9-4.11)

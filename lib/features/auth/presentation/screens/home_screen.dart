@@ -49,17 +49,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         title: const Text('One Message'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: [
-          if (isLoggedIn)
-            IconButton(
-              icon: const Icon(Icons.logout),
-              onPressed: () async {
-                final authRepo = ref.read(authRepositoryProvider);
-                await authRepo.signOut();
-                if (mounted) {
-                  context.go(AppRoutes.login);
-                }
-              },
-            ),
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () => context.push(AppRoutes.settings),
+          ),
         ],
       ),
       body: tierAsync.when(

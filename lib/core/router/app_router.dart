@@ -5,12 +5,18 @@ import '../../features/auth/presentation/screens/splash_screen.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/home_screen.dart';
 import '../../features/auth/providers/auth_providers.dart';
+import '../../features/settings/presentation/screens/settings_screen.dart';
+import '../../features/subscription/presentation/screens/premium_landing_screen.dart';
+import '../../features/subscription/presentation/screens/manage_subscription_screen.dart';
 
 /// App routes
 class AppRoutes {
   static const splash = '/';
   static const login = '/login';
   static const home = '/home';
+  static const settings = '/settings';
+  static const premium = '/premium';
+  static const manageSubscription = '/manage-subscription';
 }
 
 /// GoRouter configuration provider
@@ -29,6 +35,18 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.home,
         builder: (context, state) => const HomeScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.settings,
+        builder: (context, state) => const SettingsScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.premium,
+        builder: (context, state) => const PremiumLandingScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.manageSubscription,
+        builder: (context, state) => const ManageSubscriptionScreen(),
       ),
     ],
     redirect: (context, state) {
