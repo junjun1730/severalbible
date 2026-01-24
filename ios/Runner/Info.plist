@@ -53,7 +53,15 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.example.severalbible</string>
+				<string>com.severalbible.app.service</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.52159302124-qfuljstfo9fl1ds3dh4eff44inkg22rp</string>
 			</array>
 		</dict>
 	</array>
