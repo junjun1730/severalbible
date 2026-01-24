@@ -54,8 +54,31 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     );
   }
 
-  void _continueAsGuest() {
-    context.go(AppRoutes.home);
+  Future<void> _continueAsGuest() async {
+    print('=== GUEST BUTTON CLICKED ===');  // 버튼 클릭 확인용
+    setState(() => _isLoading = true);
+
+    final authRepo = ref.read(authRepositoryProvider);
+    print('DEBUG: Attempting anonymous sign in...');
+
+    final result = await authRepo.signInAnonymously();
+
+    print('DEBUG: Anonymous sign in result: $result');
+
+    if (!mounted) return;
+
+    result.fold(
+      (failure) {
+        print('DEBUG: Anonymous sign in FAILED: $failure');
+        setState(() => _isLoading = false);
+        _showErrorSnackBar(failure);
+      },
+      (_) {
+        print('DEBUG: Anonymous sign in SUCCESS');
+        setState(() => _isLoading = false);
+        context.go(AppRoutes.home);
+      },
+    );
   }
 
   void _showErrorSnackBar(String message) {

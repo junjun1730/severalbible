@@ -109,4 +109,17 @@ class AuthRepository {
       return Left('Unexpected error: $e');
     }
   }
+
+  /// Sign in anonymously (Guest login)
+  /// Creates an anonymous user session
+  Future<Either<String, Unit>> signInAnonymously() async {
+    try {
+      await _supabaseService.auth.signInAnonymously();
+      return const Right(unit);
+    } on AuthException catch (e) {
+      return Left(e.message);
+    } catch (e) {
+      return Left('Anonymous sign in failed: $e');
+    }
+  }
 }

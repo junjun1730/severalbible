@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -48,19 +49,60 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         path: AppRoutes.manageSubscription,
         builder: (context, state) => const ManageSubscriptionScreen(),
       ),
+      GoRoute(
+        path: '/login-callback',
+        redirect: (context, state) {
+          // OAuth callback is processed by Supabase automatically via deep link
+          // Redirect to home - the global redirect will handle auth state
+          return AppRoutes.home;
+        },
+      ),
     ],
     redirect: (context, state) {
       final isLoggedIn = ref.read(isLoggedInProvider);
       final isSplash = state.matchedLocation == AppRoutes.splash;
       final isLogin = state.matchedLocation == AppRoutes.login;
+      final isCallback = state.matchedLocation.startsWith('/login-callback');
 
-      // Allow splash screen always
-      if (isSplash) return null;
+      // Allow splash screen & callback always
+      if (isSplash || isCallback) return null;
 
-      // If on login and logged in, go to home
-      if (isLogin && isLoggedIn) return AppRoutes.home;
+      final user = ref.read(currentUserProvider);
+      final isAnonymous = user?.isAnonymous ?? false;
+      
+      print('AppRouter Redirect: Location=${state.matchedLocation}');
+      print('AppRouter Debug: isLoggedIn=$isLoggedIn, isAnonymous=$isAnonymous');
+
+      // If on login and logged in (and NOT anonymous), go to home
+      // Anonymous users should be able to see the login screen to sign in/up
+
+      if (isLogin && isLoggedIn && !isAnonymous) return AppRoutes.home;
+
+      // Guard: If not logged in and not on a public route, go to Login
+      // This ensures that when signing out, the user is forced to the login screen
+      final isPublic = isSplash || isLogin || isCallback;
+      if (!isLoggedIn && !isPublic) return AppRoutes.login;
 
       return null;
     },
+    refreshListenable: GoRouterRefreshStream(ref.watch(authStateChangesProvider.stream)),
   );
 });
+
+/// Converts a [Stream] into a [Listenable] for GoRouter
+class GoRouterRefreshStream extends ChangeNotifier {
+  GoRouterRefreshStream(Stream<dynamic> stream) {
+    notifyListeners();
+    _subscription = stream.asBroadcastStream().listen(
+      (dynamic _) => notifyListeners(),
+    );
+  }
+
+  late final StreamSubscription<dynamic> _subscription;
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    super.dispose();
+  }
+}

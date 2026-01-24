@@ -35,9 +35,16 @@ final userProfileRepositoryProvider = Provider<UserProfileRepository>((ref) {
   return UserProfileRepository(dataSource);
 });
 
-/// Provider for current user (nullable)
+/// Provider for current user (nullable) - Reactive
 final currentUserProvider = Provider<User?>((ref) {
+  // Watch the auth state changes to force rebuild when auth state changes
+  final authState = ref.watch(authStateChangesProvider);
+  
+  // Also get the repo to access current user synchronously
   final authRepo = ref.watch(authRepositoryProvider);
+  
+  // If the stream emitted a state, we can trust authRepo.currentUser is updated (or use state.session?.user)
+  // We return authRepo.currentUser to be safe as it's the source of truth
   return authRepo.currentUser;
 });
 
@@ -66,7 +73,8 @@ final currentUserTierProvider = FutureProvider<UserTier>((ref) async {
 });
 
 /// Provider for checking if user is logged in
+/// Derives from currentUserProvider to ensure reactivity to auth state changes
 final isLoggedInProvider = Provider<bool>((ref) {
-  final authRepo = ref.watch(authRepositoryProvider);
-  return authRepo.isLoggedIn;
+  final currentUser = ref.watch(currentUserProvider);
+  return currentUser != null;
 });

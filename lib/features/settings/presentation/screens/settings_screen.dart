@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../subscription/presentation/providers/subscription_providers.dart';
 import '../../../auth/providers/auth_providers.dart';
+import '../../../auth/domain/user_tier.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -88,6 +89,19 @@ class SettingsScreen extends ConsumerWidget {
   }
 
   Widget _buildSignOutTile(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(currentUserProvider);
+    final isLoggedIn = user != null;
+    final isAnonymous = user?.isAnonymous ?? false;
+
+    // Show Sign In if not logged in or if anonymous user
+    if (!isLoggedIn || isAnonymous) {
+      return ListTile(
+        leading: const Icon(Icons.login, color: Colors.blue),
+        title: const Text('Sign In / Register'),
+        onTap: () => context.go(AppRoutes.login),
+      );
+    }
+
     return ListTile(
       leading: const Icon(Icons.logout, color: Colors.red),
       title: const Text('Sign Out'),
@@ -95,29 +109,36 @@ class SettingsScreen extends ConsumerWidget {
         final confirmed = await showDialog<bool>(
           context: context,
           builder: (context) => AlertDialog(
-            title: const Text('Sign Out'),
-            content: const Text('Are you sure you want to sign out?'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(false),
-                child: const Text('Cancel'),
+                title: const Text('Sign Out'),
+                content: const Text('Are you sure you want to sign out?'),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(false),
+                    child: const Text('Cancel'),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(true),
+                    child: const Text('Sign Out'),
+                  ),
+                ],
               ),
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(true),
-                child: const Text('Sign Out'),
-              ),
-            ],
-          ),
+            );
+
+            if (confirmed == true && context.mounted) {
+              final authRepo = ref.read(authRepositoryProvider);
+              final result = await authRepo.signOut();
+
+              if (context.mounted) {
+                result.fold(
+                  (error) => ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Sign out failed: $error')),
+                  ),
+                  (_) => context.go(AppRoutes.login),
+                );
+              }
+            }
+          },
         );
 
-        if (confirmed == true && context.mounted) {
-          final authRepo = ref.read(authRepositoryProvider);
-          await authRepo.signOut();
-          if (context.mounted) {
-            context.go(AppRoutes.login);
-          }
-        }
-      },
-    );
   }
 }
