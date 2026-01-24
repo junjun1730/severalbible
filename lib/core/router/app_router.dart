@@ -69,9 +69,6 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 
       final user = ref.read(currentUserProvider);
       final isAnonymous = user?.isAnonymous ?? false;
-      
-      print('AppRouter Redirect: Location=${state.matchedLocation}');
-      print('AppRouter Debug: isLoggedIn=$isLoggedIn, isAnonymous=$isAnonymous');
 
       // If on login and logged in (and NOT anonymous), go to home
       // Anonymous users should be able to see the login screen to sign in/up

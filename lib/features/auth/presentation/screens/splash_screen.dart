@@ -43,23 +43,16 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     // Call callback if provided (for testing)
     widget.onAuthChecked?.call(isLoggedIn);
 
-    print('SplashScreen Debug: isLoggedIn=$isLoggedIn, widget.autoNavigate=${widget.autoNavigate}');
-
     if (widget.autoNavigate) {
       if (isLoggedIn) {
         // Check if user is anonymous
         final user = ref.read(currentUserProvider);
-        print('SplashScreen Debug: user=$user, isAnonymous=${user?.isAnonymous}');
-        
         if (user != null && !user.isAnonymous) {
-          print('SplashScreen Debug: Navigating to Home');
           _navigateToHome();
         } else {
-          print('SplashScreen Debug: Navigating to Login (Anonymous/Null)');
           _navigateToLogin();
         }
       } else {
-        print('SplashScreen Debug: Navigating to Login (Not Logged In)');
         _navigateToLogin();
       }
     }

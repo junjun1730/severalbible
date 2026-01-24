@@ -140,15 +140,11 @@ class AuthRepository {
   /// Uses sign_in_with_apple package for native UI
   Future<Either<String, User>> signInWithApple() async {
     try {
-      print('DEBUG: Starting Apple Sign-In...');
-
       // Generate a random nonce
       final rawNonce = _generateNonce();
       final hashedNonce = _sha256ofString(rawNonce);
-      print('DEBUG: Generated nonce');
 
       // Request Apple credential with the hashed nonce
-      print('DEBUG: Requesting Apple credential...');
       final credential = await SignInWithApple.getAppleIDCredential(
         scopes: [
           AppleIDAuthorizationScopes.email,
@@ -156,45 +152,32 @@ class AuthRepository {
         ],
         nonce: hashedNonce,
       );
-      print('DEBUG: Got Apple credential');
-      print('DEBUG: authorizationCode: ${credential.authorizationCode}');
-      print('DEBUG: identityToken exists: ${credential.identityToken != null}');
-      print('DEBUG: email: ${credential.email}');
 
       final idToken = credential.identityToken;
       if (idToken == null) {
-        print('DEBUG: No ID token from Apple');
         return const Left('Failed to get ID token from Apple');
       }
 
       // Sign in to Supabase with the raw nonce (not hashed)
-      print('DEBUG: Signing in to Supabase with ID token...');
       final response = await _supabaseService.auth.signInWithIdToken(
         provider: OAuthProvider.apple,
         idToken: idToken,
         nonce: rawNonce,
       );
-      print('DEBUG: Supabase response received');
-      print('DEBUG: User: ${response.user?.id}');
 
       if (response.user != null) {
-        print('DEBUG: Apple sign in SUCCESS');
         return Right(response.user!);
       } else {
-        print('DEBUG: No user returned from Supabase');
         return const Left('Apple sign in failed: No user returned');
       }
     } on SignInWithAppleAuthorizationException catch (e) {
-      print('DEBUG: SignInWithAppleAuthorizationException: ${e.code} - ${e.message}');
       if (e.code == AuthorizationErrorCode.canceled) {
         return const Left('Apple sign in was cancelled');
       }
       return Left('Apple sign in failed: ${e.message}');
     } on AuthException catch (e) {
-      print('DEBUG: Supabase AuthException: ${e.message}');
       return Left(e.message);
     } catch (e) {
-      print('DEBUG: Unexpected error: $e');
       return Left('Unexpected error: $e');
     }
   }
