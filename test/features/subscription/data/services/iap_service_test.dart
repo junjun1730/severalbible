@@ -229,8 +229,7 @@ class _MockProductDetails implements iap.ProductDetails {
     required this.price,
     required this.rawPrice,
     required this.currencyCode,
-    this.currencySymbol = '₩',
-  });
+  }) : currencySymbol = '₩';
 }
 
 /// Mock PurchaseDetails for testing
