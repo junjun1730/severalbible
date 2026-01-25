@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:severalbible/core/errors/failures.dart';
@@ -22,10 +21,10 @@ void main() {
   // Test fixtures
   final testDateTime = DateTime(2026, 1, 20, 12, 0, 0);
   final testExpirationDate = DateTime(2026, 2, 20, 12, 0, 0);
-  final testUserId = 'user-123-abc';
-  final testTransactionId = 'txn-456-def';
-  final testReceipt = 'base64-encoded-receipt-data';
-  final testPurchaseToken = 'google-play-purchase-token';
+  const testUserId = 'user-123-abc';
+  const testTransactionId = 'txn-456-def';
+  const testReceipt = 'base64-encoded-receipt-data';
+  const testPurchaseToken = 'google-play-purchase-token';
 
   final sampleSubscriptionJson = {
     'id': 'sub-123-xyz',

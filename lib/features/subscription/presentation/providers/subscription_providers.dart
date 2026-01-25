@@ -24,7 +24,7 @@ final subscriptionRepositoryProvider = Provider<SubscriptionRepository>((ref) {
 /// Provider for IAPService
 final iapServiceProvider = Provider<IAPService>((ref) {
   final service = IAPServiceImpl();
-  ref.onDispose(() => service.dispose());
+  ref.onDispose(service.dispose);
   return service;
 });
 
@@ -281,7 +281,7 @@ class RestorePurchaseController extends StateNotifier<AsyncValue<void>> {
               latest.receipt != null) {
             final verifyResult = await _subscriptionRepository.verifyIosReceipt(
               receipt: latest.receipt!,
-              userId: _userId!,
+              userId: _userId,
             );
 
             await verifyResult.fold(
@@ -298,7 +298,7 @@ class RestorePurchaseController extends StateNotifier<AsyncValue<void>> {
                 .verifyAndroidPurchase(
                   purchaseToken: latest.purchaseToken!,
                   productId: latest.productId,
-                  userId: _userId!,
+                  userId: _userId,
                 );
 
             await verifyResult.fold(

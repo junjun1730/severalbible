@@ -46,11 +46,11 @@ void main() {
 
       // BoxDecoration에서 width 비교
       final currentWidth =
-          (currentPageContainer.constraints as BoxConstraints?)?.maxWidth ??
+          (currentPageContainer.constraints)?.maxWidth ??
           (currentPageContainer.decoration as BoxDecoration?)?.shape.hashCode
               .toDouble();
       final otherWidth =
-          (otherPageContainer.constraints as BoxConstraints?)?.maxWidth ??
+          (otherPageContainer.constraints)?.maxWidth ??
           (otherPageContainer.decoration as BoxDecoration?)?.shape.hashCode
               .toDouble();
 

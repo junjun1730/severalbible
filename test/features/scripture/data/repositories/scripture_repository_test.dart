@@ -1,10 +1,8 @@
-import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:severalbible/core/errors/failures.dart';
 import 'package:severalbible/features/scripture/data/datasources/scripture_datasource.dart';
 import 'package:severalbible/features/scripture/data/repositories/supabase_scripture_repository.dart';
-import 'package:severalbible/features/scripture/domain/entities/scripture.dart';
 
 // Mock class for ScriptureDataSource
 class MockScriptureDataSource extends Mock implements ScriptureDataSource {}
@@ -43,8 +41,8 @@ void main() {
     'updated_at': testDateTime.toIso8601String(),
   };
 
-  final testUserId = 'user-123-abc';
-  final testScriptureId = '123e4567-e89b-12d3-a456-426614174000';
+  const testUserId = 'user-123-abc';
+  const testScriptureId = '123e4567-e89b-12d3-a456-426614174000';
 
   setUp(() {
     mockDataSource = MockScriptureDataSource();

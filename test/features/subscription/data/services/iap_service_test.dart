@@ -1,11 +1,8 @@
-import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:in_app_purchase/in_app_purchase.dart' as iap;
 import 'package:mocktail/mocktail.dart';
 import 'package:severalbible/core/errors/failures.dart';
 import 'package:severalbible/features/subscription/data/services/iap_service_impl.dart';
-import 'package:severalbible/features/subscription/domain/entities/subscription.dart';
-import 'package:severalbible/features/subscription/domain/services/iap_service.dart';
 
 // Mock class for InAppPurchase
 class MockInAppPurchase extends Mock implements iap.InAppPurchase {}
@@ -239,22 +236,19 @@ class _MockProductDetails implements iap.ProductDetails {
 /// Mock PurchaseDetails for testing
 class _MockPurchaseDetails extends iap.PurchaseDetails {
   _MockPurchaseDetails({
-    required String productID,
-    required String? purchaseID,
-    required iap.PurchaseStatus status,
+    required super.productID,
+    required super.purchaseID,
+    required super.status,
     iap.IAPError? error,
     String? transactionDate,
     bool pendingCompletePurchase = false,
   }) : super(
-         productID: productID,
          verificationData: iap.PurchaseVerificationData(
            localVerificationData: 'local-data',
            serverVerificationData: 'server-data',
            source: 'mock',
          ),
          transactionDate: transactionDate ?? DateTime.now().toIso8601String(),
-         status: status,
-         purchaseID: purchaseID,
        ) {
     this.error = error;
     this.pendingCompletePurchase = pendingCompletePurchase;

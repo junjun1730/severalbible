@@ -15,7 +15,7 @@ class SupabaseScriptureRepository implements ScriptureRepository {
   List<Scripture> _mapJsonListToScriptures(
     List<Map<String, dynamic>> jsonList,
   ) {
-    return jsonList.map((json) => Scripture.fromJson(json)).toList();
+    return jsonList.map(Scripture.fromJson).toList();
   }
 
   @override

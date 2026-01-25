@@ -3,8 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
 import 'package:severalbible/features/subscription/domain/entities/subscription.dart';
 import 'package:severalbible/features/subscription/presentation/providers/subscription_providers.dart';
 import 'package:severalbible/features/subscription/presentation/screens/premium_landing_screen.dart';

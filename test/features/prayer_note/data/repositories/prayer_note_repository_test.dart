@@ -1,10 +1,8 @@
-import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:severalbible/core/errors/failures.dart';
 import 'package:severalbible/features/prayer_note/data/datasources/prayer_note_datasource.dart';
 import 'package:severalbible/features/prayer_note/data/repositories/supabase_prayer_note_repository.dart';
-import 'package:severalbible/features/prayer_note/domain/entities/prayer_note.dart';
 
 // Mock class for PrayerNoteDataSource
 class MockPrayerNoteDataSource extends Mock implements PrayerNoteDataSource {}
@@ -15,9 +13,9 @@ void main() {
 
   // Test fixtures
   final testDateTime = DateTime(2026, 1, 18, 12, 0, 0);
-  final testUserId = 'user-123-abc';
-  final testNoteId = 'note-456-def';
-  final testScriptureId = 'scripture-789-ghi';
+  const testUserId = 'user-123-abc';
+  const testNoteId = 'note-456-def';
+  const testScriptureId = 'scripture-789-ghi';
 
   final samplePrayerNoteJson = {
     'id': testNoteId,

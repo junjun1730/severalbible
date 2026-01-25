@@ -15,7 +15,7 @@ class SupabasePrayerNoteRepository implements PrayerNoteRepository {
   List<PrayerNote> _mapJsonListToPrayerNotes(
     List<Map<String, dynamic>> jsonList,
   ) {
-    return jsonList.map((json) => PrayerNote.fromJson(json)).toList();
+    return jsonList.map(PrayerNote.fromJson).toList();
   }
 
   @override

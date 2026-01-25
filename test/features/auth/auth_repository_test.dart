@@ -98,7 +98,7 @@ void main() {
             email: any(named: 'email'),
             password: any(named: 'password'),
           ),
-        ).thenThrow(AuthException('Invalid credentials'));
+        ).thenThrow(const AuthException('Invalid credentials'));
 
         final result = await authRepository.signInWithEmail(
           email: 'test@example.com',
@@ -147,7 +147,7 @@ void main() {
             email: any(named: 'email'),
             password: any(named: 'password'),
           ),
-        ).thenThrow(AuthException('User already registered'));
+        ).thenThrow(const AuthException('User already registered'));
 
         final result = await authRepository.signUpWithEmail(
           email: 'existing@example.com',
@@ -171,7 +171,7 @@ void main() {
       test('returns failure on sign out error', () async {
         when(
           () => mockGoTrueClient.signOut(),
-        ).thenThrow(AuthException('Sign out failed'));
+        ).thenThrow(const AuthException('Sign out failed'));
 
         final result = await authRepository.signOut();
 

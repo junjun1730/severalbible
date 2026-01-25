@@ -35,7 +35,7 @@ class SupabaseSubscriptionRepository implements SubscriptionRepository {
         platform: platform,
       );
       final products = jsonList
-          .map((json) => SubscriptionProduct.fromJson(json))
+          .map(SubscriptionProduct.fromJson)
           .toList();
       return Right(products);
     } catch (e) {

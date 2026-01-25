@@ -58,7 +58,7 @@ void main() {
       test('returns failure on PostgrestException', () async {
         when(
           () => mockDataSource.getProfile('test-user-id'),
-        ).thenThrow(PostgrestException(message: 'Database error'));
+        ).thenThrow(const PostgrestException(message: 'Database error'));
 
         final result = await repository.getUserProfile('test-user-id');
 
@@ -144,7 +144,7 @@ void main() {
       test('returns failure on database error', () async {
         when(
           () => mockDataSource.getProfile('test-user-id'),
-        ).thenThrow(PostgrestException(message: 'Connection failed'));
+        ).thenThrow(const PostgrestException(message: 'Connection failed'));
 
         final result = await repository.getUserTier('test-user-id');
 
@@ -183,7 +183,7 @@ void main() {
       test('returns failure on update error', () async {
         when(
           () => mockDataSource.updateTier('test-user-id', 'premium'),
-        ).thenThrow(PostgrestException(message: 'Update failed'));
+        ).thenThrow(const PostgrestException(message: 'Update failed'));
 
         final result = await repository.updateUserTier(
           userId: 'test-user-id',
@@ -249,7 +249,7 @@ void main() {
       test('returns failure on create error', () async {
         when(
           () => mockDataSource.createProfile('new-user-id', 'member'),
-        ).thenThrow(PostgrestException(message: 'Duplicate key'));
+        ).thenThrow(const PostgrestException(message: 'Duplicate key'));
 
         final result = await repository.createUserProfile(
           userId: 'new-user-id',

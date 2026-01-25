@@ -7,11 +7,19 @@ import 'package:severalbible/features/auth/presentation/screens/login_screen.dar
 import 'package:severalbible/features/auth/providers/auth_providers.dart';
 import 'package:severalbible/features/auth/data/auth_repository.dart';
 import 'package:severalbible/core/services/supabase_service.dart';
-
+import 'package:supabase_flutter/supabase_flutter.dart';
 // Mocks
 class MockAuthRepository extends Mock implements AuthRepository {}
 
 class MockSupabaseService extends Mock implements SupabaseService {}
+
+class MockUser extends Mock implements User {
+  @override
+  String get id => 'test_user_id';
+  
+  @override
+  String get email => 'test@example.com';
+}
 
 void main() {
   late MockAuthRepository mockAuthRepository;
@@ -66,7 +74,7 @@ void main() {
     testWidgets('Google button triggers signInWithGoogle', (tester) async {
       when(
         () => mockAuthRepository.signInWithGoogle(),
-      ).thenAnswer((_) async => const Right(unit));
+      ).thenAnswer((_) async => Right(MockUser()));
 
       await tester.pumpWidget(createTestWidget());
       await tester.tap(find.textContaining('Google'));
@@ -78,7 +86,7 @@ void main() {
     testWidgets('Apple button triggers signInWithApple', (tester) async {
       when(
         () => mockAuthRepository.signInWithApple(),
-      ).thenAnswer((_) async => const Right(unit));
+      ).thenAnswer((_) async => Right(MockUser()));
 
       await tester.pumpWidget(createTestWidget());
       await tester.tap(find.textContaining('Apple'));

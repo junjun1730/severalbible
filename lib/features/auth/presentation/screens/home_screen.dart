@@ -46,7 +46,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         // Show Upsell Dialog for logged-in free users
         showDialog(
           context: context,
-          builder: (context) => UpsellDialog(
+          builder: (context) => const UpsellDialog(
             trigger: UpsellTrigger.contentExhausted,
             // Using contentExhausted as a generic "Upgrade" entry point for now
           ),

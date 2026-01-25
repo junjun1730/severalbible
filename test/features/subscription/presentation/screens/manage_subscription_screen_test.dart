@@ -32,7 +32,7 @@ class MockSubscriptionRepository extends Mock
       }),
       returnValue: Future.value(const Right(null)),
       returnValueForMissingStub: Future.value(const Right(null)),
-    );
+    ) as Future<Either<Failure, void>>;
   }
 }
 

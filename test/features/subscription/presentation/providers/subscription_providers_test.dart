@@ -30,7 +30,7 @@ void main() {
 
   final testDateTime = DateTime(2026, 1, 20, 12, 0, 0);
   final testExpirationDate = DateTime(2026, 2, 20, 12, 0, 0);
-  final testUserId = 'user-123-abc';
+  const testUserId = 'user-123-abc';
 
   final testSubscription = Subscription(
     id: 'sub-123-xyz',
