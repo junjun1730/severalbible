@@ -34,9 +34,7 @@ class SupabaseSubscriptionRepository implements SubscriptionRepository {
       final jsonList = await _dataSource.getAvailableProducts(
         platform: platform,
       );
-      final products = jsonList
-          .map(SubscriptionProduct.fromJson)
-          .toList();
+      final products = jsonList.map(SubscriptionProduct.fromJson).toList();
       return Right(products);
     } catch (e) {
       return Left(ServerFailure(e.toString()));

@@ -26,13 +26,14 @@ class MockSubscriptionRepository extends Mock
     String? reason,
   }) {
     return super.noSuchMethod(
-      Invocation.method(#cancelSubscription, [], {
-        #userId: userId,
-        #reason: reason,
-      }),
-      returnValue: Future.value(const Right(null)),
-      returnValueForMissingStub: Future.value(const Right(null)),
-    ) as Future<Either<Failure, void>>;
+          Invocation.method(#cancelSubscription, [], {
+            #userId: userId,
+            #reason: reason,
+          }),
+          returnValue: Future.value(const Right(null)),
+          returnValueForMissingStub: Future.value(const Right(null)),
+        )
+        as Future<Either<Failure, void>>;
   }
 }
 

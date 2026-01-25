@@ -8,6 +8,7 @@ import 'package:severalbible/features/auth/providers/auth_providers.dart';
 import 'package:severalbible/features/auth/data/auth_repository.dart';
 import 'package:severalbible/core/services/supabase_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
 // Mocks
 class MockAuthRepository extends Mock implements AuthRepository {}
 
@@ -16,7 +17,7 @@ class MockSupabaseService extends Mock implements SupabaseService {}
 class MockUser extends Mock implements User {
   @override
   String get id => 'test_user_id';
-  
+
   @override
   String get email => 'test@example.com';
 }
