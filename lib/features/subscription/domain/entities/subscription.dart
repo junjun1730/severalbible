@@ -94,31 +94,32 @@ enum IAPPurchaseStatus {
 
 /// Converts snake_case keys to camelCase for Subscription entity
 Map<String, dynamic> _convertSubscriptionSnakeToCamel(Map<String, dynamic> json) {
+  final now = DateTime.now().toIso8601String();
   return {
-    'id': json['id'],
-    'userId': json['user_id'],
-    'productId': json['product_id'],
-    'platform': json['platform'],
+    'id': json['id'] ?? '',
+    'userId': json['user_id'] ?? '',
+    'productId': json['product_id'] ?? '',
+    'platform': json['platform'] ?? 'ios',
     'storeTransactionId': json['store_transaction_id'],
     'originalTransactionId': json['original_transaction_id'],
-    'status': _parseSubscriptionStatus(json['subscription_status']),
-    'startedAt': json['started_at'],
+    'status': _parseSubscriptionStatus(json['subscription_status'] as String?),
+    'startedAt': json['started_at'] ?? now,
     'expiresAt': json['expires_at'],
     'autoRenew': json['auto_renew'] ?? true,
     'cancellationReason': json['cancellation_reason'],
-    'createdAt': json['created_at'],
-    'updatedAt': json['updated_at'],
+    'createdAt': json['created_at'] ?? now,
+    'updatedAt': json['updated_at'] ?? now,
   };
 }
 
 /// Converts snake_case keys to camelCase for SubscriptionProduct entity
 Map<String, dynamic> _convertProductSnakeToCamel(Map<String, dynamic> json) {
   return {
-    'id': json['id'],
-    'name': json['name'],
+    'id': json['id'] ?? '',
+    'name': json['name'] ?? '',
     'description': json['description'],
     'durationDays': json['duration_days'],
-    'priceKrw': json['price_krw'],
+    'priceKrw': json['price_krw'] ?? 0,
     'priceUsd': json['price_usd'] != null
         ? (json['price_usd'] is int
             ? (json['price_usd'] as int).toDouble()
@@ -127,7 +128,7 @@ Map<String, dynamic> _convertProductSnakeToCamel(Map<String, dynamic> json) {
     'iosProductId': json['ios_product_id'],
     'androidProductId': json['android_product_id'],
     'isActive': json['is_active'] ?? true,
-    'createdAt': json['created_at'],
+    'createdAt': json['created_at'] ?? DateTime.now().toIso8601String(),
   };
 }
 
