@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:mockito/mockito.dart';
 import 'package:severalbible/features/auth/domain/user_tier.dart';
 import 'package:severalbible/features/auth/providers/auth_providers.dart';
 import 'package:severalbible/features/scripture/domain/entities/scripture.dart';
@@ -22,9 +21,9 @@ void main() {
   }) {
     return ProviderScope(
       overrides: [
-        currentUserTierProvider.overrideWith((ref) => Stream.value(tier)),
+        currentUserTierProvider.overrideWith((ref) => Future.value(tier)),
         dailyScripturesProvider.overrideWith(
-          (ref) => AsyncValue.data(scriptures),
+          (ref) => scriptures,
         ),
         // Stub other necessary providers
       ],
@@ -38,12 +37,12 @@ void main() {
     (index) => Scripture(
       id: 'scripture_$index',
       reference: 'John 3:${index + 1}',
-      text: 'For God so loved the world...',
-      translation: 'NIV',
+      content: 'For God so loved the world...',
       book: 'John',
       chapter: 3,
       verse: index + 1,
-      date: DateTime.now(),
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
     ),
   );
 
