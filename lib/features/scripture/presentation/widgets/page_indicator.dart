@@ -25,10 +25,7 @@ class PageIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
-      children: List.generate(
-        pageCount,
-        (index) => _buildDot(context, index),
-      ),
+      children: List.generate(pageCount, (index) => _buildDot(context, index)),
     );
   }
 
@@ -37,7 +34,7 @@ class PageIndicator extends StatelessWidget {
     final color = isActive
         ? (activeColor ?? Theme.of(context).colorScheme.primary)
         : (inactiveColor ??
-            Theme.of(context).colorScheme.primary.withValues(alpha: 0.3));
+              Theme.of(context).colorScheme.primary.withValues(alpha: 0.3));
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: spacing / 2),

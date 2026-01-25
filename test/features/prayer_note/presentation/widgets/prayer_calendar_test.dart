@@ -58,11 +58,13 @@ void main() {
 
     testWidgets('allows date selection', (WidgetTester tester) async {
       DateTime? selectedDate;
-      await tester.pumpWidget(createWidgetUnderTest(
-        onDaySelected: (selected, focused) {
-          selectedDate = selected;
-        },
-      ));
+      await tester.pumpWidget(
+        createWidgetUnderTest(
+          onDaySelected: (selected, focused) {
+            selectedDate = selected;
+          },
+        ),
+      );
       await tester.pumpAndSettle();
 
       // Find and tap on day 15
@@ -74,14 +76,17 @@ void main() {
       expect(selectedDate?.day, 15);
     });
 
-    testWidgets('navigates months with chevron buttons',
-        (WidgetTester tester) async {
+    testWidgets('navigates months with chevron buttons', (
+      WidgetTester tester,
+    ) async {
       DateTime? pageChangedTo;
-      await tester.pumpWidget(createWidgetUnderTest(
-        onPageChanged: (focused) {
-          pageChangedTo = focused;
-        },
-      ));
+      await tester.pumpWidget(
+        createWidgetUnderTest(
+          onPageChanged: (focused) {
+            pageChangedTo = focused;
+          },
+        ),
+      );
       await tester.pumpAndSettle();
 
       // Find the next month chevron and tap it
@@ -95,14 +100,17 @@ void main() {
       expect(pageChangedTo?.month, 2);
     });
 
-    testWidgets('shows marker for dates with notes',
-        (WidgetTester tester) async {
-      await tester.pumpWidget(createWidgetUnderTest(
-        overrideDatesWithNotes: {
-          DateTime(2026, 1, 15),
-          DateTime(2026, 1, 17),
-        },
-      ));
+    testWidgets('shows marker for dates with notes', (
+      WidgetTester tester,
+    ) async {
+      await tester.pumpWidget(
+        createWidgetUnderTest(
+          overrideDatesWithNotes: {
+            DateTime(2026, 1, 15),
+            DateTime(2026, 1, 17),
+          },
+        ),
+      );
       await tester.pumpAndSettle();
 
       // Calendar should be rendered with markers

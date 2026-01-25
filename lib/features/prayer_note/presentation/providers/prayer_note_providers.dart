@@ -46,30 +46,34 @@ final prayerNoteListProvider = FutureProvider<List<PrayerNote>>((ref) async {
 
 /// Provider for prayer notes in a date range (for calendar markers)
 final prayerNotesForRangeProvider =
-    FutureProvider.family<List<PrayerNote>, ({DateTime start, DateTime end})>(
-        (ref, range) async {
-  final currentUser = ref.watch(currentUserProvider);
-  final repository = ref.watch(prayerNoteRepositoryProvider);
+    FutureProvider.family<List<PrayerNote>, ({DateTime start, DateTime end})>((
+      ref,
+      range,
+    ) async {
+      final currentUser = ref.watch(currentUserProvider);
+      final repository = ref.watch(prayerNoteRepositoryProvider);
 
-  if (currentUser == null) {
-    return [];
-  }
+      if (currentUser == null) {
+        return [];
+      }
 
-  final result = await repository.getPrayerNotes(
-    userId: currentUser.id,
-    startDate: range.start,
-    endDate: range.end,
-  );
+      final result = await repository.getPrayerNotes(
+        userId: currentUser.id,
+        startDate: range.start,
+        endDate: range.end,
+      );
 
-  return result.fold(
-    (failure) => throw Exception(failure.message),
-    (notes) => notes,
-  );
-});
+      return result.fold(
+        (failure) => throw Exception(failure.message),
+        (notes) => notes,
+      );
+    });
 
 /// Provider for checking if a date is accessible based on user tier
-final dateAccessibilityProvider =
-    FutureProvider.family<bool, DateTime>((ref, date) async {
+final dateAccessibilityProvider = FutureProvider.family<bool, DateTime>((
+  ref,
+  date,
+) async {
   final currentUser = ref.watch(currentUserProvider);
   final repository = ref.watch(prayerNoteRepositoryProvider);
 
@@ -82,10 +86,7 @@ final dateAccessibilityProvider =
     date: date,
   );
 
-  return result.fold(
-    (failure) => false,
-    (accessible) => accessible,
-  );
+  return result.fold((failure) => false, (accessible) => accessible);
 });
 
 /// State class for prayer note form
@@ -120,7 +121,7 @@ class PrayerNoteFormController extends StateNotifier<PrayerNoteFormState> {
   final Ref _ref;
 
   PrayerNoteFormController(this._repository, this._userId, this._ref)
-      : super(const PrayerNoteFormState());
+    : super(const PrayerNoteFormState());
 
   /// Create a new prayer note
   Future<bool> createNote({
@@ -214,14 +215,16 @@ class PrayerNoteFormController extends StateNotifier<PrayerNoteFormState> {
 /// Provider for prayer note form controller
 final prayerNoteFormControllerProvider =
     StateNotifierProvider<PrayerNoteFormController, PrayerNoteFormState>((ref) {
-  final repository = ref.watch(prayerNoteRepositoryProvider);
-  final currentUser = ref.watch(currentUserProvider);
-  return PrayerNoteFormController(repository, currentUser?.id, ref);
-});
+      final repository = ref.watch(prayerNoteRepositoryProvider);
+      final currentUser = ref.watch(currentUserProvider);
+      return PrayerNoteFormController(repository, currentUser?.id, ref);
+    });
 
 /// Provider for dates that have prayer notes in current month
-final datesWithNotesProvider =
-    FutureProvider.family<Set<DateTime>, DateTime>((ref, monthDate) async {
+final datesWithNotesProvider = FutureProvider.family<Set<DateTime>, DateTime>((
+  ref,
+  monthDate,
+) async {
   final currentUser = ref.watch(currentUserProvider);
   final repository = ref.watch(prayerNoteRepositoryProvider);
 
@@ -239,17 +242,16 @@ final datesWithNotesProvider =
     endDate: lastDay,
   );
 
-  return result.fold(
-    (failure) => {},
-    (notes) {
-      // Extract unique dates (without time)
-      return notes
-          .map((note) => DateTime(
-                note.createdAt.year,
-                note.createdAt.month,
-                note.createdAt.day,
-              ))
-          .toSet();
-    },
-  );
+  return result.fold((failure) => {}, (notes) {
+    // Extract unique dates (without time)
+    return notes
+        .map(
+          (note) => DateTime(
+            note.createdAt.year,
+            note.createdAt.month,
+            note.createdAt.day,
+          ),
+        )
+        .toSet();
+  });
 });

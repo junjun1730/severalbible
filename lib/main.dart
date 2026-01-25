@@ -19,11 +19,7 @@ Future<void> main() async {
     ),
   );
 
-  runApp(
-    const ProviderScope(
-      child: OneMessageApp(),
-    ),
-  );
+  runApp(const ProviderScope(child: OneMessageApp()));
 }
 
 // Global Supabase client accessor (deprecated, use providers)
@@ -60,10 +56,7 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: const Center(
-        child: Text(
-          'Welcome to One Message',
-          style: TextStyle(fontSize: 24),
-        ),
+        child: Text('Welcome to One Message', style: TextStyle(fontSize: 24)),
       ),
     );
   }

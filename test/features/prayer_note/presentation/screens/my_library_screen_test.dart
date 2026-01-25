@@ -47,9 +47,7 @@ void main() {
         currentUserTierProvider.overrideWith((ref) => Future.value(tier)),
         datesWithNotesProvider(date).overrideWith((ref) => Future.value({})),
       ],
-      child: const MaterialApp(
-        home: MyLibraryScreen(),
-      ),
+      child: const MaterialApp(home: MyLibraryScreen()),
     );
   }
 
@@ -65,12 +63,11 @@ void main() {
         prayerNoteListProvider.overrideWith((ref) => Future.value(notes)),
         selectedDateProvider.overrideWith((ref) => date),
         currentUserTierProvider.overrideWith((ref) => Future.value(tier)),
-        datesWithNotesProvider(date).overrideWith(
-            (ref) => Future.value(datesWithNotes ?? {})),
+        datesWithNotesProvider(
+          date,
+        ).overrideWith((ref) => Future.value(datesWithNotes ?? {})),
       ],
-      child: const MaterialApp(
-        home: MyLibraryScreen(),
-      ),
+      child: const MaterialApp(home: MyLibraryScreen()),
     );
   }
 
@@ -87,15 +84,14 @@ void main() {
         currentUserTierProvider.overrideWith((ref) => Future.value(tier)),
         datesWithNotesProvider(date).overrideWith((ref) => Future.value({})),
       ],
-      child: const MaterialApp(
-        home: MyLibraryScreen(),
-      ),
+      child: const MaterialApp(home: MyLibraryScreen()),
     );
   }
 
   group('MyLibraryScreen', () {
-    testWidgets('shows loading indicator on initial load',
-        (WidgetTester tester) async {
+    testWidgets('shows loading indicator on initial load', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(createLoadingWidget());
 
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
@@ -108,8 +104,9 @@ void main() {
       expect(find.byType(PrayerCalendar), findsOneWidget);
     });
 
-    testWidgets('shows notes list for selected date',
-        (WidgetTester tester) async {
+    testWidgets('shows notes list for selected date', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(createDataWidget(notes: testNotes));
       await tester.pumpAndSettle();
 

@@ -7,11 +7,7 @@ import 'package:severalbible/main.dart';
 void main() {
   testWidgets('App displays welcome message', (WidgetTester tester) async {
     await tester.pumpWidget(
-      const ProviderScope(
-        child: MaterialApp(
-          home: HomeScreen(),
-        ),
-      ),
+      const ProviderScope(child: MaterialApp(home: HomeScreen())),
     );
 
     expect(find.text('Welcome to One Message'), findsOneWidget);

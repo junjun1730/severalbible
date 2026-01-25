@@ -32,9 +32,7 @@ abstract class PrayerNoteDataSource {
   });
 
   /// Delete a prayer note
-  Future<void> deletePrayerNote({
-    required String noteId,
-  });
+  Future<void> deletePrayerNote({required String noteId});
 
   /// Check if a date is accessible based on user tier
   /// Returns true if accessible, false otherwise

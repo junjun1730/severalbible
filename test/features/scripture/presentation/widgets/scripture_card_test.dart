@@ -13,7 +13,8 @@ void main() {
       book: 'John',
       chapter: 3,
       verse: 16,
-      content: 'For God so loved the world that he gave his one and only Son, '
+      content:
+          'For God so loved the world that he gave his one and only Son, '
           'that whoever believes in him shall not perish but have eternal life.',
       reference: 'John 3:16',
       isPremium: false,
@@ -38,9 +39,7 @@ void main() {
 
   Widget createWidgetUnderTest(Scripture scripture) {
     return MaterialApp(
-      home: Scaffold(
-        body: ScriptureCard(scripture: scripture),
-      ),
+      home: Scaffold(body: ScriptureCard(scripture: scripture)),
     );
   }
 
@@ -54,29 +53,29 @@ void main() {
     testWidgets('renders scripture content', (WidgetTester tester) async {
       await tester.pumpWidget(createWidgetUnderTest(testScripture));
 
-      expect(
-        find.textContaining('For God so loved the world'),
-        findsOneWidget,
-      );
+      expect(find.textContaining('For God so loved the world'), findsOneWidget);
     });
 
-    testWidgets('renders book, chapter, and verse info',
-        (WidgetTester tester) async {
+    testWidgets('renders book, chapter, and verse info', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(createWidgetUnderTest(testScripture));
 
       // The reference should contain book, chapter:verse
       expect(find.text('John 3:16'), findsOneWidget);
     });
 
-    testWidgets('shows premium badge for premium scriptures',
-        (WidgetTester tester) async {
+    testWidgets('shows premium badge for premium scriptures', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(createWidgetUnderTest(premiumScripture));
 
       expect(find.byIcon(Icons.star), findsOneWidget);
     });
 
-    testWidgets('does not show premium badge for non-premium scriptures',
-        (WidgetTester tester) async {
+    testWidgets('does not show premium badge for non-premium scriptures', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(createWidgetUnderTest(testScripture));
 
       expect(find.byIcon(Icons.star), findsNothing);
@@ -94,15 +93,17 @@ void main() {
       expect(contentFinder, findsOneWidget);
     });
 
-    testWidgets('renders category tag when present',
-        (WidgetTester tester) async {
+    testWidgets('renders category tag when present', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(createWidgetUnderTest(testScripture));
 
       expect(find.text('hope'), findsOneWidget);
     });
 
-    testWidgets('does not render category tag when null',
-        (WidgetTester tester) async {
+    testWidgets('does not render category tag when null', (
+      WidgetTester tester,
+    ) async {
       final scriptureWithoutCategory = Scripture(
         id: 'test-id-3',
         book: 'Genesis',

@@ -30,9 +30,7 @@ class PrayerNoteCard extends StatelessWidget {
       child: Card(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         elevation: 2,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         child: Stack(
           children: [
             Padding(
@@ -43,7 +41,10 @@ class PrayerNoteCard extends StatelessWidget {
                   // Scripture reference (if present)
                   if (note.scriptureReference != null) ...[
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
                       decoration: BoxDecoration(
                         color: Theme.of(context).colorScheme.primaryContainer,
                         borderRadius: BorderRadius.circular(8),
@@ -53,7 +54,9 @@ class PrayerNoteCard extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
-                          color: Theme.of(context).colorScheme.onPrimaryContainer,
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onPrimaryContainer,
                         ),
                       ),
                     ),
@@ -65,17 +68,17 @@ class PrayerNoteCard extends StatelessWidget {
                     Text(
                       'This prayer note is locked. Upgrade to premium to view your archive history.',
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            height: 1.5,
-                            color: Colors.grey,
-                            fontStyle: FontStyle.italic,
-                          ),
+                        height: 1.5,
+                        color: Colors.grey,
+                        fontStyle: FontStyle.italic,
+                      ),
                     )
                   else
                     Text(
                       note.content,
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            height: 1.5,
-                          ),
+                      style: Theme.of(
+                        context,
+                      ).textTheme.bodyLarge?.copyWith(height: 1.5),
                     ),
 
                   const SizedBox(height: 12),
@@ -87,8 +90,8 @@ class PrayerNoteCard extends StatelessWidget {
                       Text(
                         _formatDate(note.createdAt),
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: Theme.of(context).colorScheme.onSurfaceVariant,
-                            ),
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
                       ),
                       if (!isLocked)
                         Row(
@@ -121,7 +124,7 @@ class PrayerNoteCard extends StatelessWidget {
                 ],
               ),
             ),
-             if (isLocked)
+            if (isLocked)
               Positioned.fill(
                 child: Container(
                   decoration: BoxDecoration(

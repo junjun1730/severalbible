@@ -5,9 +5,7 @@ import '../../domain/entities/subscription.dart';
 abstract class SubscriptionDataSource {
   /// Get user's subscription status
   /// Returns null if no subscription exists
-  Future<Map<String, dynamic>?> getSubscriptionStatus({
-    required String userId,
-  });
+  Future<Map<String, dynamic>?> getSubscriptionStatus({required String userId});
 
   /// Get available subscription products
   Future<List<Map<String, dynamic>>> getAvailableProducts({
@@ -26,10 +24,7 @@ abstract class SubscriptionDataSource {
 
   /// Cancel a subscription
   /// Calls Supabase RPC function
-  Future<void> cancelSubscription({
-    required String userId,
-    String? reason,
-  });
+  Future<void> cancelSubscription({required String userId, String? reason});
 
   /// Verify iOS receipt via Edge Function
   Future<Map<String, dynamic>> verifyIosReceipt({
@@ -45,7 +40,5 @@ abstract class SubscriptionDataSource {
   });
 
   /// Check if user has active premium
-  Future<bool> hasActivePremium({
-    required String userId,
-  });
+  Future<bool> hasActivePremium({required String userId});
 }

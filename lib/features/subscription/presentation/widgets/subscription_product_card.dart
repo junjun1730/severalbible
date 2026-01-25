@@ -25,9 +25,13 @@ class SubscriptionProductCard extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 8),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: isSelected ? Theme.of(context).primaryColor.withOpacity(0.1) : Colors.white,
+          color: isSelected
+              ? Theme.of(context).primaryColor.withOpacity(0.1)
+              : Colors.white,
           border: Border.all(
-            color: isSelected ? Theme.of(context).primaryColor : Colors.grey.shade300,
+            color: isSelected
+                ? Theme.of(context).primaryColor
+                : Colors.grey.shade300,
             width: 2,
           ),
           borderRadius: BorderRadius.circular(12),
@@ -38,9 +42,12 @@ class SubscriptionProductCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                   if (discount != null)
+                  if (discount != null)
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
                       margin: const EdgeInsets.only(bottom: 8),
                       decoration: BoxDecoration(
                         color: Theme.of(context).primaryColor,
@@ -66,10 +73,7 @@ class SubscriptionProductCard extends StatelessWidget {
                   if (product.description != null)
                     Text(
                       product.description!,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey[600],
-                      ),
+                      style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                     ),
                 ],
               ),
@@ -77,21 +81,23 @@ class SubscriptionProductCard extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                 Text(
+                Text(
                   '₩${product.priceKrw}',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: isSelected ? Theme.of(context).primaryColor : Colors.black,
+                    color: isSelected
+                        ? Theme.of(context).primaryColor
+                        : Colors.black,
                   ),
                 ),
-                 if (isAnnual)
+                if (isAnnual)
                   const Text(
                     '/ year',
                     style: TextStyle(fontSize: 12, color: Colors.grey),
                   )
-                 else
-                   const Text(
+                else
+                  const Text(
                     '/ month',
                     style: TextStyle(fontSize: 12, color: Colors.grey),
                   ),

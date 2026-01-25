@@ -68,10 +68,7 @@ class SupabaseSubscriptionDataSource implements SubscriptionDataSource {
   }) async {
     await _supabaseService.rpc<void>(
       'cancel_subscription',
-      params: {
-        'p_user_id': userId,
-        'p_reason': reason,
-      },
+      params: {'p_user_id': userId, 'p_reason': reason},
     );
   }
 
@@ -82,10 +79,7 @@ class SupabaseSubscriptionDataSource implements SubscriptionDataSource {
   }) async {
     final response = await _supabaseService.invokeEdgeFunction(
       'verify-ios-receipt',
-      body: {
-        'receipt': receipt,
-        'userId': userId,
-      },
+      body: {'receipt': receipt, 'userId': userId},
     );
 
     return response;
@@ -110,9 +104,7 @@ class SupabaseSubscriptionDataSource implements SubscriptionDataSource {
   }
 
   @override
-  Future<bool> hasActivePremium({
-    required String userId,
-  }) async {
+  Future<bool> hasActivePremium({required String userId}) async {
     final response = await _supabaseService.rpc<bool>(
       'has_active_premium',
       params: {'p_user_id': userId},

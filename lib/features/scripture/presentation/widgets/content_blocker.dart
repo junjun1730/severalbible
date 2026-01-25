@@ -6,11 +6,7 @@ class ContentBlocker extends StatelessWidget {
   final UserTier tier;
   final VoidCallback onAction;
 
-  const ContentBlocker({
-    super.key,
-    required this.tier,
-    required this.onAction,
-  });
+  const ContentBlocker({super.key, required this.tier, required this.onAction});
 
   @override
   Widget build(BuildContext context) {
@@ -71,9 +67,9 @@ class ContentBlocker extends StatelessWidget {
 
     return Text(
       title,
-      style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
+      style: Theme.of(
+        context,
+      ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
       textAlign: TextAlign.center,
     );
   }
@@ -86,19 +82,15 @@ class ContentBlocker extends StatelessWidget {
     return Text(
       subtitle,
       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
-          ),
+        color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+      ),
       textAlign: TextAlign.center,
     );
   }
 
   Widget _buildBenefitsList(BuildContext context) {
     final benefits = tier == UserTier.guest
-        ? [
-            '3 scriptures daily',
-            'Prayer note feature',
-            'Scripture history',
-          ]
+        ? ['3 scriptures daily', 'Prayer note feature', 'Scripture history']
         : [
             'Unlimited scriptures',
             'Premium exclusive content',
@@ -124,17 +116,16 @@ class ContentBlocker extends StatelessWidget {
             color: Theme.of(context).colorScheme.primary,
           ),
           const SizedBox(width: 12),
-          Text(
-            benefit,
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
+          Text(benefit, style: Theme.of(context).textTheme.bodyMedium),
         ],
       ),
     );
   }
 
   Widget _buildActionButton(BuildContext context) {
-    final buttonText = tier == UserTier.guest ? 'Sign In' : 'Upgrade to Premium';
+    final buttonText = tier == UserTier.guest
+        ? 'Sign In'
+        : 'Upgrade to Premium';
 
     return SizedBox(
       width: double.infinity,
@@ -148,10 +139,7 @@ class ContentBlocker extends StatelessWidget {
         ),
         child: Text(
           buttonText,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
       ),
     );

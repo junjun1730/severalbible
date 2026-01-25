@@ -75,10 +75,15 @@ class _PrayerNoteInputState extends State<PrayerNoteInput> {
             enabled: widget.isEnabled,
             maxLines: 4,
             maxLength: widget.maxLength,
-            buildCounter: (context,
-                {required currentLength, required isFocused, maxLength}) {
-              return null;
-            },
+            buildCounter:
+                (
+                  context, {
+                  required currentLength,
+                  required isFocused,
+                  maxLength,
+                }) {
+                  return null;
+                },
             decoration: InputDecoration(
               hintText: 'Write your meditation...',
               border: OutlineInputBorder(
@@ -96,8 +101,8 @@ class _PrayerNoteInputState extends State<PrayerNoteInput> {
               Text(
                 '$_characterCount/${widget.maxLength}',
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
-                    ),
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
               ),
               widget.isLoading
                   ? const SizedBox(

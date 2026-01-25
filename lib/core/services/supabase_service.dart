@@ -35,10 +35,7 @@ class SupabaseServiceImpl implements SupabaseService {
     String functionName, {
     Map<String, dynamic>? body,
   }) async {
-    final response = await _client.functions.invoke(
-      functionName,
-      body: body,
-    );
+    final response = await _client.functions.invoke(functionName, body: body);
 
     if (response.status != 200) {
       throw Exception(

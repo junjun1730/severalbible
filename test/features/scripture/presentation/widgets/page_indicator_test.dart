@@ -10,10 +10,7 @@ void main() {
     return MaterialApp(
       home: Scaffold(
         body: Center(
-          child: PageIndicator(
-            pageCount: pageCount,
-            currentPage: currentPage,
-          ),
+          child: PageIndicator(pageCount: pageCount, currentPage: currentPage),
         ),
       ),
     );
@@ -21,10 +18,9 @@ void main() {
 
   group('PageIndicator Widget', () {
     testWidgets('renders dots for each page', (WidgetTester tester) async {
-      await tester.pumpWidget(createWidgetUnderTest(
-        pageCount: 3,
-        currentPage: 0,
-      ));
+      await tester.pumpWidget(
+        createWidgetUnderTest(pageCount: 3, currentPage: 0),
+      );
 
       // Should find 3 indicator dots
       final dotFinder = find.byType(AnimatedContainer);
@@ -32,10 +28,9 @@ void main() {
     });
 
     testWidgets('highlights current page', (WidgetTester tester) async {
-      await tester.pumpWidget(createWidgetUnderTest(
-        pageCount: 3,
-        currentPage: 1,
-      ));
+      await tester.pumpWidget(
+        createWidgetUnderTest(pageCount: 3, currentPage: 1),
+      );
 
       // The second dot should be larger/highlighted
       final containers = tester.widgetList<AnimatedContainer>(
@@ -52,16 +47,12 @@ void main() {
       // BoxDecoration에서 width 비교
       final currentWidth =
           (currentPageContainer.constraints as BoxConstraints?)?.maxWidth ??
-              (currentPageContainer.decoration as BoxDecoration?)
-                  ?.shape
-                  .hashCode
-                  .toDouble();
+          (currentPageContainer.decoration as BoxDecoration?)?.shape.hashCode
+              .toDouble();
       final otherWidth =
           (otherPageContainer.constraints as BoxConstraints?)?.maxWidth ??
-              (otherPageContainer.decoration as BoxDecoration?)
-                  ?.shape
-                  .hashCode
-                  .toDouble();
+          (otherPageContainer.decoration as BoxDecoration?)?.shape.hashCode
+              .toDouble();
 
       // Just verify the widgets are present
       expect(containerList.length, 3);
@@ -69,18 +60,16 @@ void main() {
 
     testWidgets('updates on page change', (WidgetTester tester) async {
       // First with page 0 selected
-      await tester.pumpWidget(createWidgetUnderTest(
-        pageCount: 3,
-        currentPage: 0,
-      ));
+      await tester.pumpWidget(
+        createWidgetUnderTest(pageCount: 3, currentPage: 0),
+      );
 
       await tester.pumpAndSettle();
 
       // Then change to page 2
-      await tester.pumpWidget(createWidgetUnderTest(
-        pageCount: 3,
-        currentPage: 2,
-      ));
+      await tester.pumpWidget(
+        createWidgetUnderTest(pageCount: 3, currentPage: 2),
+      );
 
       await tester.pumpAndSettle();
 
@@ -89,10 +78,9 @@ void main() {
     });
 
     testWidgets('handles single page correctly', (WidgetTester tester) async {
-      await tester.pumpWidget(createWidgetUnderTest(
-        pageCount: 1,
-        currentPage: 0,
-      ));
+      await tester.pumpWidget(
+        createWidgetUnderTest(pageCount: 1, currentPage: 0),
+      );
 
       // Should find 1 indicator dot
       final dotFinder = find.byType(AnimatedContainer);

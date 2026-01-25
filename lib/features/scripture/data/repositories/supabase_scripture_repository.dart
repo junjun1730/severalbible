@@ -12,7 +12,9 @@ class SupabaseScriptureRepository implements ScriptureRepository {
   SupabaseScriptureRepository(this._dataSource);
 
   /// Maps JSON list to Scripture entities
-  List<Scripture> _mapJsonListToScriptures(List<Map<String, dynamic>> jsonList) {
+  List<Scripture> _mapJsonListToScriptures(
+    List<Map<String, dynamic>> jsonList,
+  ) {
     return jsonList.map((json) => Scripture.fromJson(json)).toList();
   }
 

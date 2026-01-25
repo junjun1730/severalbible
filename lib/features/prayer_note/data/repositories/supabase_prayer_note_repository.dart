@@ -13,7 +13,8 @@ class SupabasePrayerNoteRepository implements PrayerNoteRepository {
 
   /// Maps JSON list to PrayerNote entities
   List<PrayerNote> _mapJsonListToPrayerNotes(
-      List<Map<String, dynamic>> jsonList) {
+    List<Map<String, dynamic>> jsonList,
+  ) {
     return jsonList.map((json) => PrayerNote.fromJson(json)).toList();
   }
 
@@ -26,7 +27,8 @@ class SupabasePrayerNoteRepository implements PrayerNoteRepository {
     // Validate content is not empty
     if (content.trim().isEmpty) {
       return const Left(
-          ValidationFailure('Content cannot be empty', code: 'EMPTY_CONTENT'));
+        ValidationFailure('Content cannot be empty', code: 'EMPTY_CONTENT'),
+      );
     }
 
     try {

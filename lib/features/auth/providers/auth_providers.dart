@@ -39,10 +39,10 @@ final userProfileRepositoryProvider = Provider<UserProfileRepository>((ref) {
 final currentUserProvider = Provider<User?>((ref) {
   // Watch the auth state changes to force rebuild when auth state changes
   final authState = ref.watch(authStateChangesProvider);
-  
+
   // Also get the repo to access current user synchronously
   final authRepo = ref.watch(authRepositoryProvider);
-  
+
   // If the stream emitted a state, we can trust authRepo.currentUser is updated (or use state.session?.user)
   // We return authRepo.currentUser to be safe as it's the source of truth
   return authRepo.currentUser;
@@ -66,10 +66,7 @@ final currentUserTierProvider = FutureProvider<UserTier>((ref) async {
   final userProfileRepo = ref.watch(userProfileRepositoryProvider);
   final result = await userProfileRepo.getUserTier(currentUser.id);
 
-  return result.fold(
-    (failure) => UserTier.guest,
-    (tier) => tier,
-  );
+  return result.fold((failure) => UserTier.guest, (tier) => tier);
 });
 
 /// Provider for checking if user is logged in

@@ -24,15 +24,17 @@ void main() {
 
   group('SubscriptionProductCard', () {
     testWidgets('renders product name and price', (tester) async {
-      await tester.pumpWidget(MaterialApp(
-        home: Scaffold(
-          body: SubscriptionProductCard(
-            product: monthlyProduct,
-            isSelected: false,
-            onTap: () {},
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: SubscriptionProductCard(
+              product: monthlyProduct,
+              isSelected: false,
+              onTap: () {},
+            ),
           ),
         ),
-      ));
+      );
 
       expect(find.text('Monthly Premium'), findsOneWidget);
       expect(find.text('₩9900'), findsOneWidget);
@@ -40,15 +42,17 @@ void main() {
     });
 
     testWidgets('shows discount badge for annual product', (tester) async {
-      await tester.pumpWidget(MaterialApp(
-        home: Scaffold(
-          body: SubscriptionProductCard(
-            product: annualProduct,
-            isSelected: false,
-            onTap: () {},
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: SubscriptionProductCard(
+              product: annualProduct,
+              isSelected: false,
+              onTap: () {},
+            ),
           ),
         ),
-      ));
+      );
 
       expect(find.text('Best Value'), findsOneWidget);
       expect(find.text('Annual Premium'), findsOneWidget);
@@ -56,40 +60,48 @@ void main() {
       expect(find.text('/ year'), findsOneWidget);
     });
 
-    testWidgets('does not show discount badge for monthly product', (tester) async {
-      await tester.pumpWidget(MaterialApp(
-        home: Scaffold(
-          body: SubscriptionProductCard(
-            product: monthlyProduct,
-            isSelected: false,
-            onTap: () {},
+    testWidgets('does not show discount badge for monthly product', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: SubscriptionProductCard(
+              product: monthlyProduct,
+              isSelected: false,
+              onTap: () {},
+            ),
           ),
         ),
-      ));
+      );
 
       expect(find.text('Best Value'), findsNothing);
     });
 
-    testWidgets('highlights selected product with different styling', (tester) async {
-      await tester.pumpWidget(MaterialApp(
-        theme: ThemeData(primaryColor: Colors.blue),
-        home: Scaffold(
-          body: Column(
-            children: [
-              SubscriptionProductCard(
-                product: monthlyProduct,
-                isSelected: true,
-                onTap: () {},
-              ),
-              SubscriptionProductCard(
-                product: annualProduct,
-                isSelected: false,
-                onTap: () {},
-              ),
-            ],
+    testWidgets('highlights selected product with different styling', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: ThemeData(primaryColor: Colors.blue),
+          home: Scaffold(
+            body: Column(
+              children: [
+                SubscriptionProductCard(
+                  product: monthlyProduct,
+                  isSelected: true,
+                  onTap: () {},
+                ),
+                SubscriptionProductCard(
+                  product: annualProduct,
+                  isSelected: false,
+                  onTap: () {},
+                ),
+              ],
+            ),
           ),
         ),
-      ));
+      );
 
       // Find the containers
       final containers = tester.widgetList<Container>(find.byType(Container));
@@ -102,17 +114,19 @@ void main() {
     testWidgets('calls onTap callback when tapped', (tester) async {
       bool tapped = false;
 
-      await tester.pumpWidget(MaterialApp(
-        home: Scaffold(
-          body: SubscriptionProductCard(
-            product: monthlyProduct,
-            isSelected: false,
-            onTap: () {
-              tapped = true;
-            },
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: SubscriptionProductCard(
+              product: monthlyProduct,
+              isSelected: false,
+              onTap: () {
+                tapped = true;
+              },
+            ),
           ),
         ),
-      ));
+      );
 
       await tester.tap(find.byType(SubscriptionProductCard));
       await tester.pump();
@@ -121,17 +135,22 @@ void main() {
     });
 
     testWidgets('shows product description when provided', (tester) async {
-      await tester.pumpWidget(MaterialApp(
-        home: Scaffold(
-          body: SubscriptionProductCard(
-            product: monthlyProduct,
-            isSelected: false,
-            onTap: () {},
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: SubscriptionProductCard(
+              product: monthlyProduct,
+              isSelected: false,
+              onTap: () {},
+            ),
           ),
         ),
-      ));
+      );
 
-      expect(find.text('Access all premium features for 1 month'), findsOneWidget);
+      expect(
+        find.text('Access all premium features for 1 month'),
+        findsOneWidget,
+      );
     });
   });
 }

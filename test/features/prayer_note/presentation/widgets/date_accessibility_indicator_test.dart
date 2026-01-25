@@ -18,27 +18,32 @@ void main() {
   }
 
   group('DateAccessibilityIndicator Widget', () {
-    testWidgets('shows lock icon for inaccessible dates',
-        (WidgetTester tester) async {
+    testWidgets('shows lock icon for inaccessible dates', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(createWidgetUnderTest(isAccessible: false));
 
       expect(find.byIcon(Icons.lock), findsOneWidget);
     });
 
-    testWidgets('shows unlock icon for accessible dates',
-        (WidgetTester tester) async {
+    testWidgets('shows unlock icon for accessible dates', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(createWidgetUnderTest(isAccessible: true));
 
       expect(find.byIcon(Icons.lock_open), findsOneWidget);
     });
 
-    testWidgets('calls onLockedTap when locked indicator is tapped',
-        (WidgetTester tester) async {
+    testWidgets('calls onLockedTap when locked indicator is tapped', (
+      WidgetTester tester,
+    ) async {
       bool tapCalled = false;
-      await tester.pumpWidget(createWidgetUnderTest(
-        isAccessible: false,
-        onLockedTap: () => tapCalled = true,
-      ));
+      await tester.pumpWidget(
+        createWidgetUnderTest(
+          isAccessible: false,
+          onLockedTap: () => tapCalled = true,
+        ),
+      );
 
       await tester.tap(find.byIcon(Icons.lock));
       await tester.pump();
@@ -46,13 +51,16 @@ void main() {
       expect(tapCalled, true);
     });
 
-    testWidgets('does not call onLockedTap when accessible',
-        (WidgetTester tester) async {
+    testWidgets('does not call onLockedTap when accessible', (
+      WidgetTester tester,
+    ) async {
       bool tapCalled = false;
-      await tester.pumpWidget(createWidgetUnderTest(
-        isAccessible: true,
-        onLockedTap: () => tapCalled = true,
-      ));
+      await tester.pumpWidget(
+        createWidgetUnderTest(
+          isAccessible: true,
+          onLockedTap: () => tapCalled = true,
+        ),
+      );
 
       await tester.tap(find.byIcon(Icons.lock_open));
       await tester.pump();
@@ -61,8 +69,9 @@ void main() {
       expect(tapCalled, false);
     });
 
-    testWidgets('shows appropriate color for locked state',
-        (WidgetTester tester) async {
+    testWidgets('shows appropriate color for locked state', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(createWidgetUnderTest(isAccessible: false));
 
       // Find the icon and check it's displayed
@@ -70,8 +79,9 @@ void main() {
       expect(iconFinder, findsOneWidget);
     });
 
-    testWidgets('shows appropriate color for unlocked state',
-        (WidgetTester tester) async {
+    testWidgets('shows appropriate color for unlocked state', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(createWidgetUnderTest(isAccessible: true));
 
       // Find the icon and check it's displayed

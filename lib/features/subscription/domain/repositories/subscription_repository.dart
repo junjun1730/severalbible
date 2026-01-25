@@ -66,7 +66,5 @@ abstract class SubscriptionRepository {
   /// Check if user has active premium subscription
   /// [userId] - The authenticated user's ID
   /// Returns Either<Failure, bool>
-  Future<Either<Failure, bool>> hasActivePremium({
-    required String userId,
-  });
+  Future<Either<Failure, bool>> hasActivePremium({required String userId});
 }

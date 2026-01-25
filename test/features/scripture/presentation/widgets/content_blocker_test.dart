@@ -10,48 +10,45 @@ void main() {
   }) {
     return MaterialApp(
       home: Scaffold(
-        body: ContentBlocker(
-          tier: tier,
-          onAction: onAction ?? () {},
-        ),
+        body: ContentBlocker(tier: tier, onAction: onAction ?? () {}),
       ),
     );
   }
 
   group('ContentBlocker Widget', () {
-    testWidgets('displays blocker message for guest',
-        (WidgetTester tester) async {
+    testWidgets('displays blocker message for guest', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(createWidgetUnderTest(tier: UserTier.guest));
 
-      expect(
-        find.textContaining('Log in'),
-        findsWidgets,
-      );
+      expect(find.textContaining('Log in'), findsWidgets);
     });
 
-    testWidgets('displays blocker message for member',
-        (WidgetTester tester) async {
+    testWidgets('displays blocker message for member', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(createWidgetUnderTest(tier: UserTier.member));
 
-      expect(
-        find.textContaining('Premium'),
-        findsWidgets,
-      );
+      expect(find.textContaining('Premium'), findsWidgets);
     });
 
-    testWidgets('shows CTA button based on tier - guest',
-        (WidgetTester tester) async {
+    testWidgets('shows CTA button based on tier - guest', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(createWidgetUnderTest(tier: UserTier.guest));
 
       expect(find.widgetWithText(ElevatedButton, 'Sign In'), findsOneWidget);
     });
 
-    testWidgets('shows CTA button based on tier - member',
-        (WidgetTester tester) async {
+    testWidgets('shows CTA button based on tier - member', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(createWidgetUnderTest(tier: UserTier.member));
 
-      expect(find.widgetWithText(ElevatedButton, 'Upgrade to Premium'),
-          findsOneWidget);
+      expect(
+        find.widgetWithText(ElevatedButton, 'Upgrade to Premium'),
+        findsOneWidget,
+      );
     });
 
     testWidgets('guest blocker prompts login', (WidgetTester tester) async {
@@ -61,8 +58,9 @@ void main() {
       expect(find.textContaining('Sign'), findsWidgets);
     });
 
-    testWidgets('member blocker prompts premium upgrade',
-        (WidgetTester tester) async {
+    testWidgets('member blocker prompts premium upgrade', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(createWidgetUnderTest(tier: UserTier.member));
 
       // Should have premium upgrade related text
@@ -76,14 +74,17 @@ void main() {
       expect(find.byIcon(Icons.check_circle), findsWidgets);
     });
 
-    testWidgets('calls onAction callback when CTA is tapped',
-        (WidgetTester tester) async {
+    testWidgets('calls onAction callback when CTA is tapped', (
+      WidgetTester tester,
+    ) async {
       var actionCalled = false;
 
-      await tester.pumpWidget(createWidgetUnderTest(
-        tier: UserTier.guest,
-        onAction: () => actionCalled = true,
-      ));
+      await tester.pumpWidget(
+        createWidgetUnderTest(
+          tier: UserTier.guest,
+          onAction: () => actionCalled = true,
+        ),
+      );
 
       await tester.tap(find.byType(ElevatedButton));
       await tester.pumpAndSettle();

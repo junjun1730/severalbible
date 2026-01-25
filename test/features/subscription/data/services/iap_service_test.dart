@@ -18,11 +18,13 @@ void main() {
 
   setUpAll(() {
     registerFallbackValue(<String>{});
-    registerFallbackValue(_MockPurchaseDetails(
-      productID: 'test',
-      purchaseID: 'test-id',
-      status: iap.PurchaseStatus.purchased,
-    ));
+    registerFallbackValue(
+      _MockPurchaseDetails(
+        productID: 'test',
+        purchaseID: 'test-id',
+        status: iap.PurchaseStatus.purchased,
+      ),
+    );
   });
 
   setUp(() {
@@ -33,10 +35,10 @@ void main() {
   group('initialize', () {
     test('should return Right(void) when store is available', () async {
       // Arrange
-      when(() => mockInAppPurchase.isAvailable())
-          .thenAnswer((_) async => true);
-      when(() => mockInAppPurchase.purchaseStream)
-          .thenAnswer((_) => const Stream.empty());
+      when(() => mockInAppPurchase.isAvailable()).thenAnswer((_) async => true);
+      when(
+        () => mockInAppPurchase.purchaseStream,
+      ).thenAnswer((_) => const Stream.empty());
 
       // Act
       final result = await iapService.initialize();
@@ -46,71 +48,74 @@ void main() {
       verify(() => mockInAppPurchase.isAvailable()).called(1);
     });
 
-    test('should return Left(ServerFailure) when store is not available',
-        () async {
-      // Arrange
-      when(() => mockInAppPurchase.isAvailable())
-          .thenAnswer((_) async => false);
+    test(
+      'should return Left(ServerFailure) when store is not available',
+      () async {
+        // Arrange
+        when(
+          () => mockInAppPurchase.isAvailable(),
+        ).thenAnswer((_) async => false);
 
-      // Act
-      final result = await iapService.initialize();
+        // Act
+        final result = await iapService.initialize();
 
-      // Assert
-      expect(result.isLeft(), true);
-      result.fold(
-        (failure) {
+        // Assert
+        expect(result.isLeft(), true);
+        result.fold((failure) {
           expect(failure, isA<ServerFailure>());
           expect(failure.message, contains('not available'));
-        },
-        (_) => fail('Expected Left but got Right'),
-      );
-    });
+        }, (_) => fail('Expected Left but got Right'));
+      },
+    );
   });
 
   group('fetchProducts', () {
-    test('should return Right(List<SubscriptionProduct>) when products found',
-        () async {
-      // Arrange
-      final mockProductDetails1 = _MockProductDetails(
-        id: 'monthly_premium',
-        title: 'Monthly Premium',
-        description: 'Access all premium features for 1 month',
-        price: '₩9,900',
-        rawPrice: 9900,
-        currencyCode: 'KRW',
-      );
+    test(
+      'should return Right(List<SubscriptionProduct>) when products found',
+      () async {
+        // Arrange
+        final mockProductDetails1 = _MockProductDetails(
+          id: 'monthly_premium',
+          title: 'Monthly Premium',
+          description: 'Access all premium features for 1 month',
+          price: '₩9,900',
+          rawPrice: 9900,
+          currencyCode: 'KRW',
+        );
 
-      final mockProductDetails2 = _MockProductDetails(
-        id: 'annual_premium',
-        title: 'Annual Premium',
-        description: 'Access all premium features for 1 year',
-        price: '₩99,000',
-        rawPrice: 99000,
-        currencyCode: 'KRW',
-      );
+        final mockProductDetails2 = _MockProductDetails(
+          id: 'annual_premium',
+          title: 'Annual Premium',
+          description: 'Access all premium features for 1 year',
+          price: '₩99,000',
+          rawPrice: 99000,
+          currencyCode: 'KRW',
+        );
 
-      when(() => mockInAppPurchase.queryProductDetails(any())).thenAnswer(
-        (_) async => iap.ProductDetailsResponse(
-          productDetails: [mockProductDetails1, mockProductDetails2],
-          notFoundIDs: [],
-          error: null,
-        ),
-      );
+        when(() => mockInAppPurchase.queryProductDetails(any())).thenAnswer(
+          (_) async => iap.ProductDetailsResponse(
+            productDetails: [mockProductDetails1, mockProductDetails2],
+            notFoundIDs: [],
+            error: null,
+          ),
+        );
 
-      // Act
-      final result = await iapService.fetchProducts(productIds: testProductIds);
+        // Act
+        final result = await iapService.fetchProducts(
+          productIds: testProductIds,
+        );
 
-      // Assert
-      expect(result.isRight(), true);
-      result.fold(
-        (failure) => fail('Expected Right but got Left'),
-        (products) {
+        // Assert
+        expect(result.isRight(), true);
+        result.fold((failure) => fail('Expected Right but got Left'), (
+          products,
+        ) {
           expect(products.length, 2);
           expect(products.first.id, 'monthly_premium');
           expect(products.last.id, 'annual_premium');
-        },
-      );
-    });
+        });
+      },
+    );
 
     test('should return Left(ServerFailure) when error occurs', () async {
       // Arrange
@@ -166,8 +171,7 @@ void main() {
   group('restorePurchases', () {
     test('should call restorePurchases on platform', () async {
       // Arrange
-      when(() => mockInAppPurchase.restorePurchases())
-          .thenAnswer((_) async {});
+      when(() => mockInAppPurchase.restorePurchases()).thenAnswer((_) async {});
 
       // Act - Restore will timeout as there's no stream response
       // This tests that the method is called
@@ -188,16 +192,18 @@ void main() {
         status: iap.PurchaseStatus.purchased,
       );
 
-      when(() => mockInAppPurchase.completePurchase(any()))
-          .thenAnswer((_) async {});
+      when(
+        () => mockInAppPurchase.completePurchase(any()),
+      ).thenAnswer((_) async {});
 
       // Act - completePurchase is called internally through stream handling
       // This validates the mock setup for integration tests
       await mockInAppPurchase.completePurchase(mockPurchaseDetails);
 
       // Assert
-      verify(() => mockInAppPurchase.completePurchase(mockPurchaseDetails))
-          .called(1);
+      verify(
+        () => mockInAppPurchase.completePurchase(mockPurchaseDetails),
+      ).called(1);
     });
   });
 }
@@ -240,16 +246,16 @@ class _MockPurchaseDetails extends iap.PurchaseDetails {
     String? transactionDate,
     bool pendingCompletePurchase = false,
   }) : super(
-          productID: productID,
-          verificationData: iap.PurchaseVerificationData(
-            localVerificationData: 'local-data',
-            serverVerificationData: 'server-data',
-            source: 'mock',
-          ),
-          transactionDate: transactionDate ?? DateTime.now().toIso8601String(),
-          status: status,
-          purchaseID: purchaseID,
-        ) {
+         productID: productID,
+         verificationData: iap.PurchaseVerificationData(
+           localVerificationData: 'local-data',
+           serverVerificationData: 'server-data',
+           source: 'mock',
+         ),
+         transactionDate: transactionDate ?? DateTime.now().toIso8601String(),
+         status: status,
+         purchaseID: purchaseID,
+       ) {
     this.error = error;
     this.pendingCompletePurchase = pendingCompletePurchase;
   }

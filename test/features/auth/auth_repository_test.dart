@@ -73,10 +73,12 @@ void main() {
         when(() => mockUser.id).thenReturn('test-user-id');
         when(() => mockAuthResponse.user).thenReturn(mockUser);
         when(() => mockAuthResponse.session).thenReturn(mockSession);
-        when(() => mockGoTrueClient.signInWithPassword(
-              email: any(named: 'email'),
-              password: any(named: 'password'),
-            )).thenAnswer((_) async => mockAuthResponse);
+        when(
+          () => mockGoTrueClient.signInWithPassword(
+            email: any(named: 'email'),
+            password: any(named: 'password'),
+          ),
+        ).thenAnswer((_) async => mockAuthResponse);
 
         final result = await authRepository.signInWithEmail(
           email: 'test@example.com',
@@ -91,10 +93,12 @@ void main() {
       });
 
       test('returns failure on AuthException', () async {
-        when(() => mockGoTrueClient.signInWithPassword(
-              email: any(named: 'email'),
-              password: any(named: 'password'),
-            )).thenThrow(AuthException('Invalid credentials'));
+        when(
+          () => mockGoTrueClient.signInWithPassword(
+            email: any(named: 'email'),
+            password: any(named: 'password'),
+          ),
+        ).thenThrow(AuthException('Invalid credentials'));
 
         final result = await authRepository.signInWithEmail(
           email: 'test@example.com',
@@ -118,10 +122,12 @@ void main() {
         when(() => mockUser.id).thenReturn('new-user-id');
         when(() => mockAuthResponse.user).thenReturn(mockUser);
         when(() => mockAuthResponse.session).thenReturn(mockSession);
-        when(() => mockGoTrueClient.signUp(
-              email: any(named: 'email'),
-              password: any(named: 'password'),
-            )).thenAnswer((_) async => mockAuthResponse);
+        when(
+          () => mockGoTrueClient.signUp(
+            email: any(named: 'email'),
+            password: any(named: 'password'),
+          ),
+        ).thenAnswer((_) async => mockAuthResponse);
 
         final result = await authRepository.signUpWithEmail(
           email: 'newuser@example.com',
@@ -136,10 +142,12 @@ void main() {
       });
 
       test('returns failure when user already exists', () async {
-        when(() => mockGoTrueClient.signUp(
-              email: any(named: 'email'),
-              password: any(named: 'password'),
-            )).thenThrow(AuthException('User already registered'));
+        when(
+          () => mockGoTrueClient.signUp(
+            email: any(named: 'email'),
+            password: any(named: 'password'),
+          ),
+        ).thenThrow(AuthException('User already registered'));
 
         final result = await authRepository.signUpWithEmail(
           email: 'existing@example.com',
@@ -152,8 +160,7 @@ void main() {
 
     group('signOut', () {
       test('signs out successfully', () async {
-        when(() => mockGoTrueClient.signOut())
-            .thenAnswer((_) async => {});
+        when(() => mockGoTrueClient.signOut()).thenAnswer((_) async => {});
 
         final result = await authRepository.signOut();
 
@@ -162,8 +169,9 @@ void main() {
       });
 
       test('returns failure on sign out error', () async {
-        when(() => mockGoTrueClient.signOut())
-            .thenThrow(AuthException('Sign out failed'));
+        when(
+          () => mockGoTrueClient.signOut(),
+        ).thenThrow(AuthException('Sign out failed'));
 
         final result = await authRepository.signOut();
 
@@ -178,20 +186,21 @@ void main() {
         when(() => mockUser.id).thenReturn('test-user-id');
         when(() => mockSession.user).thenReturn(mockUser);
 
-        final authState = AuthState(
-          AuthChangeEvent.signedIn,
-          mockSession,
-        );
+        final authState = AuthState(AuthChangeEvent.signedIn, mockSession);
 
-        when(() => mockGoTrueClient.onAuthStateChange)
-            .thenAnswer((_) => Stream.value(authState));
+        when(
+          () => mockGoTrueClient.onAuthStateChange,
+        ).thenAnswer((_) => Stream.value(authState));
 
         final stream = authRepository.authStateChanges;
 
         await expectLater(
           stream,
-          emits(predicate<AuthState>((state) =>
-              state.event == AuthChangeEvent.signedIn)),
+          emits(
+            predicate<AuthState>(
+              (state) => state.event == AuthChangeEvent.signedIn,
+            ),
+          ),
         );
       });
     });

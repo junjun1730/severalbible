@@ -8,9 +8,7 @@ Future<void> showOnboardingPopup(
   return showDialog(
     context: context,
     barrierDismissible: true,
-    builder: (context) => OnboardingPopup(
-      onSignIn: onSignIn,
-    ),
+    builder: (context) => OnboardingPopup(onSignIn: onSignIn),
   );
 }
 
@@ -18,17 +16,12 @@ Future<void> showOnboardingPopup(
 class OnboardingPopup extends StatelessWidget {
   final VoidCallback? onSignIn;
 
-  const OnboardingPopup({
-    super.key,
-    this.onSignIn,
-  });
+  const OnboardingPopup({super.key, this.onSignIn});
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: Padding(
         padding: const EdgeInsets.all(24),
         child: Column(
@@ -52,18 +45,18 @@ class OnboardingPopup extends StatelessWidget {
             // Title
             Text(
               'Unlock More Grace',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 12),
             // Message
             Text(
               'Sign in to receive 3x more daily grace and save your spiritual journey.',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Colors.grey.shade600,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(color: Colors.grey.shade600),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 24),
@@ -104,10 +97,7 @@ class OnboardingPopup extends StatelessWidget {
                 ),
                 child: const Text(
                   'Sign In Now',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                 ),
               ),
             ),
@@ -117,9 +107,7 @@ class OnboardingPopup extends StatelessWidget {
               onPressed: () => Navigator.of(context).pop(),
               child: Text(
                 'Maybe later',
-                style: TextStyle(
-                  color: Colors.grey.shade600,
-                ),
+                style: TextStyle(color: Colors.grey.shade600),
               ),
             ),
           ],
@@ -135,17 +123,10 @@ class OnboardingPopup extends StatelessWidget {
   }) {
     return Row(
       children: [
-        Icon(
-          icon,
-          size: 20,
-          color: Theme.of(context).colorScheme.primary,
-        ),
+        Icon(icon, size: 20, color: Theme.of(context).colorScheme.primary),
         const SizedBox(width: 12),
         Expanded(
-          child: Text(
-            text,
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
+          child: Text(text, style: Theme.of(context).textTheme.bodySmall),
         ),
       ],
     );

@@ -18,11 +18,18 @@ class MockUser extends Mock implements User {
   MockUser(this.id);
 }
 
-class MockSubscriptionRepository extends Mock implements SubscriptionRepository {
+class MockSubscriptionRepository extends Mock
+    implements SubscriptionRepository {
   @override
-  Future<Either<Failure, void>> cancelSubscription({required String userId, String? reason}) {
+  Future<Either<Failure, void>> cancelSubscription({
+    required String userId,
+    String? reason,
+  }) {
     return super.noSuchMethod(
-      Invocation.method(#cancelSubscription, [], {#userId: userId, #reason: reason}),
+      Invocation.method(#cancelSubscription, [], {
+        #userId: userId,
+        #reason: reason,
+      }),
       returnValue: Future.value(const Right(null)),
       returnValueForMissingStub: Future.value(const Right(null)),
     );
@@ -40,14 +47,16 @@ void main() {
     final mockUser = MockUser('test_user_id');
     return ProviderScope(
       overrides: [
-        subscriptionRepositoryProvider.overrideWith((ref) => mockSubscriptionRepository),
-        subscriptionStatusProvider.overrideWith((ref) => Future.value(subscription)),
+        subscriptionRepositoryProvider.overrideWith(
+          (ref) => mockSubscriptionRepository,
+        ),
+        subscriptionStatusProvider.overrideWith(
+          (ref) => Future.value(subscription),
+        ),
         subscriptionExpirationProvider.overrideWith((ref) => expirationText),
         currentUserProvider.overrideWith((ref) => mockUser),
       ],
-      child: const MaterialApp(
-        home: ManageSubscriptionScreen(),
-      ),
+      child: const MaterialApp(home: ManageSubscriptionScreen()),
     );
   }
 
@@ -94,16 +103,20 @@ void main() {
         updatedAt: DateTime.now(),
       );
 
-      await tester.pumpWidget(createSubject(
-        activeSubscription,
-        expirationText: 'Renews on 2027-01-18',
-      ));
+      await tester.pumpWidget(
+        createSubject(
+          activeSubscription,
+          expirationText: 'Renews on 2027-01-18',
+        ),
+      );
       await tester.pumpAndSettle();
 
       expect(find.text('Renews on 2027-01-18'), findsOneWidget);
     });
 
-    testWidgets('shows cancel subscription button when auto_renew is true', (tester) async {
+    testWidgets('shows cancel subscription button when auto_renew is true', (
+      tester,
+    ) async {
       tester.view.physicalSize = const Size(1080, 2400);
       tester.view.devicePixelRatio = 3.0;
       addTearDown(tester.view.resetPhysicalSize);
@@ -173,46 +186,52 @@ void main() {
       expect(find.text('Monthly Premium'), findsOneWidget);
     });
 
-    testWidgets('shows no active subscription message when subscription is null', (tester) async {
-      tester.view.physicalSize = const Size(1080, 2400);
-      tester.view.devicePixelRatio = 3.0;
-      addTearDown(tester.view.resetPhysicalSize);
+    testWidgets(
+      'shows no active subscription message when subscription is null',
+      (tester) async {
+        tester.view.physicalSize = const Size(1080, 2400);
+        tester.view.devicePixelRatio = 3.0;
+        addTearDown(tester.view.resetPhysicalSize);
 
-      await tester.pumpWidget(createSubject(null));
-      await tester.pumpAndSettle();
+        await tester.pumpWidget(createSubject(null));
+        await tester.pumpAndSettle();
 
-      expect(find.text('No active subscription'), findsOneWidget);
-    });
+        expect(find.text('No active subscription'), findsOneWidget);
+      },
+    );
 
-    testWidgets('shows cancel confirmation dialog when cancel button is tapped', (tester) async {
-      tester.view.physicalSize = const Size(1080, 2400);
-      tester.view.devicePixelRatio = 3.0;
-      addTearDown(tester.view.resetPhysicalSize);
+    testWidgets(
+      'shows cancel confirmation dialog when cancel button is tapped',
+      (tester) async {
+        tester.view.physicalSize = const Size(1080, 2400);
+        tester.view.devicePixelRatio = 3.0;
+        addTearDown(tester.view.resetPhysicalSize);
 
-      final activeSubscription = Subscription(
-        id: 'sub_123',
-        userId: 'test_user',
-        productId: 'monthly_premium',
-        platform: SubscriptionPlatform.ios,
-        status: SubscriptionStatus.active,
-        startedAt: DateTime.now().subtract(const Duration(days: 10)),
-        expiresAt: DateTime.now().add(const Duration(days: 20)),
-        autoRenew: true,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
-      );
+        final activeSubscription = Subscription(
+          id: 'sub_123',
+          userId: 'test_user',
+          productId: 'monthly_premium',
+          platform: SubscriptionPlatform.ios,
+          status: SubscriptionStatus.active,
+          startedAt: DateTime.now().subtract(const Duration(days: 10)),
+          expiresAt: DateTime.now().add(const Duration(days: 20)),
+          autoRenew: true,
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        );
 
-      await tester.pumpWidget(createSubject(activeSubscription));
-      await tester.pumpAndSettle();
+        await tester.pumpWidget(createSubject(activeSubscription));
+        await tester.pumpAndSettle();
 
-      // Tap cancel button
-      await tester.tap(find.text('Cancel Subscription'));
-      await tester.pumpAndSettle();
+        // Tap cancel button
+        await tester.tap(find.text('Cancel Subscription'));
+        await tester.pumpAndSettle();
 
-      // Verify confirmation dialog is shown
-      expect(find.text('Cancel Subscription?'), findsOneWidget);
-      expect(find.text('Keep Subscription'), findsOneWidget);
-    });
+        // Verify confirmation dialog is shown
+        expect(find.text('Cancel Subscription?'), findsOneWidget);
+        expect(find.text('Keep Subscription'), findsOneWidget);
+      },
+    );
 
     testWidgets('shows info text about cancellation policy', (tester) async {
       tester.view.physicalSize = const Size(1080, 2400);

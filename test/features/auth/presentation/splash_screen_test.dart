@@ -30,9 +30,7 @@ void main() {
         authRepositoryProvider.overrideWithValue(mockAuthRepository),
         isLoggedInProvider.overrideWith((ref) => isLoggedIn),
       ],
-      child: const MaterialApp(
-        home: SplashScreen(autoNavigate: false),
-      ),
+      child: const MaterialApp(home: SplashScreen(autoNavigate: false)),
     );
   }
 

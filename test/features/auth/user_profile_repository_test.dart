@@ -27,25 +27,24 @@ void main() {
           'updated_at': '2026-01-14T10:00:00Z',
         };
 
-        when(() => mockDataSource.getProfile('test-user-id'))
-            .thenAnswer((_) async => profileData);
+        when(
+          () => mockDataSource.getProfile('test-user-id'),
+        ).thenAnswer((_) async => profileData);
 
         final result = await repository.getUserProfile('test-user-id');
 
         expect(result.isRight(), true);
-        result.fold(
-          (failure) => fail('Should not be a failure'),
-          (profile) {
-            expect(profile.id, 'test-user-id');
-            expect(profile.tier, UserTier.member);
-          },
-        );
+        result.fold((failure) => fail('Should not be a failure'), (profile) {
+          expect(profile.id, 'test-user-id');
+          expect(profile.tier, UserTier.member);
+        });
         verify(() => mockDataSource.getProfile('test-user-id')).called(1);
       });
 
       test('returns failure when profile not found', () async {
-        when(() => mockDataSource.getProfile('nonexistent-id'))
-            .thenAnswer((_) async => null);
+        when(
+          () => mockDataSource.getProfile('nonexistent-id'),
+        ).thenAnswer((_) async => null);
 
         final result = await repository.getUserProfile('nonexistent-id');
 
@@ -57,8 +56,9 @@ void main() {
       });
 
       test('returns failure on PostgrestException', () async {
-        when(() => mockDataSource.getProfile('test-user-id'))
-            .thenThrow(PostgrestException(message: 'Database error'));
+        when(
+          () => mockDataSource.getProfile('test-user-id'),
+        ).thenThrow(PostgrestException(message: 'Database error'));
 
         final result = await repository.getUserProfile('test-user-id');
 
@@ -70,8 +70,9 @@ void main() {
       });
 
       test('returns failure on unexpected error', () async {
-        when(() => mockDataSource.getProfile('test-user-id'))
-            .thenThrow(Exception('Unexpected'));
+        when(
+          () => mockDataSource.getProfile('test-user-id'),
+        ).thenThrow(Exception('Unexpected'));
 
         final result = await repository.getUserProfile('test-user-id');
 
@@ -92,8 +93,9 @@ void main() {
           'updated_at': '2026-01-14T10:00:00Z',
         };
 
-        when(() => mockDataSource.getProfile('test-user-id'))
-            .thenAnswer((_) async => profileData);
+        when(
+          () => mockDataSource.getProfile('test-user-id'),
+        ).thenAnswer((_) async => profileData);
 
         final result = await repository.getUserTier('test-user-id');
 
@@ -105,8 +107,9 @@ void main() {
       });
 
       test('returns guest tier when profile not found', () async {
-        when(() => mockDataSource.getProfile('nonexistent-id'))
-            .thenAnswer((_) async => null);
+        when(
+          () => mockDataSource.getProfile('nonexistent-id'),
+        ).thenAnswer((_) async => null);
 
         final result = await repository.getUserTier('nonexistent-id');
 
@@ -125,8 +128,9 @@ void main() {
           'updated_at': '2026-01-14T10:00:00Z',
         };
 
-        when(() => mockDataSource.getProfile('member-user'))
-            .thenAnswer((_) async => profileData);
+        when(
+          () => mockDataSource.getProfile('member-user'),
+        ).thenAnswer((_) async => profileData);
 
         final result = await repository.getUserTier('member-user');
 
@@ -138,8 +142,9 @@ void main() {
       });
 
       test('returns failure on database error', () async {
-        when(() => mockDataSource.getProfile('test-user-id'))
-            .thenThrow(PostgrestException(message: 'Connection failed'));
+        when(
+          () => mockDataSource.getProfile('test-user-id'),
+        ).thenThrow(PostgrestException(message: 'Connection failed'));
 
         final result = await repository.getUserTier('test-user-id');
 
@@ -156,8 +161,9 @@ void main() {
           'updated_at': '2026-01-14T12:00:00Z',
         };
 
-        when(() => mockDataSource.updateTier('test-user-id', 'premium'))
-            .thenAnswer((_) async => updatedData);
+        when(
+          () => mockDataSource.updateTier('test-user-id', 'premium'),
+        ).thenAnswer((_) async => updatedData);
 
         final result = await repository.updateUserTier(
           userId: 'test-user-id',
@@ -165,20 +171,19 @@ void main() {
         );
 
         expect(result.isRight(), true);
-        result.fold(
-          (failure) => fail('Should not be a failure'),
-          (profile) {
-            expect(profile.id, 'test-user-id');
-            expect(profile.tier, UserTier.premium);
-          },
-        );
-        verify(() => mockDataSource.updateTier('test-user-id', 'premium'))
-            .called(1);
+        result.fold((failure) => fail('Should not be a failure'), (profile) {
+          expect(profile.id, 'test-user-id');
+          expect(profile.tier, UserTier.premium);
+        });
+        verify(
+          () => mockDataSource.updateTier('test-user-id', 'premium'),
+        ).called(1);
       });
 
       test('returns failure on update error', () async {
-        when(() => mockDataSource.updateTier('test-user-id', 'premium'))
-            .thenThrow(PostgrestException(message: 'Update failed'));
+        when(
+          () => mockDataSource.updateTier('test-user-id', 'premium'),
+        ).thenThrow(PostgrestException(message: 'Update failed'));
 
         final result = await repository.updateUserTier(
           userId: 'test-user-id',
@@ -202,21 +207,19 @@ void main() {
           'updated_at': '2026-01-14T10:00:00Z',
         };
 
-        when(() => mockDataSource.createProfile('new-user-id', 'member'))
-            .thenAnswer((_) async => createdData);
+        when(
+          () => mockDataSource.createProfile('new-user-id', 'member'),
+        ).thenAnswer((_) async => createdData);
 
         final result = await repository.createUserProfile(
           userId: 'new-user-id',
         );
 
         expect(result.isRight(), true);
-        result.fold(
-          (failure) => fail('Should not be a failure'),
-          (profile) {
-            expect(profile.id, 'new-user-id');
-            expect(profile.tier, UserTier.member);
-          },
-        );
+        result.fold((failure) => fail('Should not be a failure'), (profile) {
+          expect(profile.id, 'new-user-id');
+          expect(profile.tier, UserTier.member);
+        });
       });
 
       test('creates profile with specified tier', () async {
@@ -227,8 +230,9 @@ void main() {
           'updated_at': '2026-01-14T10:00:00Z',
         };
 
-        when(() => mockDataSource.createProfile('premium-user-id', 'premium'))
-            .thenAnswer((_) async => createdData);
+        when(
+          () => mockDataSource.createProfile('premium-user-id', 'premium'),
+        ).thenAnswer((_) async => createdData);
 
         final result = await repository.createUserProfile(
           userId: 'premium-user-id',
@@ -243,8 +247,9 @@ void main() {
       });
 
       test('returns failure on create error', () async {
-        when(() => mockDataSource.createProfile('new-user-id', 'member'))
-            .thenThrow(PostgrestException(message: 'Duplicate key'));
+        when(
+          () => mockDataSource.createProfile('new-user-id', 'member'),
+        ).thenThrow(PostgrestException(message: 'Duplicate key'));
 
         final result = await repository.createUserProfile(
           userId: 'new-user-id',

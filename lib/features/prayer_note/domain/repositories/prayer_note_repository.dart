@@ -48,9 +48,7 @@ abstract class PrayerNoteRepository {
   /// Delete a prayer note
   /// [noteId] - The ID of the note to delete
   /// Returns Either<Failure, void>
-  Future<Either<Failure, void>> deletePrayerNote({
-    required String noteId,
-  });
+  Future<Either<Failure, void>> deletePrayerNote({required String noteId});
 
   /// Check if a date is accessible based on user tier
   /// Member: last 3 days accessible

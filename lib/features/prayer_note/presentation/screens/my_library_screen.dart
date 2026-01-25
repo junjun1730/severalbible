@@ -44,10 +44,7 @@ class _MyLibraryScreenState extends ConsumerState<MyLibraryScreen> {
     final datesWithNotesAsync = ref.watch(datesWithNotesProvider(_focusedDay));
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('My Library'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('My Library'), centerTitle: true),
       body: Column(
         children: [
           // Calendar section
@@ -82,26 +79,27 @@ class _MyLibraryScreenState extends ConsumerState<MyLibraryScreen> {
                 if (notes.isEmpty) {
                   return _buildEmptyState(context);
                 }
-                
+
                 final tierAsync = ref.watch(currentUserTierProvider);
                 final tier = tierAsync.valueOrNull ?? UserTier.guest;
-                
+
                 return ListView.builder(
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   itemCount: notes.length,
                   itemBuilder: (context, index) {
                     final note = notes[index];
-                    
+
                     // Lock logic: Free users can only see notes from the last 3 days
-                    final isLocked = tier != UserTier.premium && 
+                    final isLocked =
+                        tier != UserTier.premium &&
                         note.createdAt.isBefore(
-                          DateTime.now().subtract(const Duration(days: 3))
+                          DateTime.now().subtract(const Duration(days: 3)),
                         );
-                    
+
                     return PrayerNoteCard(
                       note: note,
                       isLocked: isLocked,
-                      onTap: isLocked 
+                      onTap: isLocked
                           ? () => showDialog(
                               context: context,
                               builder: (context) => const UpsellDialog(
@@ -115,9 +113,7 @@ class _MyLibraryScreenState extends ConsumerState<MyLibraryScreen> {
                   },
                 );
               },
-              loading: () => const Center(
-                child: CircularProgressIndicator(),
-              ),
+              loading: () => const Center(child: CircularProgressIndicator()),
               error: (error, stackTrace) => _buildErrorState(context, error),
             ),
           ),
@@ -140,15 +136,15 @@ class _MyLibraryScreenState extends ConsumerState<MyLibraryScreen> {
           Text(
             'No meditations for this day',
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
           ),
           const SizedBox(height: 8),
           Text(
             'Start by reading today\'s scripture',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
           ),
         ],
       ),
@@ -169,8 +165,8 @@ class _MyLibraryScreenState extends ConsumerState<MyLibraryScreen> {
           Text(
             'Error loading notes',
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: Theme.of(context).colorScheme.error,
-                ),
+              color: Theme.of(context).colorScheme.error,
+            ),
           ),
           const SizedBox(height: 8),
           ElevatedButton(
@@ -200,7 +196,9 @@ class _MyLibraryScreenState extends ConsumerState<MyLibraryScreen> {
           TextButton(
             onPressed: () async {
               Navigator.pop(context);
-              final controller = ref.read(prayerNoteFormControllerProvider.notifier);
+              final controller = ref.read(
+                prayerNoteFormControllerProvider.notifier,
+              );
               await controller.deleteNote(noteId: noteId);
             },
             child: Text(

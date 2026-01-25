@@ -56,8 +56,9 @@ void main() {
       expect(find.text('5/500'), findsOneWidget);
     });
 
-    testWidgets('disables for guest tier (isEnabled=false)',
-        (WidgetTester tester) async {
+    testWidgets('disables for guest tier (isEnabled=false)', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(createWidgetUnderTest(isEnabled: false));
 
       final textField = tester.widget<TextField>(find.byType(TextField));
@@ -70,12 +71,13 @@ void main() {
       expect(find.byIcon(Icons.save), findsOneWidget);
     });
 
-    testWidgets('calls onSave callback when save button is pressed',
-        (WidgetTester tester) async {
+    testWidgets('calls onSave callback when save button is pressed', (
+      WidgetTester tester,
+    ) async {
       bool saveCalled = false;
-      await tester.pumpWidget(createWidgetUnderTest(
-        onSave: () => saveCalled = true,
-      ));
+      await tester.pumpWidget(
+        createWidgetUnderTest(onSave: () => saveCalled = true),
+      );
 
       // Enter some text first
       await tester.enterText(find.byType(TextField), 'Test content');
@@ -88,12 +90,13 @@ void main() {
       expect(saveCalled, true);
     });
 
-    testWidgets('validates empty content - save button disabled when empty',
-        (WidgetTester tester) async {
+    testWidgets('validates empty content - save button disabled when empty', (
+      WidgetTester tester,
+    ) async {
       bool saveCalled = false;
-      await tester.pumpWidget(createWidgetUnderTest(
-        onSave: () => saveCalled = true,
-      ));
+      await tester.pumpWidget(
+        createWidgetUnderTest(onSave: () => saveCalled = true),
+      );
 
       // Try to tap save without entering text
       await tester.tap(find.byIcon(Icons.save));
@@ -103,24 +106,28 @@ void main() {
       expect(saveCalled, false);
     });
 
-    testWidgets('shows loading indicator when isLoading is true',
-        (WidgetTester tester) async {
+    testWidgets('shows loading indicator when isLoading is true', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(createWidgetUnderTest(isLoading: true));
 
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
     });
 
-    testWidgets('shows hint text for meditation input',
-        (WidgetTester tester) async {
+    testWidgets('shows hint text for meditation input', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(createWidgetUnderTest());
 
       expect(find.text('Write your meditation...'), findsOneWidget);
     });
 
-    testWidgets('displays initial content when provided',
-        (WidgetTester tester) async {
+    testWidgets('displays initial content when provided', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(
-          createWidgetUnderTest(initialContent: 'Initial meditation text'));
+        createWidgetUnderTest(initialContent: 'Initial meditation text'),
+      );
 
       expect(find.text('Initial meditation text'), findsOneWidget);
     });

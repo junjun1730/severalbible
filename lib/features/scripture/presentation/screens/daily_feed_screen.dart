@@ -54,9 +54,7 @@ class _DailyFeedScreenState extends ConsumerState<DailyFeedScreen> {
               tier: tierAsync.valueOrNull ?? UserTier.guest,
             );
           },
-          loading: () => const Center(
-            child: CircularProgressIndicator(),
-          ),
+          loading: () => const Center(child: CircularProgressIndicator()),
           error: (error, stack) => _buildErrorState(context, error),
         ),
       ),
@@ -108,8 +106,7 @@ class _DailyFeedScreenState extends ConsumerState<DailyFeedScreen> {
         ),
         const SizedBox(height: 16),
         PageIndicator(
-          pageCount:
-              showBlocker ? scriptures.length + 1 : scriptures.length,
+          pageCount: showBlocker ? scriptures.length + 1 : scriptures.length,
           currentPage: currentIndex,
         ),
         const SizedBox(height: 24),
@@ -133,15 +130,15 @@ class _DailyFeedScreenState extends ConsumerState<DailyFeedScreen> {
           Text(
             'No scriptures available',
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: Theme.of(context).colorScheme.outline,
-                ),
+              color: Theme.of(context).colorScheme.outline,
+            ),
           ),
           const SizedBox(height: 8),
           Text(
             'Please check back later',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Theme.of(context).colorScheme.outline,
-                ),
+              color: Theme.of(context).colorScheme.outline,
+            ),
           ),
         ],
       ),
@@ -167,8 +164,8 @@ class _DailyFeedScreenState extends ConsumerState<DailyFeedScreen> {
           Text(
             error.toString(),
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Theme.of(context).colorScheme.outline,
-                ),
+              color: Theme.of(context).colorScheme.outline,
+            ),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 24),
@@ -205,9 +202,8 @@ class _DailyFeedScreenState extends ConsumerState<DailyFeedScreen> {
       // Show Upsell Dialog for premium features
       showDialog(
         context: context,
-        builder: (context) => const UpsellDialog(
-          trigger: UpsellTrigger.contentExhausted,
-        ),
+        builder: (context) =>
+            const UpsellDialog(trigger: UpsellTrigger.contentExhausted),
       );
     }
   }
@@ -235,8 +231,8 @@ class _DailyFeedScreenState extends ConsumerState<DailyFeedScreen> {
               Text(
                 scripture.reference,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
+                  color: Theme.of(context).colorScheme.primary,
+                ),
               ),
               const SizedBox(height: 16),
               TextField(

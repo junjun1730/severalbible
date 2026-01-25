@@ -47,8 +47,9 @@ final subscriptionStatusProvider = FutureProvider<Subscription?>((ref) async {
 });
 
 /// Provider for available subscription products
-final availableProductsProvider =
-    FutureProvider<List<SubscriptionProduct>>((ref) async {
+final availableProductsProvider = FutureProvider<List<SubscriptionProduct>>((
+  ref,
+) async {
   final repository = ref.watch(subscriptionRepositoryProvider);
   final result = await repository.getAvailableProducts();
 
@@ -69,20 +70,11 @@ final hasPremiumProvider = FutureProvider<bool>((ref) async {
   final repository = ref.watch(subscriptionRepositoryProvider);
   final result = await repository.hasActivePremium(userId: currentUser.id);
 
-  return result.fold(
-    (failure) => false,
-    (hasPremium) => hasPremium,
-  );
+  return result.fold((failure) => false, (hasPremium) => hasPremium);
 });
 
 /// State for purchase process
-enum PurchaseState {
-  idle,
-  loading,
-  success,
-  error,
-  canceled,
-}
+enum PurchaseState { idle, loading, success, error, canceled }
 
 /// Controller for managing subscription purchases
 class PurchaseController extends StateNotifier<AsyncValue<PurchaseState>> {
@@ -102,7 +94,8 @@ class PurchaseController extends StateNotifier<AsyncValue<PurchaseState>> {
   Future<void> initialize() async {
     final result = await _iapService.initialize();
     result.fold(
-      (failure) => state = AsyncValue.error(failure.message, StackTrace.current),
+      (failure) =>
+          state = AsyncValue.error(failure.message, StackTrace.current),
       (_) {},
     );
   }
@@ -231,17 +224,17 @@ class PurchaseController extends StateNotifier<AsyncValue<PurchaseState>> {
 /// Provider for purchase controller
 final purchaseControllerProvider =
     StateNotifierProvider<PurchaseController, AsyncValue<PurchaseState>>((ref) {
-  final subscriptionRepository = ref.watch(subscriptionRepositoryProvider);
-  final iapService = ref.watch(iapServiceProvider);
-  final currentUser = ref.watch(currentUserProvider);
+      final subscriptionRepository = ref.watch(subscriptionRepositoryProvider);
+      final iapService = ref.watch(iapServiceProvider);
+      final currentUser = ref.watch(currentUserProvider);
 
-  return PurchaseController(
-    subscriptionRepository,
-    iapService,
-    currentUser?.id,
-    ref,
-  );
-});
+      return PurchaseController(
+        subscriptionRepository,
+        iapService,
+        currentUser?.id,
+        ref,
+      );
+    });
 
 /// Controller for restoring purchases
 class RestorePurchaseController extends StateNotifier<AsyncValue<void>> {
@@ -301,12 +294,12 @@ class RestorePurchaseController extends StateNotifier<AsyncValue<void>> {
             );
           } else if (latest.platform == SubscriptionPlatform.android &&
               latest.purchaseToken != null) {
-            final verifyResult =
-                await _subscriptionRepository.verifyAndroidPurchase(
-              purchaseToken: latest.purchaseToken!,
-              productId: latest.productId,
-              userId: _userId!,
-            );
+            final verifyResult = await _subscriptionRepository
+                .verifyAndroidPurchase(
+                  purchaseToken: latest.purchaseToken!,
+                  productId: latest.productId,
+                  userId: _userId!,
+                );
 
             await verifyResult.fold(
               (failure) async {
@@ -352,17 +345,17 @@ class RestorePurchaseController extends StateNotifier<AsyncValue<void>> {
 /// Provider for restore purchase controller
 final restorePurchaseControllerProvider =
     StateNotifierProvider<RestorePurchaseController, AsyncValue<void>>((ref) {
-  final subscriptionRepository = ref.watch(subscriptionRepositoryProvider);
-  final iapService = ref.watch(iapServiceProvider);
-  final currentUser = ref.watch(currentUserProvider);
+      final subscriptionRepository = ref.watch(subscriptionRepositoryProvider);
+      final iapService = ref.watch(iapServiceProvider);
+      final currentUser = ref.watch(currentUserProvider);
 
-  return RestorePurchaseController(
-    subscriptionRepository,
-    iapService,
-    currentUser?.id,
-    ref,
-  );
-});
+      return RestorePurchaseController(
+        subscriptionRepository,
+        iapService,
+        currentUser?.id,
+        ref,
+      );
+    });
 
 /// Provider for checking if upgrade prompt should be shown
 /// Shows when Member user has exhausted daily scriptures
@@ -389,8 +382,9 @@ final subscriptionExpirationProvider = Provider<String?>((ref) {
         return null;
       }
 
-      final daysRemaining =
-          subscription.expiresAt!.difference(DateTime.now()).inDays;
+      final daysRemaining = subscription.expiresAt!
+          .difference(DateTime.now())
+          .inDays;
 
       if (daysRemaining <= 0) {
         return 'Expired';

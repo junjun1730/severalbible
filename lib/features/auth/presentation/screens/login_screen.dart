@@ -130,17 +130,17 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 Text(
                   'One Message',
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(height: 8),
                 // Welcome message
                 Text(
                   'Sign in to receive daily grace',
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: Colors.white.withOpacity(0.9),
-                      ),
+                    color: Colors.white.withOpacity(0.9),
+                  ),
                 ),
                 const Spacer(flex: 2),
                 // Sign-in buttons
@@ -164,23 +164,17 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 Row(
                   children: [
                     Expanded(
-                      child: Divider(
-                        color: Colors.white.withOpacity(0.5),
-                      ),
+                      child: Divider(color: Colors.white.withOpacity(0.5)),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Text(
                         'or',
-                        style: TextStyle(
-                          color: Colors.white.withOpacity(0.8),
-                        ),
+                        style: TextStyle(color: Colors.white.withOpacity(0.8)),
                       ),
                     ),
                     Expanded(
-                      child: Divider(
-                        color: Colors.white.withOpacity(0.5),
-                      ),
+                      child: Divider(color: Colors.white.withOpacity(0.5)),
                     ),
                   ],
                 ),
@@ -242,10 +236,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         icon: Icon(icon, size: 24),
         label: Text(
           label,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
         ),
       ),
     );

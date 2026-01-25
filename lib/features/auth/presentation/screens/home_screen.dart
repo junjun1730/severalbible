@@ -34,10 +34,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
     // 1. If Anonymous, show Onboarding Popup (Sign in incentive)
     if (isAnonymous && mounted) {
-      showOnboardingPopup(
-        context,
-        onSignIn: () => context.go(AppRoutes.login),
-      );
+      showOnboardingPopup(context, onSignIn: () => context.go(AppRoutes.login));
       return;
     }
 
@@ -50,7 +47,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         showDialog(
           context: context,
           builder: (context) => UpsellDialog(
-            trigger: UpsellTrigger.contentExhausted, 
+            trigger: UpsellTrigger.contentExhausted,
             // Using contentExhausted as a generic "Upgrade" entry point for now
           ),
         );

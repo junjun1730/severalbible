@@ -59,9 +59,9 @@ class ScriptureCard extends StatelessWidget {
         Text(
           scripture.reference,
           style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.onPrimaryContainer,
-              ),
+            fontWeight: FontWeight.bold,
+            color: Theme.of(context).colorScheme.onPrimaryContainer,
+          ),
         ),
         if (scripture.isPremium)
           Container(
@@ -73,11 +73,7 @@ class ScriptureCard extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(
-                  Icons.star,
-                  size: 16,
-                  color: Colors.amber.shade700,
-                ),
+                Icon(Icons.star, size: 16, color: Colors.amber.shade700),
                 const SizedBox(width: 4),
                 Text(
                   'Premium',
@@ -98,10 +94,10 @@ class ScriptureCard extends StatelessWidget {
     return Text(
       scripture.content,
       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            fontSize: 18,
-            height: 1.6,
-            color: Theme.of(context).colorScheme.onPrimaryContainer,
-          ),
+        fontSize: 18,
+        height: 1.6,
+        color: Theme.of(context).colorScheme.onPrimaryContainer,
+      ),
     );
   }
 
@@ -112,8 +108,9 @@ class ScriptureCard extends StatelessWidget {
         if (scripture.category != null)
           Chip(
             label: Text(scripture.category!),
-            backgroundColor:
-                Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
+            backgroundColor: Theme.of(
+              context,
+            ).colorScheme.primary.withValues(alpha: 0.1),
             labelStyle: TextStyle(
               color: Theme.of(context).colorScheme.primary,
               fontWeight: FontWeight.w500,

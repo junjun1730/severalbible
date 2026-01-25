@@ -86,33 +86,39 @@ void main() {
   });
 
   group('subscriptionStatusProvider', () {
-    test('should return subscription when user has active subscription',
-        () async {
-      // Arrange
-      when(() => mockRepository.getSubscriptionStatus(userId: testUserId))
-          .thenAnswer((_) async => Right(testSubscription));
+    test(
+      'should return subscription when user has active subscription',
+      () async {
+        // Arrange
+        when(
+          () => mockRepository.getSubscriptionStatus(userId: testUserId),
+        ).thenAnswer((_) async => Right(testSubscription));
 
-      final container = ProviderContainer(
-        overrides: [
-          currentUserProvider.overrideWith((ref) => testUser),
-          subscriptionRepositoryProvider.overrideWith((ref) => mockRepository),
-        ],
-      );
-      addTearDown(container.dispose);
+        final container = ProviderContainer(
+          overrides: [
+            currentUserProvider.overrideWith((ref) => testUser),
+            subscriptionRepositoryProvider.overrideWith(
+              (ref) => mockRepository,
+            ),
+          ],
+        );
+        addTearDown(container.dispose);
 
-      // Act
-      final result = await container.read(subscriptionStatusProvider.future);
+        // Act
+        final result = await container.read(subscriptionStatusProvider.future);
 
-      // Assert
-      expect(result, isNotNull);
-      expect(result!.id, 'sub-123-xyz');
-      expect(result.status, SubscriptionStatus.active);
-    });
+        // Assert
+        expect(result, isNotNull);
+        expect(result!.id, 'sub-123-xyz');
+        expect(result.status, SubscriptionStatus.active);
+      },
+    );
 
     test('should return null when user has no subscription', () async {
       // Arrange
-      when(() => mockRepository.getSubscriptionStatus(userId: testUserId))
-          .thenAnswer((_) async => const Right(null));
+      when(
+        () => mockRepository.getSubscriptionStatus(userId: testUserId),
+      ).thenAnswer((_) async => const Right(null));
 
       final container = ProviderContainer(
         overrides: [
@@ -148,9 +154,9 @@ void main() {
 
     test('should throw error when repository fails', () async {
       // Arrange
-      when(() => mockRepository.getSubscriptionStatus(userId: testUserId))
-          .thenAnswer(
-              (_) async => const Left(ServerFailure('Database error')));
+      when(
+        () => mockRepository.getSubscriptionStatus(userId: testUserId),
+      ).thenAnswer((_) async => const Left(ServerFailure('Database error')));
 
       final container = ProviderContainer(
         overrides: [
@@ -171,8 +177,9 @@ void main() {
   group('availableProductsProvider', () {
     test('should return list of products', () async {
       // Arrange
-      when(() => mockRepository.getAvailableProducts(platform: null))
-          .thenAnswer((_) async => Right(testProducts));
+      when(
+        () => mockRepository.getAvailableProducts(platform: null),
+      ).thenAnswer((_) async => Right(testProducts));
 
       final container = ProviderContainer(
         overrides: [
@@ -192,9 +199,9 @@ void main() {
 
     test('should throw error when repository fails', () async {
       // Arrange
-      when(() => mockRepository.getAvailableProducts(platform: null))
-          .thenAnswer(
-              (_) async => const Left(ServerFailure('Failed to fetch')));
+      when(
+        () => mockRepository.getAvailableProducts(platform: null),
+      ).thenAnswer((_) async => const Left(ServerFailure('Failed to fetch')));
 
       final container = ProviderContainer(
         overrides: [
@@ -214,8 +221,9 @@ void main() {
   group('hasPremiumProvider', () {
     test('should return true for premium user', () async {
       // Arrange
-      when(() => mockRepository.hasActivePremium(userId: testUserId))
-          .thenAnswer((_) async => const Right(true));
+      when(
+        () => mockRepository.hasActivePremium(userId: testUserId),
+      ).thenAnswer((_) async => const Right(true));
 
       final container = ProviderContainer(
         overrides: [
@@ -234,8 +242,9 @@ void main() {
 
     test('should return false for non-premium user', () async {
       // Arrange
-      when(() => mockRepository.hasActivePremium(userId: testUserId))
-          .thenAnswer((_) async => const Right(false));
+      when(
+        () => mockRepository.hasActivePremium(userId: testUserId),
+      ).thenAnswer((_) async => const Right(false));
 
       final container = ProviderContainer(
         overrides: [
@@ -275,9 +284,7 @@ void main() {
       // Arrange
       final container = ProviderContainer(
         overrides: [
-          currentUserTierProvider.overrideWith(
-            (ref) async => UserTier.member,
-          ),
+          currentUserTierProvider.overrideWith((ref) async => UserTier.member),
         ],
       );
       addTearDown(container.dispose);
@@ -296,9 +303,7 @@ void main() {
       // Arrange
       final container = ProviderContainer(
         overrides: [
-          currentUserTierProvider.overrideWith(
-            (ref) async => UserTier.premium,
-          ),
+          currentUserTierProvider.overrideWith((ref) async => UserTier.premium),
         ],
       );
       addTearDown(container.dispose);
@@ -317,9 +322,7 @@ void main() {
       // Arrange
       final container = ProviderContainer(
         overrides: [
-          currentUserTierProvider.overrideWith(
-            (ref) async => UserTier.guest,
-          ),
+          currentUserTierProvider.overrideWith((ref) async => UserTier.guest),
         ],
       );
       addTearDown(container.dispose);
@@ -343,8 +346,9 @@ void main() {
         expiresAt: futureExpiration,
       );
 
-      when(() => mockRepository.getSubscriptionStatus(userId: testUserId))
-          .thenAnswer((_) async => Right(expiringSubscription));
+      when(
+        () => mockRepository.getSubscriptionStatus(userId: testUserId),
+      ).thenAnswer((_) async => Right(expiringSubscription));
 
       final container = ProviderContainer(
         overrides: [
@@ -366,8 +370,9 @@ void main() {
 
     test('should return null when no subscription', () async {
       // Arrange
-      when(() => mockRepository.getSubscriptionStatus(userId: testUserId))
-          .thenAnswer((_) async => const Right(null));
+      when(
+        () => mockRepository.getSubscriptionStatus(userId: testUserId),
+      ).thenAnswer((_) async => const Right(null));
 
       final container = ProviderContainer(
         overrides: [
@@ -423,8 +428,9 @@ void main() {
       );
       addTearDown(container.dispose);
 
-      final controller =
-          container.read(restorePurchaseControllerProvider.notifier);
+      final controller = container.read(
+        restorePurchaseControllerProvider.notifier,
+      );
 
       // Act
       await controller.restorePurchases();

@@ -28,9 +28,7 @@ void main() {
         supabaseServiceProvider.overrideWithValue(mockSupabaseService),
         authRepositoryProvider.overrideWithValue(mockAuthRepository),
       ],
-      child: const MaterialApp(
-        home: LoginScreen(),
-      ),
+      child: const MaterialApp(home: LoginScreen()),
     );
   }
 
@@ -66,8 +64,9 @@ void main() {
     });
 
     testWidgets('Google button triggers signInWithGoogle', (tester) async {
-      when(() => mockAuthRepository.signInWithGoogle())
-          .thenAnswer((_) async => const Right(unit));
+      when(
+        () => mockAuthRepository.signInWithGoogle(),
+      ).thenAnswer((_) async => const Right(unit));
 
       await tester.pumpWidget(createTestWidget());
       await tester.tap(find.textContaining('Google'));
@@ -77,8 +76,9 @@ void main() {
     });
 
     testWidgets('Apple button triggers signInWithApple', (tester) async {
-      when(() => mockAuthRepository.signInWithApple())
-          .thenAnswer((_) async => const Right(unit));
+      when(
+        () => mockAuthRepository.signInWithApple(),
+      ).thenAnswer((_) async => const Right(unit));
 
       await tester.pumpWidget(createTestWidget());
       await tester.tap(find.textContaining('Apple'));
@@ -88,8 +88,9 @@ void main() {
     });
 
     testWidgets('shows error snackbar on sign-in failure', (tester) async {
-      when(() => mockAuthRepository.signInWithGoogle())
-          .thenAnswer((_) async => const Left('Sign in failed'));
+      when(
+        () => mockAuthRepository.signInWithGoogle(),
+      ).thenAnswer((_) async => const Left('Sign in failed'));
 
       await tester.pumpWidget(createTestWidget());
       await tester.tap(find.textContaining('Google'));

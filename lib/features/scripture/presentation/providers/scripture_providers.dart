@@ -62,8 +62,10 @@ final dailyScripturesProvider = FutureProvider<List<Scripture>>((ref) async {
 });
 
 /// Provider for premium scriptures (additional 3 for premium users)
-final premiumScripturesProvider =
-    FutureProvider.family<List<Scripture>, void>((ref, _) async {
+final premiumScripturesProvider = FutureProvider.family<List<Scripture>, void>((
+  ref,
+  _,
+) async {
   final tierAsync = ref.watch(currentUserTierProvider);
   final currentUser = ref.watch(currentUserProvider);
   final repository = ref.watch(scriptureRepositoryProvider);
@@ -126,31 +128,31 @@ class ScriptureViewTracker extends StateNotifier<Set<String>> {
 /// Provider for scripture view tracker
 final scriptureViewTrackerProvider =
     StateNotifierProvider<ScriptureViewTracker, Set<String>>((ref) {
-  final repository = ref.watch(scriptureRepositoryProvider);
-  final currentUser = ref.watch(currentUserProvider);
-  return ScriptureViewTracker(repository, currentUser?.id);
-});
+      final repository = ref.watch(scriptureRepositoryProvider);
+      final currentUser = ref.watch(currentUserProvider);
+      return ScriptureViewTracker(repository, currentUser?.id);
+    });
 
 /// Provider for scripture history by date
 final scriptureHistoryProvider =
     FutureProvider.family<List<Scripture>, DateTime>((ref, date) async {
-  final currentUser = ref.watch(currentUserProvider);
-  final repository = ref.watch(scriptureRepositoryProvider);
+      final currentUser = ref.watch(currentUserProvider);
+      final repository = ref.watch(scriptureRepositoryProvider);
 
-  if (currentUser == null) {
-    return [];
-  }
+      if (currentUser == null) {
+        return [];
+      }
 
-  final result = await repository.getScriptureHistory(
-    userId: currentUser.id,
-    date: date,
-  );
+      final result = await repository.getScriptureHistory(
+        userId: currentUser.id,
+        date: date,
+      );
 
-  return result.fold(
-    (failure) => throw Exception(failure.message),
-    (scriptures) => scriptures,
-  );
-});
+      return result.fold(
+        (failure) => throw Exception(failure.message),
+        (scriptures) => scriptures,
+      );
+    });
 
 /// Provider for checking if user has reached daily limit
 final hasReachedDailyLimitProvider = Provider<bool>((ref) {

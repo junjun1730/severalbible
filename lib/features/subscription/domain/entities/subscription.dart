@@ -14,11 +14,7 @@ enum SubscriptionStatus {
 }
 
 /// Enum representing platform for subscription
-enum SubscriptionPlatform {
-  ios,
-  android,
-  web,
-}
+enum SubscriptionPlatform { ios, android, web }
 
 /// Subscription entity representing a user's subscription status
 /// Immutable data class using freezed for functional programming
@@ -84,16 +80,12 @@ class PurchaseResult with _$PurchaseResult {
 }
 
 /// Enum representing IAP purchase status (to avoid conflict with in_app_purchase)
-enum IAPPurchaseStatus {
-  purchased,
-  pending,
-  restored,
-  canceled,
-  error,
-}
+enum IAPPurchaseStatus { purchased, pending, restored, canceled, error }
 
 /// Converts snake_case keys to camelCase for Subscription entity
-Map<String, dynamic> _convertSubscriptionSnakeToCamel(Map<String, dynamic> json) {
+Map<String, dynamic> _convertSubscriptionSnakeToCamel(
+  Map<String, dynamic> json,
+) {
   final now = DateTime.now().toIso8601String();
   return {
     'id': json['id'] ?? '',
@@ -122,8 +114,8 @@ Map<String, dynamic> _convertProductSnakeToCamel(Map<String, dynamic> json) {
     'priceKrw': json['price_krw'] ?? 0,
     'priceUsd': json['price_usd'] != null
         ? (json['price_usd'] is int
-            ? (json['price_usd'] as int).toDouble()
-            : json['price_usd'])
+              ? (json['price_usd'] as int).toDouble()
+              : json['price_usd'])
         : null,
     'iosProductId': json['ios_product_id'],
     'androidProductId': json['android_product_id'],

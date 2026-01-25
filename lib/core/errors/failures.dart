@@ -7,7 +7,8 @@ abstract class Failure {
   const Failure(this.message, {this.code});
 
   @override
-  String toString() => 'Failure: $message${code != null ? ' (code: $code)' : ''}';
+  String toString() =>
+      'Failure: $message${code != null ? ' (code: $code)' : ''}';
 
   @override
   bool operator ==(Object other) =>

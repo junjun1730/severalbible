@@ -9,10 +9,12 @@ class ManageSubscriptionScreen extends ConsumerStatefulWidget {
   const ManageSubscriptionScreen({super.key});
 
   @override
-  ConsumerState<ManageSubscriptionScreen> createState() => _ManageSubscriptionScreenState();
+  ConsumerState<ManageSubscriptionScreen> createState() =>
+      _ManageSubscriptionScreenState();
 }
 
-class _ManageSubscriptionScreenState extends ConsumerState<ManageSubscriptionScreen> {
+class _ManageSubscriptionScreenState
+    extends ConsumerState<ManageSubscriptionScreen> {
   bool _isLoading = false;
 
   Future<void> _cancelSubscription() async {
@@ -45,19 +47,23 @@ class _ManageSubscriptionScreenState extends ConsumerState<ManageSubscriptionScr
       try {
         final userId = ref.read(currentUserProvider)?.id;
         if (userId != null) {
-          final result = await ref.read(subscriptionRepositoryProvider).cancelSubscription(
-            userId: userId,
-            reason: 'User cancelled via app',
-          );
-          
+          final result = await ref
+              .read(subscriptionRepositoryProvider)
+              .cancelSubscription(
+                userId: userId,
+                reason: 'User cancelled via app',
+              );
+
           if (mounted) {
             result.fold(
               (failure) => ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text('Failed to cancel: ${failure.message}')),
               ),
               (_) {
-                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Subscription canceled successfully')),
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Subscription canceled successfully'),
+                  ),
                 );
                 ref.invalidate(subscriptionStatusProvider);
               },
@@ -66,9 +72,9 @@ class _ManageSubscriptionScreenState extends ConsumerState<ManageSubscriptionScr
         }
       } catch (e) {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Error: $e')),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text('Error: $e')));
         }
       } finally {
         if (mounted) {
@@ -95,8 +101,9 @@ class _ManageSubscriptionScreenState extends ConsumerState<ManageSubscriptionScr
       ),
       body: subscriptionAsync.when(
         data: (subscription) {
-          if (subscription == null || subscription.status != SubscriptionStatus.active) {
-             return const Center(
+          if (subscription == null ||
+              subscription.status != SubscriptionStatus.active) {
+            return const Center(
               child: Text(
                 'No active subscription',
                 style: TextStyle(fontSize: 16, color: Colors.grey),
@@ -135,7 +142,10 @@ class _ManageSubscriptionScreenState extends ConsumerState<ManageSubscriptionScr
                           ),
                         ),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 4,
+                          ),
                           decoration: BoxDecoration(
                             color: Colors.green.withOpacity(0.1),
                             borderRadius: BorderRadius.circular(20),
@@ -153,8 +163,8 @@ class _ManageSubscriptionScreenState extends ConsumerState<ManageSubscriptionScr
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      subscription.productId.contains('annual') 
-                          ? 'Annual Premium' 
+                      subscription.productId.contains('annual')
+                          ? 'Annual Premium'
                           : 'Monthly Premium',
                       style: const TextStyle(
                         fontSize: 22,
@@ -165,17 +175,14 @@ class _ManageSubscriptionScreenState extends ConsumerState<ManageSubscriptionScr
                       const SizedBox(height: 8),
                       Text(
                         expirationText,
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey[600],
-                        ),
+                        style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                       ),
                     ],
                   ],
                 ),
               ),
               const SizedBox(height: 32),
-              
+
               if (subscription.autoRenew)
                 SizedBox(
                   width: double.infinity,
@@ -189,18 +196,21 @@ class _ManageSubscriptionScreenState extends ConsumerState<ManageSubscriptionScr
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    child: _isLoading 
+                    child: _isLoading
                         ? const SizedBox(
-                            width: 20, 
-                            height: 20, 
-                            child: CircularProgressIndicator(strokeWidth: 2, color: Colors.red)
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: Colors.red,
+                            ),
                           )
                         : const Text('Cancel Subscription'),
                   ),
                 ),
-                
-               const SizedBox(height: 16),
-               const Text(
+
+              const SizedBox(height: 16),
+              const Text(
                 'If you cancel, you will still have access to premium features until your subscription expires. '
                 'At that point, your account will be downgraded to the free tier.',
                 style: TextStyle(fontSize: 12, color: Colors.grey),

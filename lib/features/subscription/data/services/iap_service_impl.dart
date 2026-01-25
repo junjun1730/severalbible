@@ -18,7 +18,7 @@ class IAPServiceImpl implements IAPService {
 
   /// Creates IAPService with optional InAppPurchase instance for testing
   IAPServiceImpl([iap.InAppPurchase? iapInstance])
-      : _iapInstance = iapInstance ?? iap.InAppPurchase.instance;
+    : _iapInstance = iapInstance ?? iap.InAppPurchase.instance;
 
   @override
   Future<Either<Failure, void>> initialize() async {
@@ -46,7 +46,9 @@ class IAPServiceImpl implements IAPService {
     required List<String> productIds,
   }) async {
     try {
-      final response = await _iapInstance.queryProductDetails(productIds.toSet());
+      final response = await _iapInstance.queryProductDetails(
+        productIds.toSet(),
+      );
 
       if (response.error != null) {
         return Left(ServerFailure(response.error!.message));
@@ -96,7 +98,9 @@ class IAPServiceImpl implements IAPService {
 
       // Initiate purchase
       final purchaseParam = iap.PurchaseParam(productDetails: productDetails);
-      final success = await _iapInstance.buyNonConsumable(purchaseParam: purchaseParam);
+      final success = await _iapInstance.buyNonConsumable(
+        purchaseParam: purchaseParam,
+      );
 
       if (!success) {
         _purchaseCompleter = null;
@@ -214,7 +218,8 @@ class IAPServiceImpl implements IAPService {
       purchaseToken: Platform.isAndroid
           ? purchase.verificationData.serverVerificationData
           : null,
-      purchaseDate: DateTime.tryParse(purchase.transactionDate ?? '') ?? DateTime.now(),
+      purchaseDate:
+          DateTime.tryParse(purchase.transactionDate ?? '') ?? DateTime.now(),
       status: purchase.status == iap.PurchaseStatus.restored
           ? IAPPurchaseStatus.restored
           : IAPPurchaseStatus.purchased,

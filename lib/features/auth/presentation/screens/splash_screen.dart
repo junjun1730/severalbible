@@ -13,11 +13,7 @@ class SplashScreen extends ConsumerStatefulWidget {
   /// Whether to auto-navigate after auth check
   final bool autoNavigate;
 
-  const SplashScreen({
-    super.key,
-    this.onAuthChecked,
-    this.autoNavigate = true,
-  });
+  const SplashScreen({super.key, this.onAuthChecked, this.autoNavigate = true});
 
   @override
   ConsumerState<SplashScreen> createState() => _SplashScreenState();
@@ -113,17 +109,17 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 Text(
                   'One Message',
                   style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(height: 8),
                 // Tagline
                 Text(
                   'Daily grace for your soul',
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: Colors.white.withOpacity(0.9),
-                      ),
+                    color: Colors.white.withOpacity(0.9),
+                  ),
                 ),
                 const SizedBox(height: 48),
                 // Loading indicator

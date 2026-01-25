@@ -7,7 +7,8 @@ import 'package:severalbible/features/subscription/data/repositories/supabase_su
 import 'package:severalbible/features/subscription/domain/entities/subscription.dart';
 
 // Mock class for SubscriptionDataSource
-class MockSubscriptionDataSource extends Mock implements SubscriptionDataSource {}
+class MockSubscriptionDataSource extends Mock
+    implements SubscriptionDataSource {}
 
 void main() {
   // Register fallback values for mocktail
@@ -111,35 +112,45 @@ void main() {
   });
 
   group('getSubscriptionStatus', () {
-    test('should return Right(Subscription) when datasource returns active subscription',
-        () async {
-      // Arrange
-      when(() => mockDataSource.getSubscriptionStatus(userId: any(named: 'userId')))
-          .thenAnswer((_) async => sampleSubscriptionJson);
+    test(
+      'should return Right(Subscription) when datasource returns active subscription',
+      () async {
+        // Arrange
+        when(
+          () => mockDataSource.getSubscriptionStatus(
+            userId: any(named: 'userId'),
+          ),
+        ).thenAnswer((_) async => sampleSubscriptionJson);
 
-      // Act
-      final result = await repository.getSubscriptionStatus(userId: testUserId);
+        // Act
+        final result = await repository.getSubscriptionStatus(
+          userId: testUserId,
+        );
 
-      // Assert
-      expect(result.isRight(), true);
-      result.fold(
-        (failure) => fail('Expected Right but got Left'),
-        (subscription) {
+        // Assert
+        expect(result.isRight(), true);
+        result.fold((failure) => fail('Expected Right but got Left'), (
+          subscription,
+        ) {
           expect(subscription, isNotNull);
           expect(subscription!.id, 'sub-123-xyz');
           expect(subscription.status, SubscriptionStatus.active);
           expect(subscription.productId, 'monthly_premium');
           expect(subscription.platform, SubscriptionPlatform.ios);
           expect(subscription.autoRenew, true);
-        },
-      );
-      verify(() => mockDataSource.getSubscriptionStatus(userId: testUserId)).called(1);
-    });
+        });
+        verify(
+          () => mockDataSource.getSubscriptionStatus(userId: testUserId),
+        ).called(1);
+      },
+    );
 
     test('should return Right(null) when no subscription exists', () async {
       // Arrange
-      when(() => mockDataSource.getSubscriptionStatus(userId: any(named: 'userId')))
-          .thenAnswer((_) async => null);
+      when(
+        () =>
+            mockDataSource.getSubscriptionStatus(userId: any(named: 'userId')),
+      ).thenAnswer((_) async => null);
 
       // Act
       final result = await repository.getSubscriptionStatus(userId: testUserId);
@@ -152,74 +163,91 @@ void main() {
       );
     });
 
-    test('should return Left(ServerFailure) when datasource throws exception', () async {
-      // Arrange
-      when(() => mockDataSource.getSubscriptionStatus(userId: any(named: 'userId')))
-          .thenThrow(Exception('Database connection error'));
+    test(
+      'should return Left(ServerFailure) when datasource throws exception',
+      () async {
+        // Arrange
+        when(
+          () => mockDataSource.getSubscriptionStatus(
+            userId: any(named: 'userId'),
+          ),
+        ).thenThrow(Exception('Database connection error'));
 
-      // Act
-      final result = await repository.getSubscriptionStatus(userId: testUserId);
+        // Act
+        final result = await repository.getSubscriptionStatus(
+          userId: testUserId,
+        );
 
-      // Assert
-      expect(result.isLeft(), true);
-      result.fold(
-        (failure) {
+        // Assert
+        expect(result.isLeft(), true);
+        result.fold((failure) {
           expect(failure, isA<ServerFailure>());
           expect(failure.message, contains('Database connection error'));
-        },
-        (subscription) => fail('Expected Left but got Right'),
-      );
-    });
+        }, (subscription) => fail('Expected Left but got Right'));
+      },
+    );
 
     test('should correctly parse expired subscription status', () async {
       // Arrange
-      when(() => mockDataSource.getSubscriptionStatus(userId: any(named: 'userId')))
-          .thenAnswer((_) async => sampleExpiredSubscriptionJson);
+      when(
+        () =>
+            mockDataSource.getSubscriptionStatus(userId: any(named: 'userId')),
+      ).thenAnswer((_) async => sampleExpiredSubscriptionJson);
 
       // Act
       final result = await repository.getSubscriptionStatus(userId: testUserId);
 
       // Assert
       expect(result.isRight(), true);
-      result.fold(
-        (failure) => fail('Expected Right but got Left'),
-        (subscription) {
-          expect(subscription!.status, SubscriptionStatus.expired);
-          expect(subscription.autoRenew, false);
-        },
-      );
+      result.fold((failure) => fail('Expected Right but got Left'), (
+        subscription,
+      ) {
+        expect(subscription!.status, SubscriptionStatus.expired);
+        expect(subscription.autoRenew, false);
+      });
     });
   });
 
   group('getAvailableProducts', () {
-    test('should return Right(List<SubscriptionProduct>) when datasource succeeds',
-        () async {
-      // Arrange
-      when(() => mockDataSource.getAvailableProducts(platform: any(named: 'platform')))
-          .thenAnswer((_) async => [sampleMonthlyProductJson, sampleAnnualProductJson]);
+    test(
+      'should return Right(List<SubscriptionProduct>) when datasource succeeds',
+      () async {
+        // Arrange
+        when(
+          () => mockDataSource.getAvailableProducts(
+            platform: any(named: 'platform'),
+          ),
+        ).thenAnswer(
+          (_) async => [sampleMonthlyProductJson, sampleAnnualProductJson],
+        );
 
-      // Act
-      final result = await repository.getAvailableProducts();
+        // Act
+        final result = await repository.getAvailableProducts();
 
-      // Assert
-      expect(result.isRight(), true);
-      result.fold(
-        (failure) => fail('Expected Right but got Left'),
-        (products) {
+        // Assert
+        expect(result.isRight(), true);
+        result.fold((failure) => fail('Expected Right but got Left'), (
+          products,
+        ) {
           expect(products.length, 2);
           expect(products.first.id, 'monthly_premium');
           expect(products.first.priceKrw, 9900);
           expect(products.last.id, 'annual_premium');
           expect(products.last.priceKrw, 99000);
-        },
-      );
-      verify(() => mockDataSource.getAvailableProducts(platform: null)).called(1);
-    });
+        });
+        verify(
+          () => mockDataSource.getAvailableProducts(platform: null),
+        ).called(1);
+      },
+    );
 
     test('should filter by platform when platform is provided', () async {
       // Arrange
-      when(() => mockDataSource.getAvailableProducts(platform: SubscriptionPlatform.ios))
-          .thenAnswer((_) async => [sampleMonthlyProductJson]);
+      when(
+        () => mockDataSource.getAvailableProducts(
+          platform: SubscriptionPlatform.ios,
+        ),
+      ).thenAnswer((_) async => [sampleMonthlyProductJson]);
 
       // Act
       final result = await repository.getAvailableProducts(
@@ -228,100 +256,117 @@ void main() {
 
       // Assert
       expect(result.isRight(), true);
-      result.fold(
-        (failure) => fail('Expected Right but got Left'),
-        (products) {
-          expect(products.length, 1);
-          expect(products.first.iosProductId, 'com.onemessage.monthly');
-        },
-      );
-      verify(() => mockDataSource.getAvailableProducts(platform: SubscriptionPlatform.ios))
-          .called(1);
+      result.fold((failure) => fail('Expected Right but got Left'), (products) {
+        expect(products.length, 1);
+        expect(products.first.iosProductId, 'com.onemessage.monthly');
+      });
+      verify(
+        () => mockDataSource.getAvailableProducts(
+          platform: SubscriptionPlatform.ios,
+        ),
+      ).called(1);
     });
 
     test('should include pricing info correctly', () async {
       // Arrange
-      when(() => mockDataSource.getAvailableProducts(platform: any(named: 'platform')))
-          .thenAnswer((_) async => [sampleMonthlyProductJson]);
+      when(
+        () => mockDataSource.getAvailableProducts(
+          platform: any(named: 'platform'),
+        ),
+      ).thenAnswer((_) async => [sampleMonthlyProductJson]);
 
       // Act
       final result = await repository.getAvailableProducts();
 
       // Assert
       expect(result.isRight(), true);
-      result.fold(
-        (failure) => fail('Expected Right but got Left'),
-        (products) {
-          final product = products.first;
-          expect(product.priceKrw, 9900);
-          expect(product.priceUsd, 9.99);
-          expect(product.durationDays, 30);
-        },
-      );
+      result.fold((failure) => fail('Expected Right but got Left'), (products) {
+        final product = products.first;
+        expect(product.priceKrw, 9900);
+        expect(product.priceUsd, 9.99);
+        expect(product.durationDays, 30);
+      });
     });
 
-    test('should return Left(ServerFailure) when datasource throws exception', () async {
-      // Arrange
-      when(() => mockDataSource.getAvailableProducts(platform: any(named: 'platform')))
-          .thenThrow(Exception('Failed to fetch products'));
+    test(
+      'should return Left(ServerFailure) when datasource throws exception',
+      () async {
+        // Arrange
+        when(
+          () => mockDataSource.getAvailableProducts(
+            platform: any(named: 'platform'),
+          ),
+        ).thenThrow(Exception('Failed to fetch products'));
 
-      // Act
-      final result = await repository.getAvailableProducts();
+        // Act
+        final result = await repository.getAvailableProducts();
 
-      // Assert
-      expect(result.isLeft(), true);
-      result.fold(
-        (failure) => expect(failure, isA<ServerFailure>()),
-        (products) => fail('Expected Left but got Right'),
-      );
-    });
+        // Assert
+        expect(result.isLeft(), true);
+        result.fold(
+          (failure) => expect(failure, isA<ServerFailure>()),
+          (products) => fail('Expected Left but got Right'),
+        );
+      },
+    );
   });
 
   group('activateSubscription', () {
-    test('should return Right(Subscription) when activation succeeds', () async {
-      // Arrange
-      when(() => mockDataSource.activateSubscription(
+    test(
+      'should return Right(Subscription) when activation succeeds',
+      () async {
+        // Arrange
+        when(
+          () => mockDataSource.activateSubscription(
             userId: any(named: 'userId'),
             productId: any(named: 'productId'),
             platform: any(named: 'platform'),
             transactionId: any(named: 'transactionId'),
             originalTransactionId: any(named: 'originalTransactionId'),
-          )).thenAnswer((_) async => sampleActivationResponse);
+          ),
+        ).thenAnswer((_) async => sampleActivationResponse);
 
-      when(() => mockDataSource.getSubscriptionStatus(userId: any(named: 'userId')))
-          .thenAnswer((_) async => sampleSubscriptionJson);
+        when(
+          () => mockDataSource.getSubscriptionStatus(
+            userId: any(named: 'userId'),
+          ),
+        ).thenAnswer((_) async => sampleSubscriptionJson);
 
-      // Act
-      final result = await repository.activateSubscription(
-        userId: testUserId,
-        productId: 'monthly_premium',
-        platform: SubscriptionPlatform.ios,
-        transactionId: testTransactionId,
-      );
+        // Act
+        final result = await repository.activateSubscription(
+          userId: testUserId,
+          productId: 'monthly_premium',
+          platform: SubscriptionPlatform.ios,
+          transactionId: testTransactionId,
+        );
 
-      // Assert
-      expect(result.isRight(), true);
-      result.fold(
-        (failure) => fail('Expected Right but got Left'),
-        (subscription) {
+        // Assert
+        expect(result.isRight(), true);
+        result.fold((failure) => fail('Expected Right but got Left'), (
+          subscription,
+        ) {
           expect(subscription.status, SubscriptionStatus.active);
           expect(subscription.productId, 'monthly_premium');
-        },
-      );
-    });
+        });
+      },
+    );
 
     test('should call datasource with correct parameters', () async {
       // Arrange
-      when(() => mockDataSource.activateSubscription(
-            userId: any(named: 'userId'),
-            productId: any(named: 'productId'),
-            platform: any(named: 'platform'),
-            transactionId: any(named: 'transactionId'),
-            originalTransactionId: any(named: 'originalTransactionId'),
-          )).thenAnswer((_) async => sampleActivationResponse);
+      when(
+        () => mockDataSource.activateSubscription(
+          userId: any(named: 'userId'),
+          productId: any(named: 'productId'),
+          platform: any(named: 'platform'),
+          transactionId: any(named: 'transactionId'),
+          originalTransactionId: any(named: 'originalTransactionId'),
+        ),
+      ).thenAnswer((_) async => sampleActivationResponse);
 
-      when(() => mockDataSource.getSubscriptionStatus(userId: any(named: 'userId')))
-          .thenAnswer((_) async => sampleSubscriptionJson);
+      when(
+        () =>
+            mockDataSource.getSubscriptionStatus(userId: any(named: 'userId')),
+      ).thenAnswer((_) async => sampleSubscriptionJson);
 
       // Act
       await repository.activateSubscription(
@@ -333,30 +378,38 @@ void main() {
       );
 
       // Assert
-      verify(() => mockDataSource.activateSubscription(
-            userId: testUserId,
-            productId: 'monthly_premium',
-            platform: SubscriptionPlatform.ios,
-            transactionId: testTransactionId,
-            originalTransactionId: 'original-txn-123',
-          )).called(1);
+      verify(
+        () => mockDataSource.activateSubscription(
+          userId: testUserId,
+          productId: 'monthly_premium',
+          platform: SubscriptionPlatform.ios,
+          transactionId: testTransactionId,
+          originalTransactionId: 'original-txn-123',
+        ),
+      ).called(1);
     });
 
     test('should handle subscription renewal correctly', () async {
       // Arrange - renewal has original transaction ID
-      when(() => mockDataSource.activateSubscription(
-            userId: any(named: 'userId'),
-            productId: any(named: 'productId'),
-            platform: any(named: 'platform'),
-            transactionId: any(named: 'transactionId'),
-            originalTransactionId: any(named: 'originalTransactionId'),
-          )).thenAnswer((_) async => sampleActivationResponse);
+      when(
+        () => mockDataSource.activateSubscription(
+          userId: any(named: 'userId'),
+          productId: any(named: 'productId'),
+          platform: any(named: 'platform'),
+          transactionId: any(named: 'transactionId'),
+          originalTransactionId: any(named: 'originalTransactionId'),
+        ),
+      ).thenAnswer((_) async => sampleActivationResponse);
 
-      when(() => mockDataSource.getSubscriptionStatus(userId: any(named: 'userId')))
-          .thenAnswer((_) async => {
-                ...sampleSubscriptionJson,
-                'original_transaction_id': 'original-txn-123',
-              });
+      when(
+        () =>
+            mockDataSource.getSubscriptionStatus(userId: any(named: 'userId')),
+      ).thenAnswer(
+        (_) async => {
+          ...sampleSubscriptionJson,
+          'original_transaction_id': 'original-txn-123',
+        },
+      );
 
       // Act
       final result = await repository.activateSubscription(
@@ -369,23 +422,24 @@ void main() {
 
       // Assert
       expect(result.isRight(), true);
-      result.fold(
-        (failure) => fail('Expected Right but got Left'),
-        (subscription) {
-          expect(subscription.originalTransactionId, 'original-txn-123');
-        },
-      );
+      result.fold((failure) => fail('Expected Right but got Left'), (
+        subscription,
+      ) {
+        expect(subscription.originalTransactionId, 'original-txn-123');
+      });
     });
 
     test('should return Left(ValidationFailure) for invalid product', () async {
       // Arrange
-      when(() => mockDataSource.activateSubscription(
-            userId: any(named: 'userId'),
-            productId: any(named: 'productId'),
-            platform: any(named: 'platform'),
-            transactionId: any(named: 'transactionId'),
-            originalTransactionId: any(named: 'originalTransactionId'),
-          )).thenThrow(Exception('Invalid product_id: invalid_product'));
+      when(
+        () => mockDataSource.activateSubscription(
+          userId: any(named: 'userId'),
+          productId: any(named: 'productId'),
+          platform: any(named: 'platform'),
+          transactionId: any(named: 'transactionId'),
+          originalTransactionId: any(named: 'originalTransactionId'),
+        ),
+      ).thenThrow(Exception('Invalid product_id: invalid_product'));
 
       // Act
       final result = await repository.activateSubscription(
@@ -403,58 +457,67 @@ void main() {
       );
     });
 
-    test('should return Left(ServerFailure) when datasource throws exception', () async {
-      // Arrange
-      when(() => mockDataSource.activateSubscription(
+    test(
+      'should return Left(ServerFailure) when datasource throws exception',
+      () async {
+        // Arrange
+        when(
+          () => mockDataSource.activateSubscription(
             userId: any(named: 'userId'),
             productId: any(named: 'productId'),
             platform: any(named: 'platform'),
             transactionId: any(named: 'transactionId'),
             originalTransactionId: any(named: 'originalTransactionId'),
-          )).thenThrow(Exception('Activation failed'));
+          ),
+        ).thenThrow(Exception('Activation failed'));
 
-      // Act
-      final result = await repository.activateSubscription(
-        userId: testUserId,
-        productId: 'monthly_premium',
-        platform: SubscriptionPlatform.ios,
-        transactionId: testTransactionId,
-      );
+        // Act
+        final result = await repository.activateSubscription(
+          userId: testUserId,
+          productId: 'monthly_premium',
+          platform: SubscriptionPlatform.ios,
+          transactionId: testTransactionId,
+        );
 
-      // Assert
-      expect(result.isLeft(), true);
-      result.fold(
-        (failure) => expect(failure, isA<ServerFailure>()),
-        (subscription) => fail('Expected Left but got Right'),
-      );
-    });
+        // Assert
+        expect(result.isLeft(), true);
+        result.fold(
+          (failure) => expect(failure, isA<ServerFailure>()),
+          (subscription) => fail('Expected Left but got Right'),
+        );
+      },
+    );
   });
 
   group('cancelSubscription', () {
     test('should return Right(void) when cancellation succeeds', () async {
       // Arrange
-      when(() => mockDataSource.cancelSubscription(
-            userId: any(named: 'userId'),
-            reason: any(named: 'reason'),
-          )).thenAnswer((_) async {});
+      when(
+        () => mockDataSource.cancelSubscription(
+          userId: any(named: 'userId'),
+          reason: any(named: 'reason'),
+        ),
+      ).thenAnswer((_) async {});
 
       // Act
       final result = await repository.cancelSubscription(userId: testUserId);
 
       // Assert
       expect(result.isRight(), true);
-      verify(() => mockDataSource.cancelSubscription(
-            userId: testUserId,
-            reason: null,
-          )).called(1);
+      verify(
+        () =>
+            mockDataSource.cancelSubscription(userId: testUserId, reason: null),
+      ).called(1);
     });
 
     test('should pass reason when provided', () async {
       // Arrange
-      when(() => mockDataSource.cancelSubscription(
-            userId: any(named: 'userId'),
-            reason: any(named: 'reason'),
-          )).thenAnswer((_) async {});
+      when(
+        () => mockDataSource.cancelSubscription(
+          userId: any(named: 'userId'),
+          reason: any(named: 'reason'),
+        ),
+      ).thenAnswer((_) async {});
 
       // Act
       final result = await repository.cancelSubscription(
@@ -464,56 +527,71 @@ void main() {
 
       // Assert
       expect(result.isRight(), true);
-      verify(() => mockDataSource.cancelSubscription(
-            userId: testUserId,
-            reason: 'Too expensive',
-          )).called(1);
+      verify(
+        () => mockDataSource.cancelSubscription(
+          userId: testUserId,
+          reason: 'Too expensive',
+        ),
+      ).called(1);
     });
 
-    test('should return Left(ServerFailure) when no subscription exists', () async {
-      // Arrange
-      when(() => mockDataSource.cancelSubscription(
+    test(
+      'should return Left(ServerFailure) when no subscription exists',
+      () async {
+        // Arrange
+        when(
+          () => mockDataSource.cancelSubscription(
             userId: any(named: 'userId'),
             reason: any(named: 'reason'),
-          )).thenThrow(Exception('No active subscription found'));
+          ),
+        ).thenThrow(Exception('No active subscription found'));
 
-      // Act
-      final result = await repository.cancelSubscription(userId: testUserId);
+        // Act
+        final result = await repository.cancelSubscription(userId: testUserId);
 
-      // Assert
-      expect(result.isLeft(), true);
-      result.fold(
-        (failure) => expect(failure.message, contains('No active subscription')),
-        (_) => fail('Expected Left but got Right'),
-      );
-    });
+        // Assert
+        expect(result.isLeft(), true);
+        result.fold(
+          (failure) =>
+              expect(failure.message, contains('No active subscription')),
+          (_) => fail('Expected Left but got Right'),
+        );
+      },
+    );
 
-    test('should return Left(ServerFailure) when datasource throws exception', () async {
-      // Arrange
-      when(() => mockDataSource.cancelSubscription(
+    test(
+      'should return Left(ServerFailure) when datasource throws exception',
+      () async {
+        // Arrange
+        when(
+          () => mockDataSource.cancelSubscription(
             userId: any(named: 'userId'),
             reason: any(named: 'reason'),
-          )).thenThrow(Exception('Cancellation failed'));
+          ),
+        ).thenThrow(Exception('Cancellation failed'));
 
-      // Act
-      final result = await repository.cancelSubscription(userId: testUserId);
+        // Act
+        final result = await repository.cancelSubscription(userId: testUserId);
 
-      // Assert
-      expect(result.isLeft(), true);
-      result.fold(
-        (failure) => expect(failure, isA<ServerFailure>()),
-        (_) => fail('Expected Left but got Right'),
-      );
-    });
+        // Assert
+        expect(result.isLeft(), true);
+        result.fold(
+          (failure) => expect(failure, isA<ServerFailure>()),
+          (_) => fail('Expected Left but got Right'),
+        );
+      },
+    );
   });
 
   group('verifyIosReceipt', () {
     test('should return Right(data) for valid receipt', () async {
       // Arrange
-      when(() => mockDataSource.verifyIosReceipt(
-            receipt: any(named: 'receipt'),
-            userId: any(named: 'userId'),
-          )).thenAnswer((_) async => sampleIosVerificationResponse);
+      when(
+        () => mockDataSource.verifyIosReceipt(
+          receipt: any(named: 'receipt'),
+          userId: any(named: 'userId'),
+        ),
+      ).thenAnswer((_) async => sampleIosVerificationResponse);
 
       // Act
       final result = await repository.verifyIosReceipt(
@@ -523,22 +601,21 @@ void main() {
 
       // Assert
       expect(result.isRight(), true);
-      result.fold(
-        (failure) => fail('Expected Right but got Left'),
-        (data) {
-          expect(data['valid'], true);
-          expect(data['transactionId'], testTransactionId);
-          expect(data['productId'], 'monthly_premium');
-        },
-      );
+      result.fold((failure) => fail('Expected Right but got Left'), (data) {
+        expect(data['valid'], true);
+        expect(data['transactionId'], testTransactionId);
+        expect(data['productId'], 'monthly_premium');
+      });
     });
 
     test('should call Edge Function with correct parameters', () async {
       // Arrange
-      when(() => mockDataSource.verifyIosReceipt(
-            receipt: any(named: 'receipt'),
-            userId: any(named: 'userId'),
-          )).thenAnswer((_) async => sampleIosVerificationResponse);
+      when(
+        () => mockDataSource.verifyIosReceipt(
+          receipt: any(named: 'receipt'),
+          userId: any(named: 'userId'),
+        ),
+      ).thenAnswer((_) async => sampleIosVerificationResponse);
 
       // Act
       await repository.verifyIosReceipt(
@@ -547,18 +624,22 @@ void main() {
       );
 
       // Assert
-      verify(() => mockDataSource.verifyIosReceipt(
-            receipt: testReceipt,
-            userId: testUserId,
-          )).called(1);
+      verify(
+        () => mockDataSource.verifyIosReceipt(
+          receipt: testReceipt,
+          userId: testUserId,
+        ),
+      ).called(1);
     });
 
     test('should extract transaction details correctly', () async {
       // Arrange
-      when(() => mockDataSource.verifyIosReceipt(
-            receipt: any(named: 'receipt'),
-            userId: any(named: 'userId'),
-          )).thenAnswer((_) async => sampleIosVerificationResponse);
+      when(
+        () => mockDataSource.verifyIosReceipt(
+          receipt: any(named: 'receipt'),
+          userId: any(named: 'userId'),
+        ),
+      ).thenAnswer((_) async => sampleIosVerificationResponse);
 
       // Act
       final result = await repository.verifyIosReceipt(
@@ -568,23 +649,22 @@ void main() {
 
       // Assert
       expect(result.isRight(), true);
-      result.fold(
-        (failure) => fail('Expected Right but got Left'),
-        (data) {
-          expect(data['transactionId'], isNotNull);
-          expect(data['originalTransactionId'], isNotNull);
-          expect(data['productId'], isNotNull);
-          expect(data['expiresDate'], isNotNull);
-        },
-      );
+      result.fold((failure) => fail('Expected Right but got Left'), (data) {
+        expect(data['transactionId'], isNotNull);
+        expect(data['originalTransactionId'], isNotNull);
+        expect(data['productId'], isNotNull);
+        expect(data['expiresDate'], isNotNull);
+      });
     });
 
     test('should return Left(ValidationFailure) for invalid receipt', () async {
       // Arrange
-      when(() => mockDataSource.verifyIosReceipt(
-            receipt: any(named: 'receipt'),
-            userId: any(named: 'userId'),
-          )).thenThrow(Exception('Invalid receipt: status 21003'));
+      when(
+        () => mockDataSource.verifyIosReceipt(
+          receipt: any(named: 'receipt'),
+          userId: any(named: 'userId'),
+        ),
+      ).thenThrow(Exception('Invalid receipt: status 21003'));
 
       // Act
       final result = await repository.verifyIosReceipt(
@@ -600,37 +680,43 @@ void main() {
       );
     });
 
-    test('should return Left(ServerFailure) when Edge Function throws exception',
-        () async {
-      // Arrange
-      when(() => mockDataSource.verifyIosReceipt(
+    test(
+      'should return Left(ServerFailure) when Edge Function throws exception',
+      () async {
+        // Arrange
+        when(
+          () => mockDataSource.verifyIosReceipt(
             receipt: any(named: 'receipt'),
             userId: any(named: 'userId'),
-          )).thenThrow(Exception('Edge Function unavailable'));
+          ),
+        ).thenThrow(Exception('Edge Function unavailable'));
 
-      // Act
-      final result = await repository.verifyIosReceipt(
-        receipt: testReceipt,
-        userId: testUserId,
-      );
+        // Act
+        final result = await repository.verifyIosReceipt(
+          receipt: testReceipt,
+          userId: testUserId,
+        );
 
-      // Assert
-      expect(result.isLeft(), true);
-      result.fold(
-        (failure) => expect(failure, isA<ServerFailure>()),
-        (data) => fail('Expected Left but got Right'),
-      );
-    });
+        // Assert
+        expect(result.isLeft(), true);
+        result.fold(
+          (failure) => expect(failure, isA<ServerFailure>()),
+          (data) => fail('Expected Left but got Right'),
+        );
+      },
+    );
   });
 
   group('verifyAndroidPurchase', () {
     test('should return Right(data) for valid purchase token', () async {
       // Arrange
-      when(() => mockDataSource.verifyAndroidPurchase(
-            purchaseToken: any(named: 'purchaseToken'),
-            productId: any(named: 'productId'),
-            userId: any(named: 'userId'),
-          )).thenAnswer((_) async => sampleAndroidVerificationResponse);
+      when(
+        () => mockDataSource.verifyAndroidPurchase(
+          purchaseToken: any(named: 'purchaseToken'),
+          productId: any(named: 'productId'),
+          userId: any(named: 'userId'),
+        ),
+      ).thenAnswer((_) async => sampleAndroidVerificationResponse);
 
       // Act
       final result = await repository.verifyAndroidPurchase(
@@ -641,23 +727,22 @@ void main() {
 
       // Assert
       expect(result.isRight(), true);
-      result.fold(
-        (failure) => fail('Expected Right but got Left'),
-        (data) {
-          expect(data['valid'], true);
-          expect(data['purchaseToken'], testPurchaseToken);
-          expect(data['productId'], 'monthly_premium');
-        },
-      );
+      result.fold((failure) => fail('Expected Right but got Left'), (data) {
+        expect(data['valid'], true);
+        expect(data['purchaseToken'], testPurchaseToken);
+        expect(data['productId'], 'monthly_premium');
+      });
     });
 
     test('should call Edge Function with correct parameters', () async {
       // Arrange
-      when(() => mockDataSource.verifyAndroidPurchase(
-            purchaseToken: any(named: 'purchaseToken'),
-            productId: any(named: 'productId'),
-            userId: any(named: 'userId'),
-          )).thenAnswer((_) async => sampleAndroidVerificationResponse);
+      when(
+        () => mockDataSource.verifyAndroidPurchase(
+          purchaseToken: any(named: 'purchaseToken'),
+          productId: any(named: 'productId'),
+          userId: any(named: 'userId'),
+        ),
+      ).thenAnswer((_) async => sampleAndroidVerificationResponse);
 
       // Act
       await repository.verifyAndroidPurchase(
@@ -667,20 +752,24 @@ void main() {
       );
 
       // Assert
-      verify(() => mockDataSource.verifyAndroidPurchase(
-            purchaseToken: testPurchaseToken,
-            productId: 'monthly_premium',
-            userId: testUserId,
-          )).called(1);
+      verify(
+        () => mockDataSource.verifyAndroidPurchase(
+          purchaseToken: testPurchaseToken,
+          productId: 'monthly_premium',
+          userId: testUserId,
+        ),
+      ).called(1);
     });
 
     test('should extract purchase details correctly', () async {
       // Arrange
-      when(() => mockDataSource.verifyAndroidPurchase(
-            purchaseToken: any(named: 'purchaseToken'),
-            productId: any(named: 'productId'),
-            userId: any(named: 'userId'),
-          )).thenAnswer((_) async => sampleAndroidVerificationResponse);
+      when(
+        () => mockDataSource.verifyAndroidPurchase(
+          purchaseToken: any(named: 'purchaseToken'),
+          productId: any(named: 'productId'),
+          userId: any(named: 'userId'),
+        ),
+      ).thenAnswer((_) async => sampleAndroidVerificationResponse);
 
       // Act
       final result = await repository.verifyAndroidPurchase(
@@ -691,24 +780,23 @@ void main() {
 
       // Assert
       expect(result.isRight(), true);
-      result.fold(
-        (failure) => fail('Expected Right but got Left'),
-        (data) {
-          expect(data['purchaseToken'], isNotNull);
-          expect(data['orderId'], isNotNull);
-          expect(data['acknowledgementState'], isNotNull);
-          expect(data['expiryTimeMillis'], isNotNull);
-        },
-      );
+      result.fold((failure) => fail('Expected Right but got Left'), (data) {
+        expect(data['purchaseToken'], isNotNull);
+        expect(data['orderId'], isNotNull);
+        expect(data['acknowledgementState'], isNotNull);
+        expect(data['expiryTimeMillis'], isNotNull);
+      });
     });
 
     test('should return Left(ValidationFailure) for invalid token', () async {
       // Arrange
-      when(() => mockDataSource.verifyAndroidPurchase(
-            purchaseToken: any(named: 'purchaseToken'),
-            productId: any(named: 'productId'),
-            userId: any(named: 'userId'),
-          )).thenThrow(Exception('Invalid purchase token'));
+      when(
+        () => mockDataSource.verifyAndroidPurchase(
+          purchaseToken: any(named: 'purchaseToken'),
+          productId: any(named: 'productId'),
+          userId: any(named: 'userId'),
+        ),
+      ).thenThrow(Exception('Invalid purchase token'));
 
       // Act
       final result = await repository.verifyAndroidPurchase(
@@ -720,41 +808,47 @@ void main() {
       // Assert
       expect(result.isLeft(), true);
       result.fold(
-        (failure) => expect(failure.message, contains('Invalid purchase token')),
+        (failure) =>
+            expect(failure.message, contains('Invalid purchase token')),
         (data) => fail('Expected Left but got Right'),
       );
     });
 
-    test('should return Left(ServerFailure) when Edge Function throws exception',
-        () async {
-      // Arrange
-      when(() => mockDataSource.verifyAndroidPurchase(
+    test(
+      'should return Left(ServerFailure) when Edge Function throws exception',
+      () async {
+        // Arrange
+        when(
+          () => mockDataSource.verifyAndroidPurchase(
             purchaseToken: any(named: 'purchaseToken'),
             productId: any(named: 'productId'),
             userId: any(named: 'userId'),
-          )).thenThrow(Exception('Google Play API unavailable'));
+          ),
+        ).thenThrow(Exception('Google Play API unavailable'));
 
-      // Act
-      final result = await repository.verifyAndroidPurchase(
-        purchaseToken: testPurchaseToken,
-        productId: 'monthly_premium',
-        userId: testUserId,
-      );
+        // Act
+        final result = await repository.verifyAndroidPurchase(
+          purchaseToken: testPurchaseToken,
+          productId: 'monthly_premium',
+          userId: testUserId,
+        );
 
-      // Assert
-      expect(result.isLeft(), true);
-      result.fold(
-        (failure) => expect(failure, isA<ServerFailure>()),
-        (data) => fail('Expected Left but got Right'),
-      );
-    });
+        // Assert
+        expect(result.isLeft(), true);
+        result.fold(
+          (failure) => expect(failure, isA<ServerFailure>()),
+          (data) => fail('Expected Left but got Right'),
+        );
+      },
+    );
   });
 
   group('hasActivePremium', () {
     test('should return true for active subscription', () async {
       // Arrange
-      when(() => mockDataSource.hasActivePremium(userId: any(named: 'userId')))
-          .thenAnswer((_) async => true);
+      when(
+        () => mockDataSource.hasActivePremium(userId: any(named: 'userId')),
+      ).thenAnswer((_) async => true);
 
       // Act
       final result = await repository.hasActivePremium(userId: testUserId);
@@ -769,8 +863,9 @@ void main() {
 
     test('should return false for no subscription', () async {
       // Arrange
-      when(() => mockDataSource.hasActivePremium(userId: any(named: 'userId')))
-          .thenAnswer((_) async => false);
+      when(
+        () => mockDataSource.hasActivePremium(userId: any(named: 'userId')),
+      ).thenAnswer((_) async => false);
 
       // Act
       final result = await repository.hasActivePremium(userId: testUserId);
@@ -785,8 +880,9 @@ void main() {
 
     test('should return false for expired subscription', () async {
       // Arrange - subscription exists but has expired
-      when(() => mockDataSource.hasActivePremium(userId: any(named: 'userId')))
-          .thenAnswer((_) async => false);
+      when(
+        () => mockDataSource.hasActivePremium(userId: any(named: 'userId')),
+      ).thenAnswer((_) async => false);
 
       // Act
       final result = await repository.hasActivePremium(userId: testUserId);
@@ -801,31 +897,38 @@ void main() {
 
     test('should check expiration date correctly', () async {
       // Arrange - Use datasource which checks expiration internally
-      when(() => mockDataSource.hasActivePremium(userId: any(named: 'userId')))
-          .thenAnswer((_) async => true);
+      when(
+        () => mockDataSource.hasActivePremium(userId: any(named: 'userId')),
+      ).thenAnswer((_) async => true);
 
       // Act
       final result = await repository.hasActivePremium(userId: testUserId);
 
       // Assert
-      verify(() => mockDataSource.hasActivePremium(userId: testUserId)).called(1);
+      verify(
+        () => mockDataSource.hasActivePremium(userId: testUserId),
+      ).called(1);
       expect(result.isRight(), true);
     });
 
-    test('should return Left(ServerFailure) when datasource throws exception', () async {
-      // Arrange
-      when(() => mockDataSource.hasActivePremium(userId: any(named: 'userId')))
-          .thenThrow(Exception('Database error'));
+    test(
+      'should return Left(ServerFailure) when datasource throws exception',
+      () async {
+        // Arrange
+        when(
+          () => mockDataSource.hasActivePremium(userId: any(named: 'userId')),
+        ).thenThrow(Exception('Database error'));
 
-      // Act
-      final result = await repository.hasActivePremium(userId: testUserId);
+        // Act
+        final result = await repository.hasActivePremium(userId: testUserId);
 
-      // Assert
-      expect(result.isLeft(), true);
-      result.fold(
-        (failure) => expect(failure, isA<ServerFailure>()),
-        (hasPremium) => fail('Expected Left but got Right'),
-      );
-    });
+        // Assert
+        expect(result.isLeft(), true);
+        result.fold(
+          (failure) => expect(failure, isA<ServerFailure>()),
+          (hasPremium) => fail('Expected Left but got Right'),
+        );
+      },
+    );
   });
 }

@@ -24,10 +24,7 @@ class SupabaseScriptureDataSource implements ScriptureDataSource {
   }) async {
     final response = await _supabaseService.rpc<List<dynamic>>(
       'get_daily_scriptures',
-      params: {
-        'p_user_id': userId,
-        'limit_count': count,
-      },
+      params: {'p_user_id': userId, 'limit_count': count},
     );
     return List<Map<String, dynamic>>.from(response);
   }
@@ -39,10 +36,7 @@ class SupabaseScriptureDataSource implements ScriptureDataSource {
   }) async {
     final response = await _supabaseService.rpc<List<dynamic>>(
       'get_premium_scriptures',
-      params: {
-        'p_user_id': userId,
-        'limit_count': count,
-      },
+      params: {'p_user_id': userId, 'limit_count': count},
     );
     return List<Map<String, dynamic>>.from(response);
   }
@@ -54,10 +48,7 @@ class SupabaseScriptureDataSource implements ScriptureDataSource {
   }) async {
     await _supabaseService.rpc<void>(
       'record_scripture_view',
-      params: {
-        'p_user_id': userId,
-        'p_scripture_id': scriptureId,
-      },
+      params: {'p_user_id': userId, 'p_scripture_id': scriptureId},
     );
   }
 

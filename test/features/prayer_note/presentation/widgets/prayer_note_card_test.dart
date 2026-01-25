@@ -11,7 +11,8 @@ void main() {
     testNote = PrayerNote(
       id: 'note-id-1',
       userId: 'user-id-1',
-      content: 'This is a test meditation note that reflects on today\'s scripture.',
+      content:
+          'This is a test meditation note that reflects on today\'s scripture.',
       createdAt: DateTime(2026, 1, 18, 10, 30),
       updatedAt: DateTime(2026, 1, 18, 10, 30),
     );
@@ -35,11 +36,7 @@ void main() {
   }) {
     return MaterialApp(
       home: Scaffold(
-        body: PrayerNoteCard(
-          note: note,
-          onEdit: onEdit,
-          onDelete: onDelete,
-        ),
+        body: PrayerNoteCard(note: note, onEdit: onEdit, onDelete: onDelete),
       ),
     );
   }
@@ -49,20 +46,24 @@ void main() {
       await tester.pumpWidget(createWidgetUnderTest(testNote));
 
       expect(
-        find.text('This is a test meditation note that reflects on today\'s scripture.'),
+        find.text(
+          'This is a test meditation note that reflects on today\'s scripture.',
+        ),
         findsOneWidget,
       );
     });
 
-    testWidgets('renders scripture reference when present',
-        (WidgetTester tester) async {
+    testWidgets('renders scripture reference when present', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(createWidgetUnderTest(noteWithScripture));
 
       expect(find.text('John 3:16'), findsOneWidget);
     });
 
-    testWidgets('does not show scripture reference when not present',
-        (WidgetTester tester) async {
+    testWidgets('does not show scripture reference when not present', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(createWidgetUnderTest(testNote));
 
       // Should not find John 3:16 since testNote has no scripture reference
@@ -88,8 +89,9 @@ void main() {
       expect(find.byIcon(Icons.delete_outline), findsOneWidget);
     });
 
-    testWidgets('calls onEdit callback when edit button is pressed',
-        (WidgetTester tester) async {
+    testWidgets('calls onEdit callback when edit button is pressed', (
+      WidgetTester tester,
+    ) async {
       bool editCalled = false;
       await tester.pumpWidget(
         createWidgetUnderTest(testNote, onEdit: () => editCalled = true),
@@ -101,8 +103,9 @@ void main() {
       expect(editCalled, true);
     });
 
-    testWidgets('calls onDelete callback when delete button is pressed',
-        (WidgetTester tester) async {
+    testWidgets('calls onDelete callback when delete button is pressed', (
+      WidgetTester tester,
+    ) async {
       bool deleteCalled = false;
       await tester.pumpWidget(
         createWidgetUnderTest(testNote, onDelete: () => deleteCalled = true),
@@ -114,15 +117,17 @@ void main() {
       expect(deleteCalled, true);
     });
 
-    testWidgets('hides edit button when onEdit is null',
-        (WidgetTester tester) async {
+    testWidgets('hides edit button when onEdit is null', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(createWidgetUnderTest(testNote, onEdit: null));
 
       expect(find.byIcon(Icons.edit), findsNothing);
     });
 
-    testWidgets('hides delete button when onDelete is null',
-        (WidgetTester tester) async {
+    testWidgets('hides delete button when onDelete is null', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(createWidgetUnderTest(testNote, onDelete: null));
 
       expect(find.byIcon(Icons.delete_outline), findsNothing);

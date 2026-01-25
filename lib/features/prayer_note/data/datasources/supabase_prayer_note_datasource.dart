@@ -64,23 +64,16 @@ class SupabasePrayerNoteDataSource implements PrayerNoteDataSource {
   }) async {
     final response = await _supabaseService.rpc<Map<String, dynamic>>(
       'update_prayer_note',
-      params: {
-        'p_note_id': noteId,
-        'p_content': content,
-      },
+      params: {'p_note_id': noteId, 'p_content': content},
     );
     return response;
   }
 
   @override
-  Future<void> deletePrayerNote({
-    required String noteId,
-  }) async {
+  Future<void> deletePrayerNote({required String noteId}) async {
     await _supabaseService.rpc<void>(
       'delete_prayer_note',
-      params: {
-        'p_note_id': noteId,
-      },
+      params: {'p_note_id': noteId},
     );
   }
 

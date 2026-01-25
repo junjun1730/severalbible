@@ -66,9 +66,7 @@ void main() {
         currentScriptureIndexProvider.overrideWith((ref) => currentIndex),
         currentUserTierProvider.overrideWith((ref) => Future.value(tier)),
       ],
-      child: const MaterialApp(
-        home: DailyFeedScreen(),
-      ),
+      child: const MaterialApp(home: DailyFeedScreen()),
     );
   }
 
@@ -83,9 +81,7 @@ void main() {
         currentScriptureIndexProvider.overrideWith((ref) => currentIndex),
         currentUserTierProvider.overrideWith((ref) => Future.value(tier)),
       ],
-      child: const MaterialApp(
-        home: DailyFeedScreen(),
-      ),
+      child: const MaterialApp(home: DailyFeedScreen()),
     );
   }
 
@@ -100,22 +96,22 @@ void main() {
         currentScriptureIndexProvider.overrideWith((ref) => currentIndex),
         currentUserTierProvider.overrideWith((ref) => Future.value(tier)),
       ],
-      child: const MaterialApp(
-        home: DailyFeedScreen(),
-      ),
+      child: const MaterialApp(home: DailyFeedScreen()),
     );
   }
 
   group('DailyFeedScreen', () {
-    testWidgets('shows loading indicator on initial load',
-        (WidgetTester tester) async {
+    testWidgets('shows loading indicator on initial load', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(createLoadingWidget());
 
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
     });
 
-    testWidgets('renders PageView with scriptures',
-        (WidgetTester tester) async {
+    testWidgets('renders PageView with scriptures', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(createDataWidget(scriptures: testScriptures));
       await tester.pumpAndSettle();
 
@@ -144,8 +140,9 @@ void main() {
       expect(find.byType(PageIndicator), findsOneWidget);
     });
 
-    testWidgets('shows empty state when no scriptures',
-        (WidgetTester tester) async {
+    testWidgets('shows empty state when no scriptures', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(createDataWidget(scriptures: []));
       await tester.pumpAndSettle();
 

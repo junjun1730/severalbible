@@ -9,7 +9,6 @@ import 'package:severalbible/features/subscription/domain/entities/subscription.
 import 'package:severalbible/features/subscription/presentation/providers/subscription_providers.dart';
 import 'package:severalbible/features/subscription/presentation/screens/premium_landing_screen.dart';
 
-
 void main() {
   late MockPurchaseController mockPurchaseController;
   late MockRestorePurchaseController mockRestorePurchaseController;
@@ -29,28 +28,32 @@ void main() {
   Widget createSubject() {
     return ProviderScope(
       overrides: [
-        purchaseControllerProvider.overrideWith((ref) => mockPurchaseController),
-        restorePurchaseControllerProvider.overrideWith((ref) => mockRestorePurchaseController),
-        availableProductsProvider.overrideWith((ref) => Future.value([
-              SubscriptionProduct(
-                id: 'monthly_premium',
-                name: 'Monthly Premium',
-                priceKrw: 9900,
-                isActive: true,
-                createdAt: DateTime.now(),
-              ),
-              SubscriptionProduct(
-                id: 'annual_premium',
-                name: 'Annual Premium',
-                priceKrw: 99000,
-                isActive: true,
-                createdAt: DateTime.now(),
-              ),
-            ])),
+        purchaseControllerProvider.overrideWith(
+          (ref) => mockPurchaseController,
+        ),
+        restorePurchaseControllerProvider.overrideWith(
+          (ref) => mockRestorePurchaseController,
+        ),
+        availableProductsProvider.overrideWith(
+          (ref) => Future.value([
+            SubscriptionProduct(
+              id: 'monthly_premium',
+              name: 'Monthly Premium',
+              priceKrw: 9900,
+              isActive: true,
+              createdAt: DateTime.now(),
+            ),
+            SubscriptionProduct(
+              id: 'annual_premium',
+              name: 'Annual Premium',
+              priceKrw: 99000,
+              isActive: true,
+              createdAt: DateTime.now(),
+            ),
+          ]),
+        ),
       ],
-      child: const MaterialApp(
-        home: PremiumLandingScreen(),
-      ),
+      child: const MaterialApp(home: PremiumLandingScreen()),
     );
   }
 
@@ -58,10 +61,10 @@ void main() {
     tester.view.physicalSize = const Size(1080, 2400);
     tester.view.devicePixelRatio = 3.0;
     addTearDown(tester.view.resetPhysicalSize);
-    
+
     await tester.pumpWidget(createSubject());
     await tester.pumpAndSettle();
-    
+
     expect(find.text('Unlock Unlimited Grace'), findsOneWidget);
     expect(find.text('Access all premium scriptures'), findsOneWidget);
   });
@@ -101,24 +104,28 @@ void main() {
 
     final loadingController = MockPurchaseControllerLoading();
 
-    await tester.pumpWidget(ProviderScope(
-      overrides: [
-        purchaseControllerProvider.overrideWith((ref) => loadingController),
-        restorePurchaseControllerProvider.overrideWith((ref) => mockRestorePurchaseController),
-        availableProductsProvider.overrideWith((ref) => Future.value([
-          SubscriptionProduct(
-            id: 'monthly_premium',
-            name: 'Monthly Premium',
-            priceKrw: 9900,
-            isActive: true,
-            createdAt: DateTime.now(),
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          purchaseControllerProvider.overrideWith((ref) => loadingController),
+          restorePurchaseControllerProvider.overrideWith(
+            (ref) => mockRestorePurchaseController,
           ),
-        ])),
-      ],
-      child: const MaterialApp(
-        home: PremiumLandingScreen(),
+          availableProductsProvider.overrideWith(
+            (ref) => Future.value([
+              SubscriptionProduct(
+                id: 'monthly_premium',
+                name: 'Monthly Premium',
+                priceKrw: 9900,
+                isActive: true,
+                createdAt: DateTime.now(),
+              ),
+            ]),
+          ),
+        ],
+        child: const MaterialApp(home: PremiumLandingScreen()),
       ),
-    ));
+    );
     // Pump multiple times to allow products to load and UI to update
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 100));
@@ -153,7 +160,9 @@ void main() {
     expect(find.text('Privacy Policy'), findsOneWidget);
   });
 
-  testWidgets('shows loading indicator while products are loading', (tester) async {
+  testWidgets('shows loading indicator while products are loading', (
+    tester,
+  ) async {
     tester.view.physicalSize = const Size(1080, 2400);
     tester.view.devicePixelRatio = 3.0;
     addTearDown(tester.view.resetPhysicalSize);
@@ -161,16 +170,20 @@ void main() {
     // Use a Completer that never completes to simulate loading state
     final completer = Completer<List<SubscriptionProduct>>();
 
-    await tester.pumpWidget(ProviderScope(
-      overrides: [
-        purchaseControllerProvider.overrideWith((ref) => mockPurchaseController),
-        restorePurchaseControllerProvider.overrideWith((ref) => mockRestorePurchaseController),
-        availableProductsProvider.overrideWith((ref) => completer.future),
-      ],
-      child: const MaterialApp(
-        home: PremiumLandingScreen(),
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          purchaseControllerProvider.overrideWith(
+            (ref) => mockPurchaseController,
+          ),
+          restorePurchaseControllerProvider.overrideWith(
+            (ref) => mockRestorePurchaseController,
+          ),
+          availableProductsProvider.overrideWith((ref) => completer.future),
+        ],
+        child: const MaterialApp(home: PremiumLandingScreen()),
       ),
-    ));
+    );
 
     // Just pump once without settling to check initial loading state
     await tester.pump();
@@ -180,7 +193,9 @@ void main() {
   });
 }
 
-class MockPurchaseControllerLoading extends StateNotifier<AsyncValue<PurchaseState>> implements PurchaseController {
+class MockPurchaseControllerLoading
+    extends StateNotifier<AsyncValue<PurchaseState>>
+    implements PurchaseController {
   MockPurchaseControllerLoading() : super(const AsyncValue.loading());
 
   @override
@@ -193,12 +208,13 @@ class MockPurchaseControllerLoading extends StateNotifier<AsyncValue<PurchaseSta
   void reset() {}
 }
 
-class MockPurchaseController extends StateNotifier<AsyncValue<PurchaseState>> implements PurchaseController {
+class MockPurchaseController extends StateNotifier<AsyncValue<PurchaseState>>
+    implements PurchaseController {
   MockPurchaseController() : super(const AsyncValue.data(PurchaseState.idle));
-  
+
   @override
   Future<void> initialize() async {}
-  
+
   @override
   Future<void> purchaseProduct(String productId) async {}
 
@@ -206,9 +222,10 @@ class MockPurchaseController extends StateNotifier<AsyncValue<PurchaseState>> im
   void reset() {}
 }
 
-class MockRestorePurchaseController extends StateNotifier<AsyncValue<void>> implements RestorePurchaseController {
+class MockRestorePurchaseController extends StateNotifier<AsyncValue<void>>
+    implements RestorePurchaseController {
   MockRestorePurchaseController() : super(const AsyncValue.data(null));
-  
+
   @override
   Future<void> restorePurchases() async {}
 }

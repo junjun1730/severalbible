@@ -31,7 +31,9 @@ class SupabaseSubscriptionRepository implements SubscriptionRepository {
     SubscriptionPlatform? platform,
   }) async {
     try {
-      final jsonList = await _dataSource.getAvailableProducts(platform: platform);
+      final jsonList = await _dataSource.getAvailableProducts(
+        platform: platform,
+      );
       final products = jsonList
           .map((json) => SubscriptionProduct.fromJson(json))
           .toList();
@@ -81,10 +83,7 @@ class SupabaseSubscriptionRepository implements SubscriptionRepository {
     String? reason,
   }) async {
     try {
-      await _dataSource.cancelSubscription(
-        userId: userId,
-        reason: reason,
-      );
+      await _dataSource.cancelSubscription(userId: userId, reason: reason);
       return const Right(null);
     } catch (e) {
       return Left(ServerFailure(e.toString()));
