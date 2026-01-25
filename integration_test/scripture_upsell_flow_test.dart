@@ -22,9 +22,7 @@ void main() {
     return ProviderScope(
       overrides: [
         currentUserTierProvider.overrideWith((ref) => Future.value(tier)),
-        dailyScripturesProvider.overrideWith(
-          (ref) => scriptures,
-        ),
+        dailyScripturesProvider.overrideWith((ref) => scriptures),
         // Stub other necessary providers
       ],
       child: const MaterialApp(home: DailyFeedScreen()),
