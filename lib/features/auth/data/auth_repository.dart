@@ -8,14 +8,6 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/services/supabase_service.dart';
 
-/// Web Client ID for Google Sign-In (used for both iOS and Android)
-const String _webClientId =
-    '52159302124-kssm6g9u8bt13kgli6q1o6d79fu3ifho.apps.googleusercontent.com';
-
-/// iOS Client ID for Google Sign-In
-const String _iosClientId =
-    '52159302124-qfuljstfo9fl1ds3dh4eff44inkg22rp.apps.googleusercontent.com';
-
 /// Repository for authentication operations
 /// Uses Either type for explicit error handling (functional programming)
 class AuthRepository {
@@ -98,11 +90,7 @@ class AuthRepository {
   /// Uses google_sign_in package for native UI and signInWithIdToken for Supabase
   Future<Either<String, User>> signInWithGoogle() async {
     try {
-      final googleSignIn = GoogleSignIn(
-        clientId: _iosClientId,
-        serverClientId: _webClientId,
-      );
-
+      final googleSignIn = GoogleSignIn();
       final googleUser = await googleSignIn.signIn();
       if (googleUser == null) {
         return const Left('Google sign in was cancelled');
