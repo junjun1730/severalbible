@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - One Message</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 22px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+        }
+        h3 {
+            color: #555;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        p {
+            margin-bottom: 15px;
+        }
+        ul {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        .last-updated {
+            color: #7f8c8d;
+            font-style: italic;
+            margin-bottom: 30px;
+        }
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        strong {
+            color: #2c3e50;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+            h2 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Privacy Policy for One Message</h1>
+        <p class="last-updated"><strong>Last Updated:</strong> January 26, 2026</p>
+
+        <h2>Introduction</h2>
+        <p>Welcome to One Message ("we," "our," or "us"). We are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our mobile application.</p>
+
+        <h2>Information We Collect</h2>
+
+        <h3>Personal Information</h3>
+        <p>When you use One Message, we may collect the following personal information:</p>
+        <ul>
+            <li><strong>Email Address</strong>: When you sign up or sign in using Google OAuth or Apple Sign-In</li>
+            <li><strong>User ID</strong>: A unique identifier assigned to your account</li>
+            <li><strong>Profile Information</strong>: Information from your OAuth provider (name, profile picture)</li>
+            <li><strong>Authentication Tokens</strong>: Secure tokens to maintain your logged-in session</li>
+        </ul>
+
+        <h3>Usage Data</h3>
+        <p>We automatically collect certain information when you use our app:</p>
+        <ul>
+            <li><strong>Scripture Reading History</strong>: Records of which scriptures you have read</li>
+            <li><strong>Prayer Notes</strong>: Your personal meditation and prayer notes</li>
+            <li><strong>Subscription Data</strong>: Information about your subscription tier (Guest, Member, or Premium)</li>
+            <li><strong>App Usage Statistics</strong>: How you interact with the app (for improving user experience)</li>
+        </ul>
+
+        <h3>Device Information</h3>
+        <p>We may collect information about your device:</p>
+        <ul>
+            <li><strong>Device Type</strong>: iOS or Android</li>
+            <li><strong>Operating System Version</strong>: For compatibility purposes</li>
+            <li><strong>App Version</strong>: To ensure you're using the latest features</li>
+            <li><strong>Crash Reports</strong>: Anonymous crash data to improve app stability</li>
+        </ul>
+
+        <h2>How We Use Your Information</h2>
+        <p>We use your information for the following purposes:</p>
+        <ol>
+            <li><strong>Service Delivery</strong>: To provide daily scripture content and prayer journaling features</li>
+            <li><strong>Personalization</strong>: To prevent duplicate content and track your reading progress</li>
+            <li><strong>Account Management</strong>: To manage your account and subscription status</li>
+            <li><strong>Authentication</strong>: To securely log you in and maintain your session</li>
+            <li><strong>Analytics</strong>: To improve our app and understand how users interact with features</li>
+            <li><strong>Communication</strong>: To send important updates about your subscription or account</li>
+            <li><strong>Legal Compliance</strong>: To comply with legal obligations and protect our rights</li>
+        </ol>
+
+        <h2>Data Storage and Processing</h2>
+
+        <h3>Supabase Backend</h3>
+        <p>We use Supabase (a third-party Backend-as-a-Service provider) to store and process your data:</p>
+        <ul>
+            <li><strong>Data Location</strong>: Your data is stored in Supabase's secure PostgreSQL database</li>
+            <li><strong>Encryption</strong>: All data is encrypted in transit (HTTPS/TLS) and at rest</li>
+            <li><strong>Row Level Security (RLS)</strong>: We implement strict access controls so you can only access your own data</li>
+            <li><strong>Data Retention</strong>: See "Data Retention" section below</li>
+        </ul>
+        <p>For more information about Supabase's security practices, visit: <a href="https://supabase.com/security" target="_blank">https://supabase.com/security</a></p>
+
+        <h3>OAuth Providers</h3>
+        <p>When you sign in with Google or Apple:</p>
+        <ul>
+            <li><strong>Google Sign-In</strong>: We use Google OAuth 2.0. See <a href="https://policies.google.com/privacy" target="_blank">Google's Privacy Policy</a></li>
+            <li><strong>Apple Sign-In</strong>: We use Apple's authentication service. See <a href="https://www.apple.com/legal/privacy/" target="_blank">Apple's Privacy Policy</a></li>
+        </ul>
+        <p>We only request the minimum necessary permissions (email and basic profile information).</p>
+
+        <h2>Data Sharing and Disclosure</h2>
+        <p>We do NOT sell your personal information to third parties. We may share your information only in the following circumstances:</p>
+        <ol>
+            <li><strong>Service Providers</strong>: With Supabase (our backend provider) to operate our services</li>
+            <li><strong>Payment Processors</strong>: With Apple App Store or Google Play Store for subscription processing</li>
+            <li><strong>Legal Requirements</strong>: When required by law, court order, or government request</li>
+            <li><strong>Business Transfers</strong>: In the event of a merger, acquisition, or sale of assets</li>
+            <li><strong>With Your Consent</strong>: When you explicitly authorize us to share your information</li>
+        </ol>
+
+        <h2>Data Retention</h2>
+
+        <h3>Active Users</h3>
+        <ul>
+            <li><strong>Prayer Notes</strong>:
+                <ul>
+                    <li><strong>Member (Free)</strong>: Notes older than 7 days are automatically deleted</li>
+                    <li><strong>Premium</strong>: Notes are retained indefinitely while your subscription is active</li>
+                </ul>
+            </li>
+            <li><strong>Reading History</strong>: Retained to prevent duplicate content delivery</li>
+            <li><strong>Account Data</strong>: Retained while your account is active</li>
+        </ul>
+
+        <h3>Deleted Accounts</h3>
+        <p>When you delete your account:</p>
+        <ul>
+            <li>All personal data is permanently deleted within 30 days</li>
+            <li>Anonymized usage statistics may be retained for analytics purposes</li>
+            <li>Deletion cannot be reversed</li>
+        </ul>
+
+        <h2>Your Privacy Rights</h2>
+
+        <h3>General Rights (All Users)</h3>
+        <ul>
+            <li><strong>Access</strong>: Request a copy of your personal data</li>
+            <li><strong>Correction</strong>: Update or correct inaccurate information</li>
+            <li><strong>Deletion</strong>: Request deletion of your account and data</li>
+            <li><strong>Export</strong>: Download your prayer notes and data</li>
+        </ul>
+
+        <h3>GDPR Rights (EU/EEA Users)</h3>
+        <p>If you are in the European Union or European Economic Area, you have additional rights under GDPR:</p>
+        <ul>
+            <li><strong>Right to Restriction</strong>: Limit how we process your data</li>
+            <li><strong>Right to Object</strong>: Object to certain types of processing</li>
+            <li><strong>Right to Portability</strong>: Receive your data in a machine-readable format</li>
+            <li><strong>Right to Withdraw Consent</strong>: Withdraw consent at any time</li>
+        </ul>
+
+        <h3>CCPA Rights (California Users)</h3>
+        <p>If you are a California resident, you have rights under the California Consumer Privacy Act (CCPA):</p>
+        <ul>
+            <li><strong>Right to Know</strong>: What personal information we collect and how we use it</li>
+            <li><strong>Right to Delete</strong>: Request deletion of your personal information</li>
+            <li><strong>Right to Opt-Out</strong>: Opt-out of the sale of personal information (we do not sell data)</li>
+            <li><strong>Right to Non-Discrimination</strong>: Equal service regardless of exercising your rights</li>
+        </ul>
+
+        <h3>Exercising Your Rights</h3>
+        <p>To exercise any of these rights, please contact us at:</p>
+        <ul>
+            <li><strong>Email</strong>: support@onemessageapp.com</li>
+            <li><strong>In-App</strong>: Settings > Account > Data Request</li>
+        </ul>
+        <p>We will respond to your request within 30 days.</p>
+
+        <h2>Children's Privacy</h2>
+        <p>One Message is NOT intended for children under 13 years of age. We do not knowingly collect personal information from children under 13. If you believe a child has provided us with personal information, please contact us immediately, and we will delete it.</p>
+
+        <h2>Security Measures</h2>
+        <p>We implement industry-standard security measures to protect your data:</p>
+        <ul>
+            <li><strong>Encryption</strong>: TLS/HTTPS for data in transit, encryption at rest</li>
+            <li><strong>Authentication</strong>: Secure OAuth 2.0 authentication</li>
+            <li><strong>Access Controls</strong>: Row Level Security (RLS) policies in our database</li>
+            <li><strong>Regular Audits</strong>: Periodic security reviews and updates</li>
+            <li><strong>Minimal Data Collection</strong>: We only collect what's necessary to provide our service</li>
+        </ul>
+        <p>However, no method of transmission over the internet is 100% secure. While we strive to protect your data, we cannot guarantee absolute security.</p>
+
+        <h2>International Data Transfers</h2>
+        <p>Your data may be transferred to and processed in countries other than your own. We ensure that such transfers comply with applicable data protection laws and that appropriate safeguards are in place.</p>
+
+        <h2>Changes to This Privacy Policy</h2>
+        <p>We may update this Privacy Policy from time to time. We will notify you of significant changes by:</p>
+        <ul>
+            <li>Displaying a notice in the app</li>
+            <li>Updating the "Last Updated" date at the top of this policy</li>
+        </ul>
+        <p>Your continued use of the app after changes constitutes acceptance of the updated policy.</p>
+
+        <h2>Third-Party Links</h2>
+        <p>Our app may contain links to third-party websites or services (e.g., Bible references, external resources). We are not responsible for the privacy practices of these third parties. Please review their privacy policies.</p>
+
+        <h2>Contact Us</h2>
+        <p>If you have questions or concerns about this Privacy Policy or our privacy practices, please contact us:</p>
+        <ul>
+            <li><strong>Email</strong>: support@onemessageapp.com</li>
+            <li><strong>Website</strong>: https://onemessageapp.com</li>
+        </ul>
+
+        <h2>Consent</h2>
+        <p>By using One Message, you consent to the collection and use of your information as described in this Privacy Policy.</p>
+
+        <div class="footer">
+            <p><strong>One Message - Daily Scripture & Prayer</strong></p>
+            <p>Building spiritual assets through Read, Write, and Archive.</p>
+        </div>
+    </div>
+</body>
+</html>

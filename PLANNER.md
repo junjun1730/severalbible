@@ -226,5 +226,5 @@
 ### 5-2. Preparation for Release
 - [ ] **[Asset]** Create App Icon (Launcher Icon) and Splash Screen
 - [ ] **[Store]** Capture screenshots and write store descriptions
-- [ ] **[Policy]** Link Privacy Policy and Terms of Service
+- [x] **[Policy]** Link Privacy Policy and Terms of Service (Legal section added to Settings, 13 tests passing - documents ready for hosting)
 - [ ] **[Test]** Distribute to TestFlight / Google Play Internal Test and QA

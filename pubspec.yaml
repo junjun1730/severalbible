@@ -73,6 +73,9 @@ dependencies:
   build_runner: ^2.10.5
   json_serializable: ^6.11.4
 
+  # URL Launcher
+  url_launcher: ^6.3.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -87,6 +90,8 @@ dev_dependencies:
   # Testing
   mockito: ^5.4.0
   mocktail: ^1.0.0
+  url_launcher_platform_interface: ^2.3.2
+  plugin_platform_interface: ^2.1.8
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

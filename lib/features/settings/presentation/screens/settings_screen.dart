@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../subscription/presentation/providers/subscription_providers.dart';
 import '../../../auth/providers/auth_providers.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
+
+  // TODO: Replace with actual hosted URLs
+  static const String privacyPolicyUrl =
+      'https://example.com/privacy-policy';
+  static const String termsOfServiceUrl =
+      'https://example.com/terms-of-service';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -43,6 +50,23 @@ class SettingsScreen extends ConsumerWidget {
           // Account Section
           _buildSectionHeader(context, 'Account'),
           _buildSignOutTile(context, ref),
+
+          const Divider(height: 32),
+
+          // Legal Section
+          _buildSectionHeader(context, 'Legal'),
+          _buildLegalTile(
+            context,
+            title: 'Privacy Policy',
+            icon: Icons.privacy_tip_outlined,
+            url: privacyPolicyUrl,
+          ),
+          _buildLegalTile(
+            context,
+            title: 'Terms of Service',
+            icon: Icons.description_outlined,
+            url: termsOfServiceUrl,
+          ),
 
           const SizedBox(height: 32),
         ],
@@ -138,5 +162,44 @@ class SettingsScreen extends ConsumerWidget {
         }
       },
     );
+  }
+
+  Widget _buildLegalTile(
+    BuildContext context, {
+    required String title,
+    required IconData icon,
+    required String url,
+  }) {
+    return ListTile(
+      leading: Icon(icon),
+      title: Text(title),
+      trailing: const Icon(Icons.open_in_new, size: 20),
+      onTap: () => _launchURL(context, url, title),
+    );
+  }
+
+  Future<void> _launchURL(
+    BuildContext context,
+    String url,
+    String title,
+  ) async {
+    try {
+      final uri = Uri.parse(url);
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+      } else {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Could not open $title')),
+          );
+        }
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Could not open $title')),
+        );
+      }
+    }
   }
 }
