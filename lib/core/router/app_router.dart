@@ -9,6 +9,7 @@ import '../../features/auth/providers/auth_providers.dart';
 import '../../features/settings/presentation/screens/settings_screen.dart';
 import '../../features/subscription/presentation/screens/premium_landing_screen.dart';
 import '../../features/subscription/presentation/screens/manage_subscription_screen.dart';
+import '../../features/prayer_note/presentation/screens/my_library_screen.dart';
 
 /// App routes
 class AppRoutes {
@@ -18,6 +19,7 @@ class AppRoutes {
   static const settings = '/settings';
   static const premium = '/premium';
   static const manageSubscription = '/manage-subscription';
+  static const myLibrary = '/my-library';
 }
 
 /// GoRouter configuration provider
@@ -48,6 +50,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.manageSubscription,
         builder: (context, state) => const ManageSubscriptionScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.myLibrary,
+        builder: (context, state) => const MyLibraryScreen(),
       ),
       GoRoute(
         path: '/login-callback',

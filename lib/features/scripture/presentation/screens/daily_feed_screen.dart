@@ -9,6 +9,7 @@ import '../providers/scripture_providers.dart';
 import '../widgets/scripture_card.dart';
 import '../widgets/page_indicator.dart';
 import '../widgets/content_blocker.dart';
+import '../widgets/navigation_arrow_button.dart';
 import 'package:severalbible/features/subscription/presentation/widgets/upsell_dialog.dart';
 
 /// Main screen displaying daily scriptures in a PageView
@@ -69,50 +70,92 @@ class _DailyFeedScreenState extends ConsumerState<DailyFeedScreen> {
   }) {
     final hasReachedLimit = currentIndex >= scriptures.length;
     final showBlocker = hasReachedLimit && tier != UserTier.premium;
+    final itemCount = showBlocker ? scriptures.length + 1 : scriptures.length;
 
     return Column(
       children: [
         Expanded(
-          child: PageView.builder(
-            controller: _pageController,
-            itemCount: showBlocker ? scriptures.length + 1 : scriptures.length,
-            onPageChanged: (index) {
-              ref.read(currentScriptureIndexProvider.notifier).state = index;
+          child: Stack(
+            children: [
+              PageView.builder(
+                controller: _pageController,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: itemCount,
+                onPageChanged: (index) {
+                  ref.read(currentScriptureIndexProvider.notifier).state = index;
 
-              // Track view if within scriptures
-              if (index < scriptures.length) {
-                ref
-                    .read(scriptureViewTrackerProvider.notifier)
-                    .trackView(scriptures[index].id);
-              }
-            },
-            itemBuilder: (context, index) {
-              if (index >= scriptures.length) {
-                return ContentBlocker(
-                  tier: tier,
-                  onAction: () => _handleBlockerAction(tier),
-                );
-              }
-              return Center(
-                child: ScriptureCard(
-                  scripture: scriptures[index],
-                  onMeditationTap: tier != UserTier.guest
-                      ? () => _openMeditationSheet(scriptures[index])
-                      : null,
+                  // Track view if within scriptures
+                  if (index < scriptures.length) {
+                    ref
+                        .read(scriptureViewTrackerProvider.notifier)
+                        .trackView(scriptures[index].id);
+                  }
+                },
+                itemBuilder: (context, index) {
+                  if (index >= scriptures.length) {
+                    return ContentBlocker(
+                      tier: tier,
+                      onAction: () => _handleBlockerAction(tier),
+                    );
+                  }
+                  return Center(
+                    child: ScriptureCard(
+                      scripture: scriptures[index],
+                      onMeditationTap: tier != UserTier.guest
+                          ? () => _openMeditationSheet(scriptures[index])
+                          : null,
+                    ),
+                  );
+                },
+              ),
+              // Left arrow
+              Positioned(
+                left: 16,
+                top: 0,
+                bottom: 0,
+                child: Center(
+                  child: NavigationArrowButton(
+                    icon: Icons.arrow_back_ios,
+                    onPressed: () => _navigateToPage(currentIndex - 1),
+                    isEnabled: currentIndex > 0,
+                    side: NavigationSide.left,
+                  ),
                 ),
-              );
-            },
+              ),
+              // Right arrow
+              Positioned(
+                right: 16,
+                top: 0,
+                bottom: 0,
+                child: Center(
+                  child: NavigationArrowButton(
+                    icon: Icons.arrow_forward_ios,
+                    onPressed: () => _navigateToPage(currentIndex + 1),
+                    isEnabled: currentIndex < itemCount - 1,
+                    side: NavigationSide.right,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
         const SizedBox(height: 16),
         PageIndicator(
-          pageCount: showBlocker ? scriptures.length + 1 : scriptures.length,
+          pageCount: itemCount,
           currentPage: currentIndex,
         ),
         const SizedBox(height: 24),
         if (tier == UserTier.premium && hasReachedLimit)
           _buildSeeMoreButton(context),
       ],
+    );
+  }
+
+  void _navigateToPage(int targetIndex) {
+    _pageController.animateToPage(
+      targetIndex,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
     );
   }
 
