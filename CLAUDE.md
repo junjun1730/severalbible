@@ -141,15 +141,24 @@ This project is designed around three core values:
 - `user_scripture_history` table: Reading history.
 - Row Level Security (RLS) for permission management.
 
+**Navigation & Access**:
+
+- **Library Icon**: Top-right AppBar icon (`Icons.library_books`) before Settings
+  - Premium users: Direct access to MyLibrary screen
+  - Non-premium users: Shows UpsellDialog with archiveLocked trigger
+  - Tooltip: "My Library" for accessibility
+
 ---
 
 ### F3. Prayer Note
 
 **Writing Feature**:
 
-- Location: **[Leave Meditation]** button at the bottom of the scripture card.
+- Location: Full-width **[Leave Meditation]** button at bottom of scripture card (below category chip).
+- Design: Material 3 FilledButton.icon with Icons.edit_note, 56dp height, 16px border radius.
+- Accessibility: Proper touch targets (≥ 48dp) and semantic labels.
 - Form: Flutter TextField (Multi-line).
-- Restriction: Not accessible to Guests.
+- Restriction: Not accessible to Guests (button appears disabled).
 - Storage: Real-time saving to Supabase `prayer_notes` table.
 
 **Viewing Feature (Calendar View)**:

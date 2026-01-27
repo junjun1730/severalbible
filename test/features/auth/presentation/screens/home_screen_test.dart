@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:severalbible/features/auth/presentation/screens/home_screen.dart';
 import 'package:severalbible/features/auth/domain/user_tier.dart';
 import 'package:severalbible/features/auth/providers/auth_providers.dart';
+import 'package:severalbible/features/subscription/presentation/widgets/upsell_dialog.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show User;
 
 void main() {
@@ -78,6 +79,97 @@ void main() {
       final appBar = tester.widget<AppBar>(find.byType(AppBar));
       final theme = Theme.of(tester.element(find.byType(AppBar)));
       expect(appBar.backgroundColor, theme.colorScheme.inversePrimary);
+    });
+
+    testWidgets('Library icon renders in AppBar before Settings', (tester) async {
+      // Arrange & Act
+      await tester.pumpWidget(createHomeScreen());
+      await tester.pumpAndSettle();
+      await tester.pump(const Duration(milliseconds: 600));
+
+      // Assert - Library icon exists
+      expect(find.byIcon(Icons.library_books), findsOneWidget);
+
+      // Assert - Verify it has tooltip
+      final libraryButton = tester.widget<IconButton>(
+        find.ancestor(
+          of: find.byIcon(Icons.library_books),
+          matching: find.byType(IconButton),
+        ),
+      );
+      expect(libraryButton.tooltip, equals('My Library'));
+      expect(libraryButton.onPressed, isNotNull);
+    });
+
+    testWidgets('Premium user navigates to MyLibrary when tapping library icon', (tester) async {
+      // Arrange
+      bool navigatedToMyLibrary = false;
+
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            currentUserTierProvider.overrideWith((ref) => Future.value(UserTier.premium)),
+            isLoggedInProvider.overrideWith((ref) => true),
+            currentUserProvider.overrideWith((ref) => null),
+          ],
+          child: MaterialApp.router(
+            routerConfig: GoRouter(
+              routes: [
+                GoRoute(
+                  path: '/',
+                  builder: (context, state) => const HomeScreen(),
+                ),
+                GoRoute(
+                  path: '/my-library',
+                  builder: (context, state) {
+                    navigatedToMyLibrary = true;
+                    return const Scaffold(body: Text('MyLibrary'));
+                  },
+                ),
+                GoRoute(
+                  path: '/settings',
+                  builder: (context, state) => const Scaffold(body: Text('Settings')),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await tester.pump(const Duration(milliseconds: 600));
+
+      // Act - Tap library icon
+      await tester.tap(find.byIcon(Icons.library_books));
+      await tester.pumpAndSettle();
+
+      // Assert
+      expect(navigatedToMyLibrary, isTrue);
+      expect(find.text('MyLibrary'), findsOneWidget);
+    });
+
+    testWidgets('Non-premium user sees UpsellDialog when tapping library icon', (tester) async {
+      // Arrange
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            currentUserTierProvider.overrideWith((ref) => Future.value(UserTier.member)),
+            isLoggedInProvider.overrideWith((ref) => true),
+            currentUserProvider.overrideWith((ref) => null),
+          ],
+          child: MaterialApp(
+            home: const HomeScreen(),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await tester.pump(const Duration(milliseconds: 600));
+
+      // Act - Tap library icon
+      await tester.tap(find.byIcon(Icons.library_books));
+      await tester.pumpAndSettle();
+
+      // Assert - UpsellDialog should appear
+      expect(find.byType(UpsellDialog), findsOneWidget);
     });
   });
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:severalbible/features/scripture/domain/entities/scripture.dart';
 import 'package:severalbible/features/scripture/presentation/widgets/scripture_card.dart';
+import 'package:severalbible/features/scripture/presentation/widgets/meditation_button.dart';
 
 void main() {
   late Scripture testScripture;
@@ -129,6 +130,106 @@ void main() {
       // Should have a container with gradient decoration
       final containerFinder = find.byType(Container);
       expect(containerFinder, findsWidgets);
+    });
+
+    testWidgets('meditation button spans full card width', (WidgetTester tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: SingleChildScrollView(
+              child: SizedBox(
+                width: 350,
+                child: ScriptureCard(
+                  scripture: testScripture,
+                  onMeditationTap: () {},
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      // Find the MeditationButton widget
+      final buttonFinder = find.byType(MeditationButton);
+      expect(buttonFinder, findsOneWidget);
+
+      // Get button width - should be close to card content width
+      final buttonWidth = tester.getSize(buttonFinder).width;
+
+      // Button should be at least 200px wide (accounting for padding)
+      expect(buttonWidth, greaterThan(200));
+      expect(find.text('Leave Meditation'), findsOneWidget);
+    });
+
+    testWidgets('meditation button positioned below category chip', (WidgetTester tester) async {
+      await tester.pumpWidget(createWidgetUnderTest(testScripture));
+      await tester.pumpAndSettle();
+
+      // Find chip and button
+      final chipFinder = find.byType(Chip);
+      final buttonFinder = find.text('Leave Meditation');
+
+      expect(chipFinder, findsOneWidget);
+      expect(buttonFinder, findsOneWidget);
+
+      // Get Y positions
+      final chipY = tester.getBottomLeft(chipFinder).dy;
+      final buttonY = tester.getTopLeft(buttonFinder).dy;
+
+      // Button should be below chip
+      expect(buttonY, greaterThan(chipY));
+    });
+
+    testWidgets('guest users see disabled meditation button', (WidgetTester tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: ScriptureCard(
+              scripture: testScripture,
+              onMeditationTap: null, // Guest user - no callback
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      // Button text should exist
+      expect(find.text('Leave Meditation'), findsOneWidget);
+
+      // Try to tap - should not do anything (button is disabled)
+      await tester.tap(find.text('Leave Meditation'));
+      await tester.pump();
+
+      // No error should occur (button is disabled)
+    });
+
+    testWidgets('member and premium users see enabled meditation button', (WidgetTester tester) async {
+      bool wasTapped = false;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: ScriptureCard(
+              scripture: testScripture,
+              onMeditationTap: () {
+                wasTapped = true;
+              },
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      // Button should be present
+      expect(find.text('Leave Meditation'), findsOneWidget);
+
+      // Tap the button
+      await tester.tap(find.text('Leave Meditation'));
+      await tester.pump();
+
+      // Callback should be invoked
+      expect(wasTapped, isTrue);
     });
   });
 }

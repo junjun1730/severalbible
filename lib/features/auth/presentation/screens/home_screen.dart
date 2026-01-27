@@ -7,6 +7,7 @@ import '../widgets/onboarding_popup.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../scripture/presentation/screens/daily_feed_screen.dart';
 import '../../../subscription/presentation/widgets/upsell_dialog.dart';
+import '../../../prayer_note/presentation/utils/my_library_navigation.dart';
 
 /// Home screen - Daily scripture feed
 class HomeScreen extends ConsumerStatefulWidget {
@@ -65,8 +66,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: [
           IconButton(
+            icon: const Icon(Icons.library_books),
+            onPressed: () => navigateToMyLibrary(context, ref),
+            tooltip: 'My Library',
+          ),
+          IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () => context.push(AppRoutes.settings),
+            tooltip: 'Settings',
           ),
         ],
       ),

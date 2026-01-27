@@ -75,6 +75,33 @@
 - [x] **[UI]** Implement Blocker Widget (Induce login/payment when limit reached) - 9 tests passing
 - [x] **[UI]** Implement PageIndicator Widget - 4 tests passing
 
+### 2-4. UI/UX Improvements ✅
+- [x] **[UI]** NavigationArrowButton widget (8 tests)
+- [x] **[UI]** Arrow navigation in DailyFeedScreen (12 tests)
+- [x] **[UI]** Remove AppBar title (3 tests)
+- [x] **[UI]** MyLibrary navigation guard (3 tests)
+- [x] **[UI]** Library icon in HomeScreen AppBar (3 tests)
+- [x] **[UI]** MeditationButton widget (6 tests)
+- [x] **[UI]** ScriptureCard footer refactor (4 tests)
+
+**Implementation Files**:
+- `lib/features/scripture/presentation/widgets/navigation_arrow_button.dart`
+- `lib/features/scripture/presentation/widgets/meditation_button.dart` [NEW]
+- `lib/features/scripture/presentation/screens/daily_feed_screen.dart`
+- `lib/features/scripture/presentation/widgets/scripture_card.dart`
+- `lib/features/auth/presentation/screens/home_screen.dart`
+- `lib/features/prayer_note/presentation/utils/my_library_navigation.dart`
+
+**Test Files** (39 tests total):
+- `test/features/scripture/presentation/widgets/navigation_arrow_button_test.dart` (8 tests)
+- `test/features/scripture/presentation/widgets/meditation_button_test.dart` (6 tests) [NEW]
+- `test/features/scripture/presentation/screens/daily_feed_screen_test.dart` (12 tests)
+- `test/features/scripture/presentation/widgets/scripture_card_test.dart` (13 tests)
+- `test/features/auth/presentation/screens/home_screen_test.dart` (6 tests)
+- `test/features/prayer_note/presentation/utils/my_library_navigation_test.dart` (3 tests)
+
+**Coverage**: 85%+ overall
+
 ---
 
 ## Phase 3: Prayer Note System

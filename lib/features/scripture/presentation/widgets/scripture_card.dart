@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../domain/entities/scripture.dart';
+import 'meditation_button.dart';
 
 /// A card widget displaying a scripture verse with beautiful design
 class ScriptureCard extends StatelessWidget {
@@ -102,27 +103,34 @@ class ScriptureCard extends StatelessWidget {
   }
 
   Widget _buildFooter(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.min,
       children: [
+        // Category chip (left-aligned)
         if (scripture.category != null)
-          Chip(
-            label: Text(scripture.category!),
-            backgroundColor: Theme.of(
-              context,
-            ).colorScheme.primary.withValues(alpha: 0.1),
-            labelStyle: TextStyle(
-              color: Theme.of(context).colorScheme.primary,
-              fontWeight: FontWeight.w500,
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Chip(
+              label: Text(scripture.category!),
+              backgroundColor: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
+              labelStyle: TextStyle(
+                color: Theme.of(context).colorScheme.primary,
+                fontWeight: FontWeight.w500,
+              ),
+              side: BorderSide.none,
             ),
-            side: BorderSide.none,
           ),
-        if (onMeditationTap != null)
-          TextButton.icon(
-            onPressed: onMeditationTap,
-            icon: const Icon(Icons.edit_note),
-            label: const Text('Leave Meditation'),
-          ),
+
+        // Spacing
+        if (scripture.category != null)
+          const SizedBox(height: 16),
+
+        // Meditation button (full width)
+        MeditationButton(
+          isEnabled: onMeditationTap != null,
+          onTap: onMeditationTap ?? () {},
+        ),
       ],
     );
   }
