@@ -242,6 +242,62 @@
 
 ---
 
+## Phase 4.5: UI Upgrade (Material 3 Redesign)
+**Goal**: Modernize UI with purple branding, Material 3, and custom animations.
+**Detailed TDD Checklist**: See `checklist/ui-upgrade/ui-upgrade-checklist.md` (158 tests, 8-10 days)
+
+### 4.5-1. Theme System Foundation 🔄 (4/6 complete)
+- [x] **[Theme]** Create AppTheme with purple seed color (#7C6FE8) and Material 3 (8 tests passing)
+- [x] **[Theme]** Create AppColors design tokens (5 tests passing)
+- [x] **[Theme]** Create AppTypography type scale (system fonts only) (5 tests passing)
+- [x] **[Theme]** Create AppSpacing and AppDimensions (4 tests passing)
+- [ ] **[Theme]** Integrate theme into main.dart
+- [ ] **[Theme]** Create theme utility extensions
+
+### 4.5-2. Core UI Components ✅ / 🔄 / ⏳
+- [ ] **[Widget]** Redesign ScriptureCard to match ui-sample (clean, centered, purple badge)
+- [ ] **[Widget]** Create unified AppButton system (56dp height, 16px radius)
+- [ ] **[Widget]** Create EmptyState component (minimal design from ui-sample)
+- [ ] **[Widget]** Update MyLibrary empty state
+- [ ] **[Widget]** Create AppBottomSheet modal infrastructure
+- [ ] **[Widget]** Convert SettingsScreen to modal presentation
+- [ ] **[Widget]** Redesign PrayerNoteInput as modal
+
+### 4.5-3. Screen-Level Updates ✅ / 🔄 / ⏳
+- [ ] **[UI]** Redesign PageIndicator (purple dots from ui-sample)
+- [ ] **[UI]** Update DailyFeedScreen layout (page indicator below cards)
+- [ ] **[UI]** Update LoginScreen with new button styles
+- [ ] **[UI]** Update SplashScreen with purple branding
+- [ ] **[UI]** Update OnboardingPopup with new button styles
+- [ ] **[UI]** Update PremiumLandingScreen with purple branding
+- [ ] **[UI]** Update UpsellDialog with new button styles
+
+### 4.5-4. Animations & Polish ✅ / 🔄 / ⏳
+- [ ] **[Anim]** Create AppAnimations utility (fade, scale, slide)
+- [ ] **[Anim]** Add ScriptureCard entrance animation (fade + scale)
+- [ ] **[Anim]** Add MeditationButton tap animation (scale)
+- [ ] **[Anim]** Add modal slide-up animation
+- [ ] **[Anim]** Add PageIndicator dot transition animation
+- [ ] **[Anim]** Add EmptyState fade-in animation
+- [ ] **[Polish]** Add button hover/press states
+
+**Test Coverage**:
+- Theme System: 38 tests (95%+ coverage goal)
+- Core UI Components: 52 tests (90%+ coverage goal)
+- Screen-Level Updates: 38 tests (90%+ coverage goal)
+- Animations & Polish: 30 tests (95%+ coverage goal)
+- **Total**: 158 tests
+
+**Key Changes**:
+- Primary brand color: Purple #7C6FE8
+- System fonts (no google_fonts)
+- Material 3 design system
+- Modal presentations (bottom sheets)
+- Custom animations (fade, scale, slide)
+- Dark mode deferred to post-MVP
+
+---
+
 ## Phase 5: Optimization & Launch
 **Goal**: Improve app completeness and release to stores.
 
