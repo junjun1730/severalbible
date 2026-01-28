@@ -246,12 +246,12 @@
 **Goal**: Modernize UI with purple branding, Material 3, and custom animations.
 **Detailed TDD Checklist**: See `checklist/ui-upgrade/ui-upgrade-checklist.md` (158 tests, 8-10 days)
 
-### 4.5-1. Theme System Foundation 🔄 (4/6 complete)
+### 4.5-1. Theme System Foundation 🔄 (5/6 complete)
 - [x] **[Theme]** Create AppTheme with purple seed color (#7C6FE8) and Material 3 (8 tests passing)
 - [x] **[Theme]** Create AppColors design tokens (5 tests passing)
 - [x] **[Theme]** Create AppTypography type scale (system fonts only) (5 tests passing)
 - [x] **[Theme]** Create AppSpacing and AppDimensions (4 tests passing)
-- [ ] **[Theme]** Integrate theme into main.dart
+- [x] **[Theme]** Integrate theme into main.dart (3 tests passing)
 - [ ] **[Theme]** Create theme utility extensions
 
 ### 4.5-2. Core UI Components ✅ / 🔄 / ⏳
