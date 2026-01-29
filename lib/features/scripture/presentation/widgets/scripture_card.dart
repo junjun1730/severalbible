@@ -1,8 +1,56 @@
 import 'package:flutter/material.dart';
+import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_typography.dart';
 import '../../domain/entities/scripture.dart';
 import 'meditation_button.dart';
 
-/// A card widget displaying a scripture verse with beautiful design
+/// A card widget displaying a scripture verse with Material 3 design.
+///
+/// ## Design Features (Phase 4.5 Cycle 2.1)
+/// - Solid background color (no gradient) using Material 3 Card
+/// - Purple circular icon badge at top center (book icon)
+/// - Center-aligned scripture content with proper typography
+/// - Reference text in purple at bottom
+/// - 24px border radius and padding (from design tokens)
+/// - Clean, minimal aesthetic matching ui-sample reference
+///
+/// ## Layout Structure
+/// ```
+/// Card (solid background, 24px border radius)
+///   └─ Padding (24px all around)
+///       └─ Column (center-aligned)
+///           ├─ Icon Badge (purple circle, book icon)
+///           ├─ Scripture Content (center-aligned, body text)
+///           ├─ Reference (center-aligned, purple color)
+///           └─ Meditation Button (full width)
+/// ```
+///
+/// ## Usage
+/// ```dart
+/// ScriptureCard(
+///   scripture: scripture,
+///   onMeditationTap: () => showMeditationModal(context),
+/// )
+/// ```
+///
+/// ## Design Tokens Used
+/// - `AppSpacing.cardRadius` - Border radius (24px)
+/// - `AppSpacing.lg` - Internal padding and spacing (24px)
+/// - `AppSpacing.md` - Medium spacing (16px)
+/// - `AppColors.primary` - Icon and reference color (Purple #7C6FE8)
+/// - `AppColors.onSurface` - Text content color
+/// - `AppTypography.textTheme.bodyLarge` - Content text style (18sp, 1.6 line height)
+/// - `AppTypography.textTheme.labelSmall` - Reference text style
+///
+/// ## Changes from Original Design
+/// - ✅ Replaced gradient background with solid Card
+/// - ✅ Added icon badge at top center
+/// - ✅ Changed from left-aligned to center-aligned content
+/// - ✅ Moved reference from top header to bottom (below content)
+/// - ✅ Removed premium badge from card
+/// - ✅ Removed category chip from card
+/// - ✅ Maintained MeditationButton at bottom
 class ScriptureCard extends StatelessWidget {
   final Scripture scripture;
   final VoidCallback? onMeditationTap;
@@ -15,37 +63,24 @@ class ScriptureCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
+    return Card(
       margin: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Theme.of(context).colorScheme.primaryContainer,
-            Theme.of(context).colorScheme.secondaryContainer,
-          ],
-        ),
-        borderRadius: BorderRadius.circular(24),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
-          ),
-        ],
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppSpacing.cardRadius),
       ),
+      elevation: 2,
       child: Padding(
-        padding: const EdgeInsets.all(24),
+        padding: EdgeInsets.all(AppSpacing.lg),
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            _buildHeader(context),
-            const SizedBox(height: 24),
+            _buildIconBadge(context),
+            SizedBox(height: AppSpacing.lg),
             _buildContent(context),
-            const SizedBox(height: 24),
+            SizedBox(height: AppSpacing.md),
+            _buildReference(context),
+            SizedBox(height: AppSpacing.lg),
             _buildFooter(context),
           ],
         ),
@@ -53,85 +88,50 @@ class ScriptureCard extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          scripture.reference,
-          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-            fontWeight: FontWeight.bold,
-            color: Theme.of(context).colorScheme.onPrimaryContainer,
-          ),
-        ),
-        if (scripture.isPremium)
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            decoration: BoxDecoration(
-              color: Colors.amber.shade100,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(Icons.star, size: 16, color: Colors.amber.shade700),
-                const SizedBox(width: 4),
-                Text(
-                  'Premium',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.amber.shade700,
-                  ),
-                ),
-              ],
-            ),
-          ),
-      ],
+  Widget _buildIconBadge(BuildContext context) {
+    return Container(
+      key: const Key('scripture_icon_badge'),
+      width: 56,
+      height: 56,
+      decoration: const BoxDecoration(
+        color: Color(0xFFF5F3FF),
+        shape: BoxShape.circle,
+      ),
+      child: Icon(
+        Icons.menu_book_rounded,
+        color: AppColors.primary,
+        size: 28,
+      ),
     );
   }
 
   Widget _buildContent(BuildContext context) {
     return Text(
       scripture.content,
-      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+      textAlign: TextAlign.center,
+      style: AppTypography.textTheme.bodyLarge?.copyWith(
         fontSize: 18,
         height: 1.6,
-        color: Theme.of(context).colorScheme.onPrimaryContainer,
+        color: AppColors.onSurface,
+      ),
+    );
+  }
+
+  Widget _buildReference(BuildContext context) {
+    return Text(
+      scripture.reference,
+      textAlign: TextAlign.center,
+      style: AppTypography.textTheme.labelSmall?.copyWith(
+        color: AppColors.primary,
+        fontWeight: FontWeight.w500,
       ),
     );
   }
 
   Widget _buildFooter(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        // Category chip (left-aligned)
-        if (scripture.category != null)
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Chip(
-              label: Text(scripture.category!),
-              backgroundColor: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
-              labelStyle: TextStyle(
-                color: Theme.of(context).colorScheme.primary,
-                fontWeight: FontWeight.w500,
-              ),
-              side: BorderSide.none,
-            ),
-          ),
-
-        // Spacing
-        if (scripture.category != null)
-          const SizedBox(height: 16),
-
-        // Meditation button (full width)
-        MeditationButton(
-          isEnabled: onMeditationTap != null,
-          onTap: onMeditationTap ?? () {},
-        ),
-      ],
+    return MeditationButton(
+      isEnabled: onMeditationTap != null,
+      onTap: onMeditationTap ?? () {},
     );
   }
 }
