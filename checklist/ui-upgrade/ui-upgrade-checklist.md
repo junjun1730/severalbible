@@ -10,12 +10,12 @@
 
 ## Progress Summary
 - **Total Items**: 158
-- **Completed**: 43 (Cycles 1.1-1.6 complete)
+- **Completed**: 52 (Cycles 1.1-1.6, 2.1 complete)
 - **In Progress**: 0
 - **Blocked**: 0
-- **Completion**: 27.2%
+- **Completion**: 32.9%
 - **Last Updated**: 2026-01-29
-- **Tests Passing**: 28 tests (Theme: 25 + Main: 3)
+- **Tests Passing**: 44 tests (Theme: 25 + Main: 3 + ScriptureCard: 16)
 
 ---
 
