@@ -256,7 +256,7 @@
 
 ### 4.5-2. Core UI Components ✅ / 🔄 / ⏳
 - [ ] **[Widget]** Redesign ScriptureCard to match ui-sample (clean, centered, purple badge)
-- [ ] **[Widget]** Create unified AppButton system (56dp height, 16px radius)
+- [x] **[Widget]** Create unified AppButton system (56dp height, 16px radius) - 7 tests passing
 - [ ] **[Widget]** Create EmptyState component (minimal design from ui-sample)
 - [ ] **[Widget]** Update MyLibrary empty state
 - [ ] **[Widget]** Create AppBottomSheet modal infrastructure
