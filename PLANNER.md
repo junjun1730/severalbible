@@ -260,7 +260,7 @@
 - [x] **[Widget]** Create EmptyState component (minimal design from ui-sample) - 7 tests passing
 - [x] **[Widget]** Update MyLibrary empty state - 9 tests passing (3 new + 6 updated)
 - [x] **[Widget]** Create AppBottomSheet modal infrastructure - 5 tests passing
-- [ ] **[Widget]** Convert SettingsScreen to modal presentation
+- [x] **[Widget]** Convert SettingsScreen to modal presentation - 17 tests passing (4 new + 13 updated)
 - [ ] **[Widget]** Redesign PrayerNoteInput as modal
 
 ### 4.5-3. Screen-Level Updates ✅ / 🔄 / ⏳

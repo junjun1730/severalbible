@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:severalbible/core/widgets/app_bottom_sheet.dart';
 import '../../providers/auth_providers.dart';
 import '../../domain/user_tier.dart';
 import '../widgets/onboarding_popup.dart';
@@ -8,6 +9,7 @@ import '../../../../core/router/app_router.dart';
 import '../../../scripture/presentation/screens/daily_feed_screen.dart';
 import '../../../subscription/presentation/widgets/upsell_dialog.dart';
 import '../../../prayer_note/presentation/utils/my_library_navigation.dart';
+import '../../../settings/presentation/screens/settings_screen.dart';
 
 /// Home screen - Daily scripture feed
 class HomeScreen extends ConsumerStatefulWidget {
@@ -72,7 +74,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           ),
           IconButton(
             icon: const Icon(Icons.settings),
-            onPressed: () => context.push(AppRoutes.settings),
+            onPressed: () {
+              AppBottomSheet.show(
+                context: context,
+                builder: (context) => const SettingsScreen(),
+              );
+            },
             tooltip: 'Settings',
           ),
         ],

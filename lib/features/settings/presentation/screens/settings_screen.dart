@@ -19,17 +19,23 @@ class SettingsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final hasPremiumAsync = ref.watch(hasPremiumProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Settings'),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      ),
-      body: ListView(
+    return Material(
+      color: Theme.of(context).colorScheme.surface,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          const SizedBox(height: 16),
+          // Modal Header
+          _buildModalHeader(context),
 
-          // Subscription Section
-          _buildSectionHeader(context, 'Subscription'),
+          // Settings Content
+          Flexible(
+            child: ListView(
+              shrinkWrap: true,
+              children: [
+              const SizedBox(height: 16),
+
+              // Subscription Section
+              _buildSectionHeader(context, 'Subscription'),
           hasPremiumAsync.when(
             data: (hasPremium) => hasPremium
                 ? _buildManageSubscriptionTile(context)
@@ -69,6 +75,32 @@ class SettingsScreen extends ConsumerWidget {
           ),
 
           const SizedBox(height: 32),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Modal header with title and close button
+  Widget _buildModalHeader(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(24, 16, 16, 16),
+      child: Row(
+        children: [
+          Text(
+            '설정',
+            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const Spacer(),
+          IconButton(
+            icon: const Icon(Icons.close),
+            onPressed: () => Navigator.of(context).pop(),
+            tooltip: 'Close',
+          ),
         ],
       ),
     );

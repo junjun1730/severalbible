@@ -63,7 +63,9 @@ void main() {
           routes: [
             GoRoute(
               path: AppRoutes.settings,
-              builder: (context, state) => const SettingsScreen(),
+              builder: (context, state) => Scaffold(
+                body: const SettingsScreen(),
+              ),
             ),
             GoRoute(
               path: AppRoutes.premium,
@@ -115,7 +117,8 @@ void main() {
       await tester.pumpWidget(createSubject());
       await tester.pumpAndSettle();
 
-      expect(find.text('Settings'), findsOneWidget);
+      // Korean title in modal header
+      expect(find.text('설정'), findsOneWidget);
     });
 
     testWidgets('shows "Upgrade to Premium" for member tier', (tester) async {
