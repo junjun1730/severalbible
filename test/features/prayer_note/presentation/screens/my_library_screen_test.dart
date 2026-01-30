@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:severalbible/core/widgets/empty_state.dart';
 import 'package:severalbible/features/prayer_note/domain/entities/prayer_note.dart';
 import 'package:severalbible/features/prayer_note/presentation/screens/my_library_screen.dart';
 import 'package:severalbible/features/prayer_note/presentation/providers/prayer_note_providers.dart';
@@ -117,7 +118,7 @@ void main() {
       await tester.pumpWidget(createDataWidget(notes: []));
       await tester.pumpAndSettle();
 
-      expect(find.textContaining('No meditations'), findsOneWidget);
+      expect(find.byType(EmptyState), findsOneWidget);
     });
 
     testWidgets('shows error state', (WidgetTester tester) async {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:severalbible/core/widgets/empty_state.dart';
 import '../providers/prayer_note_providers.dart';
 import '../widgets/prayer_calendar.dart';
 import '../widgets/prayer_note_card.dart';
@@ -123,31 +124,10 @@ class _MyLibraryScreenState extends ConsumerState<MyLibraryScreen> {
   }
 
   Widget _buildEmptyState(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.edit_note,
-            size: 64,
-            color: Theme.of(context).colorScheme.onSurfaceVariant,
-          ),
-          const SizedBox(height: 16),
-          Text(
-            'No meditations for this day',
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              color: Theme.of(context).colorScheme.onSurfaceVariant,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Start by reading today\'s scripture',
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: Theme.of(context).colorScheme.onSurfaceVariant,
-            ),
-          ),
-        ],
-      ),
+    return EmptyState(
+      icon: Icons.book,
+      title: '아직 작성된 감상문이 없습니다',
+      subtitle: '말씀을 읽고 첫 감상문을 작성해보세요',
     );
   }
 
