@@ -10,12 +10,12 @@
 
 ## Progress Summary
 - **Total Items**: 158
-- **Completed**: 70 (Cycles 1.1-1.6, 2.1-2.4 complete)
+- **Completed**: 75 (Cycles 1.1-1.6, 2.1-2.5 complete)
 - **In Progress**: 0
 - **Blocked**: 0
-- **Completion**: 44.3%
+- **Completion**: 47.5%
 - **Last Updated**: 2026-01-30
-- **Tests Passing**: 67 tests (Theme: 25 + Main: 3 + ScriptureCard: 16 + AppButton: 7 + EmptyState: 7 + MyLibrary: 9)
+- **Tests Passing**: 72 tests (Theme: 25 + Main: 3 + ScriptureCard: 16 + AppButton: 7 + EmptyState: 7 + MyLibrary: 9 + AppBottomSheet: 5)
 
 ---
 
@@ -755,40 +755,40 @@ Redesign ScriptureCard, create unified button system, update empty states, and r
 
 ---
 
-### Cycle 2.5: Modal Bottom Sheet Infrastructure
+### Cycle 2.5: Modal Bottom Sheet Infrastructure ✅
 
 #### RED 🔴
 **Test File**: `test/core/widgets/app_bottom_sheet_test.dart`
 
-- [ ] **[Test]** `should_display_bottom_sheet_with_rounded_corners`
-  - Verify top border radius (16px or 24px)
-  - Assert proper shape
-  - **Assertions**: RoundedRectangleBorder
+- [x] **[Test]** `should_display_bottom_sheet_with_rounded_corners` ✅
+  - Verify top border radius (24px)
+  - Assert proper shape via BoxDecoration
+  - **Assertions**: BorderRadius on top corners
   - **Complexity**: 2/5
   - **Duration**: 20 min
 
-- [ ] **[Test]** `should_display_drag_handle`
+- [x] **[Test]** `should_display_drag_handle` ✅
   - Verify drag handle bar at top center
   - Assert proper styling (gray, rounded)
   - **Assertions**: Container with gray color, centered
   - **Complexity**: 2/5
   - **Duration**: 20 min
 
-- [ ] **[Test]** `should_support_custom_height`
+- [x] **[Test]** `should_support_custom_height` ✅
   - Verify maxHeight can be customized
   - Assert default vs custom heights
   - **Assertions**: maxHeight parameter respected
   - **Complexity**: 2/5
   - **Duration**: 20 min
 
-- [ ] **[Test]** `should_be_dismissible_by_drag`
+- [x] **[Test]** `should_be_dismissible_by_drag` ✅
   - Verify sheet can be dismissed by dragging down
-  - Assert isDismissible == true
-  - **Assertions**: Dismiss behavior
+  - Assert enableDrag == true
+  - **Assertions**: Dismiss behavior works
   - **Complexity**: 2/5
   - **Duration**: 20 min
 
-- [ ] **[Test]** `should_apply_safe_area_padding`
+- [x] **[Test]** `should_apply_safe_area_padding` ✅
   - Verify SafeArea wraps content
   - Assert bottom padding for home indicator
   - **Assertions**: SafeArea present
@@ -798,22 +798,26 @@ Redesign ScriptureCard, create unified button system, update empty states, and r
 #### GREEN 🟢
 **Implementation File**: `lib/core/widgets/app_bottom_sheet.dart`
 
-- [ ] **[Impl]** Create AppBottomSheet utility class
-  - Static method showModalSheet()
-  - Apply rounded top corners (16-24px)
-  - Display drag handle at top
-  - Support custom maxHeight
-  - Enable dismissible by drag
+- [x] **[Impl]** Create AppBottomSheet utility class ✅
+  - Static method show() with generic return type
+  - Apply rounded top corners (24px)
+  - Display drag handle at top (_DragHandle widget)
+  - Support custom maxHeight (defaults to 90% screen height)
+  - Enable dismissible by drag (isDismissible, enableDrag params)
   - Apply SafeArea padding
   - **Complexity**: 2/5
   - **Duration**: 1.5 hours
+  - **Note**: 5 tests passing (all scenarios covered)
 
 #### REFACTOR 🔵
-- [ ] Extract drag handle as _DragHandle widget
-- [ ] Add documentation with usage examples
+- [x] Extract drag handle as _DragHandle widget ✅
+- [x] Add documentation with usage examples ✅
+- [x] Use Material 3 design (transparent background, surface color) ✅
 
 **Cycle 2.5 Estimate**: 3 hours
+**Cycle 2.5 Actual**: 2 hours
 **Dependencies**: Phase 1 (AppTheme)
+**Status**: ✅ COMPLETE (5 tests passing, 35 total core tests passing)
 
 ---
 
