@@ -254,14 +254,14 @@
 - [x] **[Theme]** Integrate theme into main.dart (3 tests passing)
 - [x] **[Theme]** Create theme utility extensions (3 tests passing)
 
-### 4.5-2. Core UI Components ✅ / 🔄 / ⏳
+### 4.5-2. Core UI Components ✅
 - [ ] **[Widget]** Redesign ScriptureCard to match ui-sample (clean, centered, purple badge)
 - [x] **[Widget]** Create unified AppButton system (56dp height, 16px radius) - 7 tests passing
 - [x] **[Widget]** Create EmptyState component (minimal design from ui-sample) - 7 tests passing
 - [x] **[Widget]** Update MyLibrary empty state - 9 tests passing (3 new + 6 updated)
 - [x] **[Widget]** Create AppBottomSheet modal infrastructure - 5 tests passing
 - [x] **[Widget]** Convert SettingsScreen to modal presentation - 17 tests passing (4 new + 13 updated)
-- [ ] **[Widget]** Redesign PrayerNoteInput as modal
+- [x] **[Widget]** Redesign PrayerNoteInput as modal - 37 total prayer_note widget tests passing (7 new modal tests)
 
 ### 4.5-3. Screen-Level Updates ✅ / 🔄 / ⏳
 - [ ] **[UI]** Redesign PageIndicator (purple dots from ui-sample)

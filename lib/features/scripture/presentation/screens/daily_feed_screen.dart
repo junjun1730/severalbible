@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:severalbible/core/widgets/app_bottom_sheet.dart';
 import '../../../auth/domain/user_tier.dart';
 import '../../../auth/providers/auth_providers.dart';
+import '../../../prayer_note/presentation/widgets/prayer_note_input.dart';
+import '../../../prayer_note/presentation/providers/prayer_note_providers.dart';
 import '../../../../core/router/app_router.dart';
 import '../../domain/entities/scripture.dart';
 import '../providers/scripture_providers.dart';
@@ -252,61 +255,50 @@ class _DailyFeedScreenState extends ConsumerState<DailyFeedScreen> {
   }
 
   void _openMeditationSheet(Scripture scripture) {
-    // To be implemented in Phase 3 (Prayer Note System)
-    showModalBottomSheet<void>(
+    final controller = TextEditingController();
+
+    AppBottomSheet.show(
       context: context,
-      isScrollControlled: true,
-      builder: (context) => Padding(
-        padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom,
-        ),
-        child: Container(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Leave Meditation',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              const SizedBox(height: 16),
-              Text(
-                scripture.reference,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                maxLines: 5,
-                decoration: InputDecoration(
-                  hintText: 'Write your meditation...',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Prayer note feature coming in Phase 3!'),
-                      ),
-                    );
-                  },
-                  child: const Text('Save'),
-                ),
-              ),
-            ],
-          ),
-        ),
+      builder: (context) => PrayerNoteInputModal(
+        scripture: scripture,
+        controller: controller,
+        onSave: () async {
+          // Save the prayer note
+          final result = await ref
+              .read(prayerNoteRepositoryProvider)
+              .createNote(
+                content: controller.text.trim(),
+                scriptureId: scripture.id,
+                scriptureReference: scripture.reference,
+              );
+
+          result.fold(
+            (error) {
+              if (context.mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Failed to save: $error')),
+                );
+              }
+            },
+            (note) {
+              if (context.mounted) {
+                Navigator.of(context).pop();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('감상문이 저장되었습니다')),
+                );
+              }
+            },
+          );
+        },
+        onCancel: () {
+          Navigator.of(context).pop();
+          controller.dispose();
+        },
       ),
-    );
+    ).then((_) {
+      // Dispose controller when modal is dismissed
+      controller.dispose();
+    });
   }
 
   void _loadPremiumScriptures() {

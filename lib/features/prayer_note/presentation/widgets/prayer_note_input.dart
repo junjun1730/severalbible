@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+export 'prayer_note_input_modal.dart';
+
 /// A widget for entering prayer note/meditation content
 /// Displays character count and handles save action
 class PrayerNoteInput extends StatefulWidget {
