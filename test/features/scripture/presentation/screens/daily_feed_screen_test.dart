@@ -9,6 +9,7 @@ import 'package:severalbible/features/scripture/presentation/providers/scripture
 import 'package:severalbible/features/scripture/presentation/widgets/scripture_card.dart';
 import 'package:severalbible/features/scripture/presentation/widgets/page_indicator.dart';
 import 'package:severalbible/features/scripture/presentation/widgets/navigation_arrow_button.dart';
+import 'package:severalbible/features/scripture/presentation/widgets/meditation_button.dart';
 import 'package:severalbible/features/auth/domain/user_tier.dart';
 import 'package:severalbible/features/auth/providers/auth_providers.dart';
 
@@ -293,6 +294,144 @@ void main() {
       // Both arrow buttons and page indicator should be present
       expect(find.byType(NavigationArrowButton), findsNWidgets(2));
       expect(find.byType(PageIndicator), findsOneWidget);
+    });
+  });
+
+  group('DailyFeedScreen MeditationButton Layout (Cycle 3.2)', () {
+    testWidgets('should display meditation button below page indicator', (
+      WidgetTester tester,
+    ) async {
+      await tester.pumpWidget(
+        createDataWidget(scriptures: testScriptures, tier: UserTier.member),
+      );
+      await tester.pumpAndSettle();
+
+      // Find PageIndicator and MeditationButton
+      final pageIndicatorFinder = find.byType(PageIndicator);
+      final meditationButtonFinder = find.byType(MeditationButton);
+
+      expect(pageIndicatorFinder, findsOneWidget);
+      expect(meditationButtonFinder, findsOneWidget);
+
+      // Verify MeditationButton is below PageIndicator
+      final pageIndicatorRect = tester.getRect(pageIndicatorFinder);
+      final buttonRect = tester.getRect(meditationButtonFinder);
+
+      expect(buttonRect.top, greaterThan(pageIndicatorRect.bottom));
+    });
+
+    testWidgets('should enable meditation button for member users', (
+      WidgetTester tester,
+    ) async {
+      await tester.pumpWidget(
+        createDataWidget(scriptures: testScriptures, tier: UserTier.member),
+      );
+      await tester.pumpAndSettle();
+
+      // Find MeditationButton
+      final meditationButton = tester.widget<MeditationButton>(
+        find.byType(MeditationButton),
+      );
+
+      expect(meditationButton.isEnabled, isTrue);
+    });
+
+    testWidgets('should enable meditation button for premium users', (
+      WidgetTester tester,
+    ) async {
+      await tester.pumpWidget(
+        createDataWidget(scriptures: testScriptures, tier: UserTier.premium),
+      );
+      await tester.pumpAndSettle();
+
+      // Find MeditationButton
+      final meditationButton = tester.widget<MeditationButton>(
+        find.byType(MeditationButton),
+      );
+
+      expect(meditationButton.isEnabled, isTrue);
+    });
+
+    testWidgets('should disable meditation button for guest users', (
+      WidgetTester tester,
+    ) async {
+      await tester.pumpWidget(
+        createDataWidget(scriptures: [testScriptures[0]], tier: UserTier.guest),
+      );
+      await tester.pumpAndSettle();
+
+      // Find MeditationButton
+      final meditationButton = tester.widget<MeditationButton>(
+        find.byType(MeditationButton),
+      );
+
+      expect(meditationButton.isEnabled, isFalse);
+    });
+
+    testWidgets('should apply proper spacing between elements', (
+      WidgetTester tester,
+    ) async {
+      await tester.pumpWidget(
+        createDataWidget(scriptures: testScriptures, tier: UserTier.member),
+      );
+      await tester.pumpAndSettle();
+
+      // Find all relevant widgets
+      final pageIndicatorFinder = find.byType(PageIndicator);
+      final meditationButtonFinder = find.byType(MeditationButton);
+
+      final pageIndicatorRect = tester.getRect(pageIndicatorFinder);
+      final buttonRect = tester.getRect(meditationButtonFinder);
+
+      // Verify spacing between PageIndicator and MeditationButton
+      // According to plan: 16px after PageView, 24px before button
+      final spacing = buttonRect.top - pageIndicatorRect.bottom;
+      expect(spacing, greaterThan(20.0)); // Should be ~24px
+    });
+
+    testWidgets('should handle guest user single card layout', (
+      WidgetTester tester,
+    ) async {
+      await tester.pumpWidget(
+        createDataWidget(scriptures: [testScriptures[0]], tier: UserTier.guest),
+      );
+      await tester.pumpAndSettle();
+
+      // Guest users see 1 card
+      expect(find.byType(ScriptureCard), findsOneWidget);
+      expect(find.byType(MeditationButton), findsOneWidget);
+      expect(find.byType(PageIndicator), findsOneWidget);
+
+      // MeditationButton should be disabled
+      final button = tester.widget<MeditationButton>(
+        find.byType(MeditationButton),
+      );
+      expect(button.isEnabled, isFalse);
+    });
+
+    testWidgets('should handle member user three cards layout', (
+      WidgetTester tester,
+    ) async {
+      await tester.pumpWidget(
+        createDataWidget(scriptures: testScriptures, tier: UserTier.member),
+      );
+      await tester.pumpAndSettle();
+
+      // Member users see 3 cards (but only 1 visible at a time in PageView)
+      expect(find.byType(PageView), findsOneWidget);
+      expect(find.byType(MeditationButton), findsOneWidget);
+
+      // PageIndicator should show 3 pages
+      final pageIndicator = tester.widget<PageIndicator>(
+        find.byType(PageIndicator),
+      );
+      expect(pageIndicator.pageCount, equals(3));
+
+      // MeditationButton should be enabled
+      final button = tester.widget<MeditationButton>(
+        find.byType(MeditationButton),
+      );
+      expect(button.isEnabled, isTrue);
     });
   });
 }

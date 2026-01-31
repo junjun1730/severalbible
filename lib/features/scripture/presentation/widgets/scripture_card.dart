@@ -3,11 +3,10 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../domain/entities/scripture.dart';
-import 'meditation_button.dart';
 
 /// A card widget displaying a scripture verse with Material 3 design.
 ///
-/// ## Design Features (Phase 4.5 Cycle 2.1)
+/// ## Design Features (Phase 4.5 Cycle 2.1 + Cycle 3.2)
 /// - Solid background color (no gradient) using Material 3 Card
 /// - Purple circular icon badge at top center (book icon)
 /// - Center-aligned scripture content with proper typography
@@ -22,15 +21,13 @@ import 'meditation_button.dart';
 ///       └─ Column (center-aligned)
 ///           ├─ Icon Badge (purple circle, book icon)
 ///           ├─ Scripture Content (center-aligned, body text)
-///           ├─ Reference (center-aligned, purple color)
-///           └─ Meditation Button (full width)
+///           └─ Reference (center-aligned, purple color)
 /// ```
 ///
 /// ## Usage
 /// ```dart
 /// ScriptureCard(
 ///   scripture: scripture,
-///   onMeditationTap: () => showMeditationModal(context),
 /// )
 /// ```
 ///
@@ -43,22 +40,20 @@ import 'meditation_button.dart';
 /// - `AppTypography.textTheme.bodyLarge` - Content text style (18sp, 1.6 line height)
 /// - `AppTypography.textTheme.labelSmall` - Reference text style
 ///
-/// ## Changes from Original Design
+/// ## Changes from Original Design (Cycle 3.2)
 /// - ✅ Replaced gradient background with solid Card
 /// - ✅ Added icon badge at top center
 /// - ✅ Changed from left-aligned to center-aligned content
 /// - ✅ Moved reference from top header to bottom (below content)
 /// - ✅ Removed premium badge from card
 /// - ✅ Removed category chip from card
-/// - ✅ Maintained MeditationButton at bottom
+/// - ✅ Removed MeditationButton from card (moved to DailyFeedScreen)
 class ScriptureCard extends StatelessWidget {
   final Scripture scripture;
-  final VoidCallback? onMeditationTap;
 
   const ScriptureCard({
     super.key,
     required this.scripture,
-    this.onMeditationTap,
   });
 
   @override
@@ -80,8 +75,6 @@ class ScriptureCard extends StatelessWidget {
             _buildContent(context),
             SizedBox(height: AppSpacing.md),
             _buildReference(context),
-            SizedBox(height: AppSpacing.lg),
-            _buildFooter(context),
           ],
         ),
       ),
@@ -125,13 +118,6 @@ class ScriptureCard extends StatelessWidget {
         color: AppColors.primary,
         fontWeight: FontWeight.w500,
       ),
-    );
-  }
-
-  Widget _buildFooter(BuildContext context) {
-    return MeditationButton(
-      isEnabled: onMeditationTap != null,
-      onTap: onMeditationTap ?? () {},
     );
   }
 }

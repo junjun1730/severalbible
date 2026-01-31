@@ -13,6 +13,7 @@ import '../widgets/scripture_card.dart';
 import '../widgets/page_indicator.dart';
 import '../widgets/content_blocker.dart';
 import '../widgets/navigation_arrow_button.dart';
+import '../widgets/meditation_button.dart';
 import 'package:severalbible/features/subscription/presentation/widgets/upsell_dialog.dart';
 
 /// Main screen displaying daily scriptures in a PageView
@@ -104,9 +105,6 @@ class _DailyFeedScreenState extends ConsumerState<DailyFeedScreen> {
                   return Center(
                     child: ScriptureCard(
                       scripture: scriptures[index],
-                      onMeditationTap: tier != UserTier.guest
-                          ? () => _openMeditationSheet(scriptures[index])
-                          : null,
                     ),
                   );
                 },
@@ -148,6 +146,16 @@ class _DailyFeedScreenState extends ConsumerState<DailyFeedScreen> {
           currentPage: currentIndex,
         ),
         const SizedBox(height: 24),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: MeditationButton(
+            isEnabled: tier != UserTier.guest && currentIndex < scriptures.length,
+            onTap: currentIndex < scriptures.length
+                ? () => _openMeditationSheet(scriptures[currentIndex])
+                : () {},
+          ),
+        ),
+        const SizedBox(height: 16),
         if (tier == UserTier.premium && hasReachedLimit)
           _buildSeeMoreButton(context),
       ],
@@ -263,13 +271,24 @@ class _DailyFeedScreenState extends ConsumerState<DailyFeedScreen> {
         scripture: scripture,
         controller: controller,
         onSave: () async {
+          // Get current user ID
+          final currentUser = ref.read(currentUserProvider);
+          if (currentUser == null) {
+            if (context.mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Please log in to save notes')),
+              );
+            }
+            return;
+          }
+
           // Save the prayer note
           final result = await ref
               .read(prayerNoteRepositoryProvider)
-              .createNote(
+              .createPrayerNote(
+                userId: currentUser.id,
                 content: controller.text.trim(),
                 scriptureId: scripture.id,
-                scriptureReference: scripture.reference,
               );
 
           result.fold(

@@ -31,10 +31,11 @@ class PageIndicator extends StatelessWidget {
 
   Widget _buildDot(BuildContext context, int index) {
     final isActive = index == currentPage;
+    final colorScheme = Theme.of(context).colorScheme;
+
     final color = isActive
-        ? (activeColor ?? Theme.of(context).colorScheme.primary)
-        : (inactiveColor ??
-              Theme.of(context).colorScheme.primary.withValues(alpha: 0.3));
+        ? (activeColor ?? colorScheme.primary)
+        : (inactiveColor ?? colorScheme.onSurface.withValues(alpha: 0.3));
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: spacing / 2),

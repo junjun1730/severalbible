@@ -78,7 +78,7 @@ void main() {
       expect(contentFinder, findsOneWidget);
     });
 
-    testWidgets('meditation button spans full card width', (WidgetTester tester) async {
+    testWidgets('should NOT display meditation button inside card (Cycle 3.2)', (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -87,7 +87,6 @@ void main() {
                 width: 350,
                 child: ScriptureCard(
                   scripture: testScripture,
-                  onMeditationTap: () {},
                 ),
               ),
             ),
@@ -96,67 +95,12 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      // Find the MeditationButton widget
+      // MeditationButton should NOT be inside the card anymore
       final buttonFinder = find.byType(MeditationButton);
-      expect(buttonFinder, findsOneWidget);
+      expect(buttonFinder, findsNothing);
 
-      // Get button width - should be close to card content width
-      final buttonWidth = tester.getSize(buttonFinder).width;
-
-      // Button should be at least 200px wide (accounting for padding)
-      expect(buttonWidth, greaterThan(200));
-      expect(find.text('Leave Meditation'), findsOneWidget);
-    });
-
-    testWidgets('guest users see disabled meditation button', (WidgetTester tester) async{
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: ScriptureCard(
-              scripture: testScripture,
-              onMeditationTap: null, // Guest user - no callback
-            ),
-          ),
-        ),
-      );
-      await tester.pumpAndSettle();
-
-      // Button text should exist
-      expect(find.text('Leave Meditation'), findsOneWidget);
-
-      // Try to tap - should not do anything (button is disabled)
-      await tester.tap(find.text('Leave Meditation'));
-      await tester.pump();
-
-      // No error should occur (button is disabled)
-    });
-
-    testWidgets('member and premium users see enabled meditation button', (WidgetTester tester) async {
-      bool wasTapped = false;
-
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: ScriptureCard(
-              scripture: testScripture,
-              onMeditationTap: () {
-                wasTapped = true;
-              },
-            ),
-          ),
-        ),
-      );
-      await tester.pumpAndSettle();
-
-      // Button should be present
-      expect(find.text('Leave Meditation'), findsOneWidget);
-
-      // Tap the button
-      await tester.tap(find.text('Leave Meditation'));
-      await tester.pump();
-
-      // Callback should be invoked
-      expect(wasTapped, isTrue);
+      // The text should also not be found
+      expect(find.text('Leave Meditation'), findsNothing);
     });
   });
 
