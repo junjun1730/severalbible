@@ -263,18 +263,20 @@
 - [x] **[Widget]** Convert SettingsScreen to modal presentation - 17 tests passing (4 new + 13 updated)
 - [x] **[Widget]** Redesign PrayerNoteInput as modal - 37 total prayer_note widget tests passing (7 new modal tests)
 
-### 4.5-3. Screen-Level Updates ✅ / 🔄 / ⏳
-- [ ] **[UI]** Redesign PageIndicator (purple dots from ui-sample)
-- [ ] **[UI]** Update DailyFeedScreen layout (page indicator below cards)
-- [ ] **[UI]** Update LoginScreen with new button styles
-- [ ] **[UI]** Update SplashScreen with purple branding
-- [ ] **[UI]** Update OnboardingPopup with new button styles
-- [ ] **[UI]** Update PremiumLandingScreen with purple branding
-- [ ] **[UI]** Update UpsellDialog with new button styles
+### 4.5-3. Screen-Level Updates ✅
+- [x] **[UI]** Redesign PageIndicator (purple dots from ui-sample) - 9 tests passing
+- [x] **[UI]** Update DailyFeedScreen layout (page indicator below cards) - 19 tests passing
+- [x] **[UI]** Update LoginScreen with new button styles - 3 tests passing
+- [x] **[UI]** Update SplashScreen with purple branding - 3 tests passing (already using theme correctly)
+- [x] **[UI]** Update OnboardingPopup with new button styles - 3 tests passing
+- [x] **[UI]** Update PremiumLandingScreen with purple branding - 3 tests passing
+- [x] **[UI]** Update UpsellDialog with new button styles - 3 tests passing
 
-### 4.5-4. Animations & Polish ✅ / 🔄 / ⏳
-- [ ] **[Anim]** Create AppAnimations utility (fade, scale, slide)
-- [ ] **[Anim]** Add ScriptureCard entrance animation (fade + scale)
+**Phase 3 Complete! 🎉** (71.5% overall progress, 123 tests passing)
+
+### 4.5-4. Animations & Polish 🔄
+- [x] **[Anim]** Create AppAnimations utility (fade, scale, slide) - 5 tests passing
+- [x] **[Anim]** Add ScriptureCard entrance animation (fade + scale) - 6 tests passing (Cycle 4.2 complete!)
 - [ ] **[Anim]** Add MeditationButton tap animation (scale)
 - [ ] **[Anim]** Add modal slide-up animation
 - [ ] **[Anim]** Add PageIndicator dot transition animation
