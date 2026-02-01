@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../core/widgets/app_button.dart';
 
 enum UpsellTrigger { archiveLocked, contentExhausted, premiumScripture }
 
@@ -57,19 +58,12 @@ class UpsellDialog extends StatelessWidget {
             style: TextStyle(color: Colors.grey),
           ),
         ),
-        ElevatedButton(
+        AppButton.primary(
           onPressed: () {
             Navigator.of(context).pop();
             context.push('/premium');
           },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Theme.of(context).primaryColor,
-            foregroundColor: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-          ),
-          child: const Text('Upgrade Now'),
+          text: 'Upgrade Now',
         ),
       ],
       actionsAlignment: MainAxisAlignment.center,

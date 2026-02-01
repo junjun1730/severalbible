@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../core/widgets/app_button.dart';
 
 /// Shows the onboarding popup to convert guest users to members
 Future<void> showOnboardingPopup(
@@ -80,26 +81,13 @@ class OnboardingPopup extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             // Sign in button
-            SizedBox(
-              width: double.infinity,
-              height: 48,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  onSignIn?.call();
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.primary,
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                child: const Text(
-                  'Sign In Now',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                ),
-              ),
+            AppButton.primary(
+              onPressed: () {
+                Navigator.of(context).pop();
+                onSignIn?.call();
+              },
+              text: 'Sign In Now',
+              fullWidth: true,
             ),
             const SizedBox(height: 12),
             // Maybe later button

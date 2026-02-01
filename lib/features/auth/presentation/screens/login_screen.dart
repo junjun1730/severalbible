@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../providers/auth_providers.dart';
 import '../../../../core/router/app_router.dart';
+import '../../../../core/widgets/app_button.dart';
 
 /// Login screen with social sign-in options
 class LoginScreen extends ConsumerStatefulWidget {
@@ -199,20 +200,20 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 ),
                 const Spacer(flex: 2),
                 // Sign-in buttons
-                _buildSignInButton(
+                AppButton.secondary(
                   onPressed: _isLoading ? null : _signInWithGoogle,
+                  text: 'Continue with Google',
                   icon: Icons.g_mobiledata,
-                  label: 'Continue with Google',
-                  backgroundColor: Colors.white,
-                  textColor: Colors.black87,
+                  fullWidth: true,
+                  isLoading: false,
                 ),
                 const SizedBox(height: 12),
-                _buildSignInButton(
+                AppButton.secondary(
                   onPressed: _isLoading ? null : _signInWithApple,
+                  text: 'Continue with Apple',
                   icon: Icons.apple,
-                  label: 'Continue with Apple',
-                  backgroundColor: Colors.black,
-                  textColor: Colors.white,
+                  fullWidth: true,
+                  isLoading: false,
                 ),
                 // Debug Email Login (only visible in debug mode)
                 if (kDebugMode) ...[
@@ -273,34 +274,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     );
   }
 
-  Widget _buildSignInButton({
-    required VoidCallback? onPressed,
-    required IconData icon,
-    required String label,
-    required Color backgroundColor,
-    required Color textColor,
-  }) {
-    return SizedBox(
-      width: double.infinity,
-      height: 56,
-      child: ElevatedButton.icon(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: backgroundColor,
-          foregroundColor: textColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          elevation: 2,
-        ),
-        icon: Icon(icon, size: 24),
-        label: Text(
-          label,
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-        ),
-      ),
-    );
-  }
 
   Widget _buildDebugEmailLogin() {
     return Container(
