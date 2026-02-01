@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:severalbible/core/animations/app_animations.dart';
 
 /// Material 3 bottom sheet utility for modal presentations.
 ///
@@ -31,7 +32,7 @@ class AppBottomSheet {
   /// Default max height as percentage of screen height.
   static const double _defaultMaxHeightFraction = 0.9;
 
-  /// Shows a modal bottom sheet with Material 3 design.
+  /// Shows a modal bottom sheet with Material 3 design and slide-up animation.
   ///
   /// Parameters:
   /// - [context]: Build context for navigation
@@ -51,38 +52,97 @@ class AppBottomSheet {
     final screenHeight = MediaQuery.of(context).size.height;
     final effectiveMaxHeight = maxHeight ?? screenHeight * _defaultMaxHeightFraction;
 
-    return showModalBottomSheet<T>(
+    return showGeneralDialog<T>(
       context: context,
-      isDismissible: isDismissible,
-      enableDrag: enableDrag,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (context) => Container(
-        constraints: BoxConstraints(
-          maxHeight: effectiveMaxHeight,
-        ),
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
-          borderRadius: const BorderRadius.vertical(
-            top: Radius.circular(_borderRadius),
+      barrierDismissible: isDismissible,
+      barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+      barrierColor: Colors.black54,
+      transitionDuration: AppAnimations.normal,
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return Align(
+          alignment: Alignment.bottomCenter,
+          child: _BottomSheetContent<T>(
+            maxHeight: effectiveMaxHeight,
+            enableDrag: enableDrag,
+            builder: builder,
           ),
-        ),
-        child: SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Drag handle
-              const _DragHandle(),
+        );
+      },
+      transitionBuilder: (context, animation, secondaryAnimation, child) {
+        return SlideTransition(
+          position: Tween<Offset>(
+            begin: const Offset(0, 1), // Start from bottom
+            end: Offset.zero, // End at final position
+          ).animate(
+            CurvedAnimation(
+              parent: animation,
+              curve: AppAnimations.easeOut,
+            ),
+          ),
+          child: child,
+        );
+      },
+    );
+  }
+}
 
-              // Content
-              Flexible(
-                child: builder(context),
-              ),
-            ],
-          ),
+/// Private bottom sheet content widget.
+///
+/// Wraps the user content in a Material 3 styled container
+/// with rounded top corners, drag handle, and safe area.
+class _BottomSheetContent<T> extends StatelessWidget {
+  const _BottomSheetContent({
+    required this.maxHeight,
+    required this.enableDrag,
+    required this.builder,
+  });
+
+  final double maxHeight;
+  final bool enableDrag;
+  final WidgetBuilder builder;
+
+  @override
+  Widget build(BuildContext context) {
+    final content = Container(
+      constraints: BoxConstraints(
+        maxHeight: maxHeight,
+      ),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(AppBottomSheet._borderRadius),
+        ),
+      ),
+      child: SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Drag handle
+            const _DragHandle(),
+
+            // Content
+            Flexible(
+              child: builder(context),
+            ),
+          ],
         ),
       ),
     );
+
+    // Wrap in GestureDetector for drag-to-dismiss if enabled
+    if (enableDrag) {
+      return GestureDetector(
+        onVerticalDragUpdate: (details) {
+          // Dismiss if dragged down significantly
+          if (details.primaryDelta != null && details.primaryDelta! > 10) {
+            Navigator.of(context).pop();
+          }
+        },
+        child: content,
+      );
+    }
+
+    return content;
   }
 }
 

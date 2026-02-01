@@ -198,5 +198,125 @@ void main() {
       );
       expect(safeArea, findsOneWidget);
     });
+
+    testWidgets('should animate slide-up on show', (WidgetTester tester) async {
+      // Arrange
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: Builder(
+              builder: (context) {
+                return ElevatedButton(
+                  onPressed: () {
+                    AppBottomSheet.show(
+                      context: context,
+                      builder: (context) => const SizedBox(
+                        height: 200,
+                        child: Text('Test Content'),
+                      ),
+                    );
+                  },
+                  child: const Text('Show Sheet'),
+                );
+              },
+            ),
+          ),
+        ),
+      );
+
+      // Act: Tap to show the bottom sheet
+      await tester.tap(find.text('Show Sheet'));
+      await tester.pump(); // Start the animation
+
+      // Assert: Initially, the sheet should not be fully visible
+      // (it should be animating from bottom)
+      expect(find.text('Test Content'), findsOneWidget);
+
+      // Assert: After animation completes, sheet should be fully visible
+      await tester.pumpAndSettle();
+      expect(find.text('Test Content'), findsOneWidget);
+    });
+
+    testWidgets('should use SlideTransition for bottom sheet animation', (
+      WidgetTester tester,
+    ) async {
+      // Arrange
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: Builder(
+              builder: (context) {
+                return ElevatedButton(
+                  onPressed: () {
+                    AppBottomSheet.show(
+                      context: context,
+                      builder: (context) => const Text('Test Content'),
+                    );
+                  },
+                  child: const Text('Show Sheet'),
+                );
+              },
+            ),
+          ),
+        ),
+      );
+
+      // Act: Show the bottom sheet
+      await tester.tap(find.text('Show Sheet'));
+      await tester.pump();
+
+      // Assert: SlideTransition should wrap the bottom sheet content
+      // Find the SlideTransition that contains the sheet content
+      final slideTransition = find.ancestor(
+        of: find.text('Test Content'),
+        matching: find.byType(SlideTransition),
+      );
+      expect(slideTransition, findsOneWidget);
+
+      // Complete the animation
+      await tester.pumpAndSettle();
+    });
+
+    testWidgets('should animate slide-down on dismiss', (
+      WidgetTester tester,
+    ) async {
+      // Arrange
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: Builder(
+              builder: (context) {
+                return ElevatedButton(
+                  onPressed: () {
+                    AppBottomSheet.show(
+                      context: context,
+                      builder: (context) => const Text('Test Content'),
+                    );
+                  },
+                  child: const Text('Show Sheet'),
+                );
+              },
+            ),
+          ),
+        ),
+      );
+
+      // Act: Show the bottom sheet
+      await tester.tap(find.text('Show Sheet'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Test Content'), findsOneWidget);
+
+      // Act: Dismiss by tapping outside (barrier)
+      await tester.tapAt(const Offset(10, 10)); // Tap outside the sheet
+      await tester.pump(); // Start dismiss animation
+
+      // Assert: Content should still be present during animation
+      expect(find.text('Test Content'), findsOneWidget);
+
+      // Assert: After animation completes, sheet should be gone
+      await tester.pumpAndSettle();
+      expect(find.text('Test Content'), findsNothing);
+    });
   });
 }
