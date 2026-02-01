@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:severalbible/core/animations/app_animations.dart';
 
 /// A dot indicator widget for page views
 class PageIndicator extends StatelessWidget {
@@ -40,7 +41,7 @@ class PageIndicator extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: spacing / 2),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
+        duration: AppAnimations.fast,
         curve: Curves.easeInOut,
         width: isActive ? activeDotWidth : dotSize,
         height: dotSize,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:severalbible/core/animations/app_animations.dart';
 import 'package:severalbible/features/scripture/presentation/widgets/page_indicator.dart';
 
 void main() {
@@ -192,13 +193,13 @@ void main() {
         createWidgetUnderTest(pageCount: 3, currentPage: 0),
       );
 
-      // Verify AnimatedContainer has 300ms duration
+      // Verify AnimatedContainer has 200ms duration (AppAnimations.fast)
       final containers = tester.widgetList<AnimatedContainer>(
         find.byType(AnimatedContainer),
       ).toList();
 
       for (final container in containers) {
-        expect(container.duration, equals(const Duration(milliseconds: 300)));
+        expect(container.duration, equals(AppAnimations.fast));
         expect(container.curve, equals(Curves.easeInOut));
       }
     });
