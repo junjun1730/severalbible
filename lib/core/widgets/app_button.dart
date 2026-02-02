@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 /// - Border radius: 16px
 /// - Proper disabled and loading states
 /// - Optional icon support
+/// - Interactive states: hover elevation, ripple effects, focus indicators
 ///
 /// Example usage:
 /// ```dart
@@ -220,7 +221,12 @@ class AppButton extends StatelessWidget {
     return Text(text);
   }
 
-  /// Builds the button style with consistent sizing and radius.
+  /// Builds the button style with consistent sizing, radius, and interactive states.
+  ///
+  /// Includes:
+  /// - Hover elevation changes (desktop/web)
+  /// - Visible ripple effect on tap
+  /// - Focus indicators for keyboard navigation
   ButtonStyle _buildButtonStyle() {
     return ButtonStyle(
       minimumSize: WidgetStateProperty.all(
@@ -237,7 +243,66 @@ class AppButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(_borderRadius),
         ),
       ),
+      // Elevation changes on hover for desktop/web
+      // Primary buttons get subtle lift on hover
+      elevation: _buildElevation(),
+      // Overlay color controls ripple effect and focus/hover overlays
+      overlayColor: _buildOverlayColor(),
     );
+  }
+
+  /// Builds elevation property with hover state support.
+  ///
+  /// Primary buttons:
+  /// - Default: 1dp elevation
+  /// - Hovered: 3dp elevation (subtle lift)
+  /// - Pressed: 1dp elevation
+  /// - Disabled: 0dp elevation
+  ///
+  /// Secondary and text buttons maintain flat appearance.
+  WidgetStateProperty<double>? _buildElevation() {
+    if (buttonType != _ButtonType.primary) {
+      // Secondary and text buttons remain flat
+      return null;
+    }
+
+    return WidgetStateProperty.resolveWith<double>((states) {
+      if (states.contains(WidgetState.disabled)) {
+        return 0.0;
+      }
+      if (states.contains(WidgetState.hovered)) {
+        return 3.0; // Subtle lift on hover
+      }
+      if (states.contains(WidgetState.pressed)) {
+        return 1.0; // Return to lower elevation when pressed
+      }
+      return 1.0; // Default elevation
+    });
+  }
+
+  /// Builds overlay color for ripple effect and interaction states.
+  ///
+  /// Provides visible feedback for:
+  /// - Tap/press (ripple effect)
+  /// - Hover (subtle highlight)
+  /// - Focus (keyboard navigation indicator)
+  WidgetStateProperty<Color> _buildOverlayColor() {
+    return WidgetStateProperty.resolveWith<Color>((states) {
+      if (states.contains(WidgetState.pressed)) {
+        // Visible ripple effect on press
+        return Colors.white.withOpacity(0.2);
+      }
+      if (states.contains(WidgetState.hovered)) {
+        // Subtle highlight on hover
+        return Colors.white.withOpacity(0.1);
+      }
+      if (states.contains(WidgetState.focused)) {
+        // Focus indicator for keyboard navigation
+        return Colors.white.withOpacity(0.15);
+      }
+      // No overlay for default state
+      return Colors.transparent;
+    });
   }
 }
 
