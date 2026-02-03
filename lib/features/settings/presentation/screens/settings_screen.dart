@@ -9,11 +9,11 @@ import '../../../auth/providers/auth_providers.dart';
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
-  // TODO: Replace with actual hosted URLs
+  // GitHub Pages URLs
   static const String privacyPolicyUrl =
-      'https://example.com/privacy-policy';
+      'https://junjun1730.github.io/severalbible/privacy_policy.html';
   static const String termsOfServiceUrl =
-      'https://example.com/terms-of-service';
+      'https://junjun1730.github.io/severalbible/terms_of_service.html';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
