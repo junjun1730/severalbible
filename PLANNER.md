@@ -313,5 +313,6 @@
 ### 5-2. Preparation for Release
 - [ ] **[Asset]** Create App Icon (Launcher Icon) and Splash Screen
 - [ ] **[Store]** Capture screenshots and write store descriptions
-- [x] **[Policy]** Link Privacy Policy and Terms of Service (Legal section added to Settings, 13 tests passing - documents ready for hosting)
+- [x] **[Policy]** Link Privacy Policy and Terms of Service (Legal section added to Settings, 13 tests passing)
+- [x] **[Hosting]** Host legal documents on GitHub Pages (https://junjun1730.github.io/severalbible/)
 - [ ] **[Test]** Distribute to TestFlight / Google Play Internal Test and QA
