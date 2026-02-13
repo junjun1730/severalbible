@@ -68,12 +68,13 @@ This project is designed around three core values:
 
 ## 2. User Tiers & Benefits
 
-| Category        | Guest (Non-login)                      | Member (Free)                    | Premium (Paid Subscription) |
-| --------------- | -------------------------------------- | -------------------------------- | --------------------------- |
-| **Data Logic**  | Completely Random (Duplicates allowed) | No-Duplicate                     | No-Duplicate + Premium DB   |
-| **Quantity**    | 1 per day                              | 3 per day                        | 3 per day + 'See 3 More'    |
-| **Prayer Note** | Cannot write                           | Write enabled / View last 3 days | Unlimited view of all time  |
-| **Archiving**   | Cannot save                            | Save last 7 days records         | Unlimited permanent storage |
+| Category        | Guest (Non-login)                      | Member (Free)                         | Premium (Paid Subscription)  |
+| --------------- | -------------------------------------- | ------------------------------------- | ---------------------------- |
+| **Data Logic**  | Completely Random (Duplicates allowed) | Random (Duplicates allowed)           | No-Duplicate                 |
+| **Quantity**    | 1 per day                              | 3 per day                             | 3 per day                    |
+| **Prayer Note** | Cannot write                           | Write enabled / View today's only     | Unlimited view of all time   |
+| **Library**     | X → Upsell                             | X → Upsell                            | Full access                  |
+| **Archiving**   | Cannot save                            | Today's notes only                    | Unlimited permanent storage  |
 
 ### Core Differentiators by Tier
 

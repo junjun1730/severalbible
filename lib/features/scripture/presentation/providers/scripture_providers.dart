@@ -23,8 +23,8 @@ final scriptureRepositoryProvider = Provider<ScriptureRepository>((ref) {
 final currentScriptureIndexProvider = StateProvider<int>((ref) => 0);
 
 /// Provider for daily scriptures based on user tier
-/// - Guest: 1 random scripture
-/// - Member: 3 daily scriptures (no duplicates)
+/// - Guest: 1 random scripture (duplicates allowed)
+/// - Member: 3 random scriptures (duplicates allowed)
 /// - Premium: 3 daily scriptures (no duplicates)
 final dailyScripturesProvider = FutureProvider<List<Scripture>>((ref) async {
   final tierAsync = ref.watch(currentUserTierProvider);
@@ -46,6 +46,12 @@ final dailyScripturesProvider = FutureProvider<List<Scripture>>((ref) async {
       );
 
     case UserTier.member:
+      final result = await repository.getRandomScripture(3);
+      return result.fold(
+        (failure) => throw Exception(failure.message),
+        (scriptures) => scriptures,
+      );
+
     case UserTier.premium:
       if (currentUser == null) {
         throw Exception('User must be logged in');
@@ -59,40 +65,6 @@ final dailyScripturesProvider = FutureProvider<List<Scripture>>((ref) async {
         (scriptures) => scriptures,
       );
   }
-});
-
-/// Provider for premium scriptures (additional 3 for premium users)
-final premiumScripturesProvider = FutureProvider.family<List<Scripture>, void>((
-  ref,
-  _,
-) async {
-  final tierAsync = ref.watch(currentUserTierProvider);
-  final currentUser = ref.watch(currentUserProvider);
-  final repository = ref.watch(scriptureRepositoryProvider);
-
-  final tier = tierAsync.when(
-    data: (t) => t,
-    loading: () => UserTier.guest,
-    error: (_, __) => UserTier.guest,
-  );
-
-  if (tier != UserTier.premium) {
-    throw Exception('Premium subscription required');
-  }
-
-  if (currentUser == null) {
-    throw Exception('User must be logged in');
-  }
-
-  final result = await repository.getPremiumScriptures(
-    userId: currentUser.id,
-    count: 3,
-  );
-
-  return result.fold(
-    (failure) => throw Exception(failure.message),
-    (scriptures) => scriptures,
-  );
 });
 
 /// Notifier for tracking scripture views with debounce
@@ -166,16 +138,3 @@ final hasReachedDailyLimitProvider = Provider<bool>((ref) {
   );
 });
 
-/// Provider for checking if "See 3 More" button should be visible
-final showSeeMoreButtonProvider = Provider<bool>((ref) {
-  final tierAsync = ref.watch(currentUserTierProvider);
-  final hasReachedLimit = ref.watch(hasReachedDailyLimitProvider);
-
-  final tier = tierAsync.when(
-    data: (t) => t,
-    loading: () => UserTier.guest,
-    error: (_, __) => UserTier.guest,
-  );
-
-  return tier == UserTier.premium && hasReachedLimit;
-});

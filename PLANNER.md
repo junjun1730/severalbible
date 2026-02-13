@@ -302,6 +302,22 @@
 
 ---
 
+## Tier Redesign (2026-02-13)
+**Goal**: Simplify tier model — member uses random scriptures (no dedup), prayer note access limited to today only, "See 3 More" removed.
+
+### Changes Implemented ✅
+- [x] **[Provider]** `dailyScripturesProvider` — member case now calls `getRandomScripture(3)` (was `getDailyScriptures`)
+- [x] **[Provider]** Removed `premiumScripturesProvider` and `showSeeMoreButtonProvider`
+- [x] **[UI]** Removed `_buildSeeMoreButton()` and `_loadPremiumScriptures()` from `DailyFeedScreen`
+- [x] **[UI]** Updated `ContentBlocker` premium benefits text
+- [x] **[DB]** Created `010_update_member_prayer_access.sql` — member prayer note access: last 3 days → today only (6 functions updated)
+- [x] **[Docs]** Updated CLAUDE.md User Tiers table
+
+**Migration Files Created**:
+- `supabase/migrations/010_update_member_prayer_access.sql`
+
+---
+
 ## Phase 5: Optimization & Launch
 **Goal**: Improve app completeness and release to stores.
 

@@ -92,9 +92,9 @@ class ContentBlocker extends StatelessWidget {
     final benefits = tier == UserTier.guest
         ? ['3 scriptures daily', 'Prayer note feature', 'Scripture history']
         : [
-            'Unlimited scriptures',
-            'Premium exclusive content',
-            'Unlimited prayer archives',
+            'No-duplicate scripture delivery',
+            'Full prayer note archive',
+            'My Library access',
           ];
 
     return Column(

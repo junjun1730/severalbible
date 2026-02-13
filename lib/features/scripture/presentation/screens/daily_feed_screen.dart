@@ -156,8 +156,6 @@ class _DailyFeedScreenState extends ConsumerState<DailyFeedScreen> {
           ),
         ),
         const SizedBox(height: 16),
-        if (tier == UserTier.premium && hasReachedLimit)
-          _buildSeeMoreButton(context),
       ],
     );
   }
@@ -228,23 +226,6 @@ class _DailyFeedScreenState extends ConsumerState<DailyFeedScreen> {
             child: const Text('Retry'),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildSeeMoreButton(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-      child: SizedBox(
-        width: double.infinity,
-        child: OutlinedButton.icon(
-          onPressed: _loadPremiumScriptures,
-          icon: const Icon(Icons.add),
-          label: const Text('See 3 More'),
-          style: OutlinedButton.styleFrom(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-          ),
-        ),
       ),
     );
   }
@@ -320,11 +301,4 @@ class _DailyFeedScreenState extends ConsumerState<DailyFeedScreen> {
     });
   }
 
-  void _loadPremiumScriptures() {
-    // Load additional premium scriptures
-    ref.read(premiumScripturesProvider(null));
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Loading premium scriptures...')),
-    );
-  }
 }
