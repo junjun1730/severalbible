@@ -6,8 +6,8 @@ part of 'subscription.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$SubscriptionImpl _$$SubscriptionImplFromJson(Map<String, dynamic> json) =>
-    _$SubscriptionImpl(
+_Subscription _$SubscriptionFromJson(Map<String, dynamic> json) =>
+    _Subscription(
       id: json['id'] as String,
       userId: json['userId'] as String,
       productId: json['productId'] as String,
@@ -25,7 +25,7 @@ _$SubscriptionImpl _$$SubscriptionImplFromJson(Map<String, dynamic> json) =>
       updatedAt: DateTime.parse(json['updatedAt'] as String),
     );
 
-Map<String, dynamic> _$$SubscriptionImplToJson(_$SubscriptionImpl instance) =>
+Map<String, dynamic> _$SubscriptionToJson(_Subscription instance) =>
     <String, dynamic>{
       'id': instance.id,
       'userId': instance.userId,
@@ -56,23 +56,22 @@ const _$SubscriptionStatusEnumMap = {
   SubscriptionStatus.gracePeriod: 'grace_period',
 };
 
-_$SubscriptionProductImpl _$$SubscriptionProductImplFromJson(
-  Map<String, dynamic> json,
-) => _$SubscriptionProductImpl(
-  id: json['id'] as String,
-  name: json['name'] as String,
-  description: json['description'] as String?,
-  durationDays: (json['durationDays'] as num?)?.toInt(),
-  priceKrw: (json['priceKrw'] as num).toInt(),
-  priceUsd: (json['priceUsd'] as num?)?.toDouble(),
-  iosProductId: json['iosProductId'] as String?,
-  androidProductId: json['androidProductId'] as String?,
-  isActive: json['isActive'] as bool? ?? true,
-  createdAt: DateTime.parse(json['createdAt'] as String),
-);
+_SubscriptionProduct _$SubscriptionProductFromJson(Map<String, dynamic> json) =>
+    _SubscriptionProduct(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      description: json['description'] as String?,
+      durationDays: (json['durationDays'] as num?)?.toInt(),
+      priceKrw: (json['priceKrw'] as num).toInt(),
+      priceUsd: (json['priceUsd'] as num?)?.toDouble(),
+      iosProductId: json['iosProductId'] as String?,
+      androidProductId: json['androidProductId'] as String?,
+      isActive: json['isActive'] as bool? ?? true,
+      createdAt: DateTime.parse(json['createdAt'] as String),
+    );
 
-Map<String, dynamic> _$$SubscriptionProductImplToJson(
-  _$SubscriptionProductImpl instance,
+Map<String, dynamic> _$SubscriptionProductToJson(
+  _SubscriptionProduct instance,
 ) => <String, dynamic>{
   'id': instance.id,
   'name': instance.name,
@@ -86,8 +85,8 @@ Map<String, dynamic> _$$SubscriptionProductImplToJson(
   'createdAt': instance.createdAt.toIso8601String(),
 };
 
-_$PurchaseResultImpl _$$PurchaseResultImplFromJson(Map<String, dynamic> json) =>
-    _$PurchaseResultImpl(
+_PurchaseResult _$PurchaseResultFromJson(Map<String, dynamic> json) =>
+    _PurchaseResult(
       productId: json['productId'] as String,
       transactionId: json['transactionId'] as String,
       originalTransactionId: json['originalTransactionId'] as String?,
@@ -98,18 +97,17 @@ _$PurchaseResultImpl _$$PurchaseResultImplFromJson(Map<String, dynamic> json) =>
       status: $enumDecode(_$IAPPurchaseStatusEnumMap, json['status']),
     );
 
-Map<String, dynamic> _$$PurchaseResultImplToJson(
-  _$PurchaseResultImpl instance,
-) => <String, dynamic>{
-  'productId': instance.productId,
-  'transactionId': instance.transactionId,
-  'originalTransactionId': instance.originalTransactionId,
-  'platform': _$SubscriptionPlatformEnumMap[instance.platform]!,
-  'receipt': instance.receipt,
-  'purchaseToken': instance.purchaseToken,
-  'purchaseDate': instance.purchaseDate.toIso8601String(),
-  'status': _$IAPPurchaseStatusEnumMap[instance.status]!,
-};
+Map<String, dynamic> _$PurchaseResultToJson(_PurchaseResult instance) =>
+    <String, dynamic>{
+      'productId': instance.productId,
+      'transactionId': instance.transactionId,
+      'originalTransactionId': instance.originalTransactionId,
+      'platform': _$SubscriptionPlatformEnumMap[instance.platform]!,
+      'receipt': instance.receipt,
+      'purchaseToken': instance.purchaseToken,
+      'purchaseDate': instance.purchaseDate.toIso8601String(),
+      'status': _$IAPPurchaseStatusEnumMap[instance.status]!,
+    };
 
 const _$IAPPurchaseStatusEnumMap = {
   IAPPurchaseStatus.purchased: 'purchased',

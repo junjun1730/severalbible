@@ -6,21 +6,20 @@ part of 'scripture.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ScriptureImpl _$$ScriptureImplFromJson(Map<String, dynamic> json) =>
-    _$ScriptureImpl(
-      id: json['id'] as String,
-      book: json['book'] as String,
-      chapter: (json['chapter'] as num).toInt(),
-      verse: (json['verse'] as num).toInt(),
-      content: json['content'] as String,
-      reference: json['reference'] as String,
-      isPremium: json['isPremium'] as bool? ?? false,
-      category: json['category'] as String?,
-      createdAt: DateTime.parse(json['createdAt'] as String),
-      updatedAt: DateTime.parse(json['updatedAt'] as String),
-    );
+_Scripture _$ScriptureFromJson(Map<String, dynamic> json) => _Scripture(
+  id: json['id'] as String,
+  book: json['book'] as String,
+  chapter: (json['chapter'] as num).toInt(),
+  verse: (json['verse'] as num).toInt(),
+  content: json['content'] as String,
+  reference: json['reference'] as String,
+  isPremium: json['isPremium'] as bool? ?? false,
+  category: json['category'] as String?,
+  createdAt: DateTime.parse(json['createdAt'] as String),
+  updatedAt: DateTime.parse(json['updatedAt'] as String),
+);
 
-Map<String, dynamic> _$$ScriptureImplToJson(_$ScriptureImpl instance) =>
+Map<String, dynamic> _$ScriptureToJson(_Scripture instance) =>
     <String, dynamic>{
       'id': instance.id,
       'book': instance.book,

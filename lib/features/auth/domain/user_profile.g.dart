@@ -6,15 +6,14 @@ part of 'user_profile.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$UserProfileImpl _$$UserProfileImplFromJson(Map<String, dynamic> json) =>
-    _$UserProfileImpl(
-      id: json['id'] as String,
-      tier: $enumDecode(_$UserTierEnumMap, json['tier']),
-      createdAt: DateTime.parse(json['createdAt'] as String),
-      updatedAt: DateTime.parse(json['updatedAt'] as String),
-    );
+_UserProfile _$UserProfileFromJson(Map<String, dynamic> json) => _UserProfile(
+  id: json['id'] as String,
+  tier: $enumDecode(_$UserTierEnumMap, json['tier']),
+  createdAt: DateTime.parse(json['createdAt'] as String),
+  updatedAt: DateTime.parse(json['updatedAt'] as String),
+);
 
-Map<String, dynamic> _$$UserProfileImplToJson(_$UserProfileImpl instance) =>
+Map<String, dynamic> _$UserProfileToJson(_UserProfile instance) =>
     <String, dynamic>{
       'id': instance.id,
       'tier': _$UserTierEnumMap[instance.tier]!,

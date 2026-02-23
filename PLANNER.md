@@ -332,3 +332,91 @@
 - [x] **[Policy]** Link Privacy Policy and Terms of Service (Legal section added to Settings, 13 tests passing)
 - [x] **[Hosting]** Host legal documents on GitHub Pages (https://junjun1730.github.io/severalbible/)
 - [ ] **[Test]** Distribute to TestFlight / Google Play Internal Test and QA
+
+---
+
+## Phase 6: Feature Flag System (Free/Paid Mode Switching)
+**Goal**: Enable server-side toggle between free and paid modes without app updates
+**Detailed TDD Checklist**: See `checklist/phase6-feature-flag-system.md` (93 items, 78 tests, 6-8 days)
+
+### 6-1. Backend (Supabase) ✅ (6/21 items completed)
+- [x] **[DB]** Create migration 011: `app_config` table with RLS (5 tests)
+- [x] **[DB]** Insert default `is_free_mode` config (disabled)
+- [x] **[DB]** Create migration 012: Update `get_user_tier` RPC with free mode logic (4 tests)
+- [x] **[Test]** Write pgTAP tests for RLS and RPC functions (15 tests total)
+- [ ] **[DB]** Create `get_app_config` RPC function (2 tests) [Skipped: Direct table access preferred]
+
+**Migration Files to Create**:
+- `supabase/migrations/011_create_app_config.sql`
+- `supabase/migrations/012_update_get_user_tier_rpc.sql`
+
+**Test Files to Create**:
+- `supabase/tests/app_config_test.sql` (15 pgTAP tests)
+
+### 6-2. Flutter Core (App Config) 🔄 (11/23 items completed)
+- [x] **[Domain]** Define `AppConfig` Entity (manual immutable class) (11 tests passing)
+- [ ] **[Domain]** Define `AppConfigRepository` Interface (1 test)
+- [ ] **[Data]** Implement `SupabaseAppConfigDataSource` (4 tests)
+- [ ] **[Data]** Implement `AppConfigRepositoryImpl` (3 tests)
+- [ ] **[State]** Implement `appConfigProvider` with 5-minute caching (4 tests)
+- [ ] **[State]** Implement `isFreeModeProvider` (3 tests)
+
+**Implementation Files to Create**:
+- `lib/core/config/domain/entities/app_config.dart`
+- `lib/core/config/domain/repositories/app_config_repository.dart`
+- `lib/core/config/data/datasources/supabase_app_config_datasource.dart`
+- `lib/core/config/data/repositories/app_config_repository_impl.dart`
+- `lib/core/config/presentation/providers/app_config_provider.dart`
+
+**Test Files to Create**:
+- `test/core/config/domain/entities/app_config_test.dart` (4 tests)
+- `test/core/config/data/datasources/supabase_app_config_datasource_test.dart` (4 tests)
+- `test/core/config/data/repositories/app_config_repository_impl_test.dart` (3 tests)
+- `test/core/config/presentation/providers/app_config_provider_test.dart` (7 tests)
+
+### 6-3. Effective Tier Logic (0/12 items)
+- [ ] **[Provider]** Add `effectiveUserTierProvider` to `auth_providers.dart` (8 tests)
+- [ ] **[Logic]** Implement transformation: `if (isFreeMode && tier==member) return premium`
+- [ ] **[Verify]** Cache invalidation on auth changes (2 tests)
+
+**Modified Files**:
+- `lib/features/auth/providers/auth_providers.dart`
+
+**Test Files to Create**:
+- `test/features/auth/providers/auth_providers_effective_tier_test.dart` (8 tests)
+
+### 6-4. Code Migration (0/14 items)
+- [ ] **[Migrate]** Replace `currentUserTierProvider` → `effectiveUserTierProvider` in 11 locations:
+  - `lib/features/scripture/presentation/providers/scripture_providers.dart`
+  - `lib/features/scripture/presentation/screens/daily_feed_screen.dart`
+  - `lib/features/prayer_note/presentation/screens/my_library_screen.dart`
+  - `lib/features/prayer_note/presentation/utils/my_library_navigation.dart`
+  - `lib/features/auth/presentation/screens/home_screen.dart`
+  - `lib/features/subscription/presentation/providers/subscription_providers.dart`
+  - 6 corresponding test files
+- [ ] **[Verify]** Update subscription invalidation logic to use `effectiveUserTierProvider`
+- [ ] **[Verify]** Zero remaining references to `currentUserTierProvider` (via grep)
+
+### 6-5. Integration Testing (0/13 items)
+- [ ] **[Test]** Mode switching tests (4 tests: member paid→free, free→paid, guest unaffected, premium unaffected)
+- [ ] **[Test]** Cache behavior tests (3 tests: 5min cache, expiry, backgrounding)
+- [ ] **[Test]** E2E user journey tests (6 tests: guest, member, premium in both modes)
+
+**Integration Test Files to Create**:
+- `integration_test/feature_flag_mode_switching_test.dart` (4 tests)
+- `integration_test/app_config_cache_test.dart` (3 tests)
+- `integration_test/free_mode_user_journey_test.dart` (6 tests)
+
+### 6-6. Documentation (0/10 items)
+- [ ] **[Doc]** Create `FEATURE_FLAG_GUIDE.md` with toggle instructions
+- [ ] **[Doc]** Update CLAUDE.md User Tiers table with free mode column
+- [ ] **[Doc]** Add architecture diagram showing provider dependency chain
+- [ ] **[Doc]** Document rollback procedure
+
+---
+
+**Phase 6 Status**: Not Started (0%)
+**Total Tests**: 78 (15 pgTAP + 50 unit + 13 integration)
+**Estimated Duration**: 6-8 days
+**Risk Level**: Medium (careful tier logic integration required)
+**Success Criteria**: Toggle free/paid mode via Supabase Dashboard with zero app downtime

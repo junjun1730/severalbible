@@ -6,19 +6,18 @@ part of 'prayer_note.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$PrayerNoteImpl _$$PrayerNoteImplFromJson(Map<String, dynamic> json) =>
-    _$PrayerNoteImpl(
-      id: json['id'] as String,
-      userId: json['userId'] as String,
-      scriptureId: json['scriptureId'] as String?,
-      content: json['content'] as String,
-      createdAt: DateTime.parse(json['createdAt'] as String),
-      updatedAt: DateTime.parse(json['updatedAt'] as String),
-      scriptureReference: json['scriptureReference'] as String?,
-      scriptureContent: json['scriptureContent'] as String?,
-    );
+_PrayerNote _$PrayerNoteFromJson(Map<String, dynamic> json) => _PrayerNote(
+  id: json['id'] as String,
+  userId: json['userId'] as String,
+  scriptureId: json['scriptureId'] as String?,
+  content: json['content'] as String,
+  createdAt: DateTime.parse(json['createdAt'] as String),
+  updatedAt: DateTime.parse(json['updatedAt'] as String),
+  scriptureReference: json['scriptureReference'] as String?,
+  scriptureContent: json['scriptureContent'] as String?,
+);
 
-Map<String, dynamic> _$$PrayerNoteImplToJson(_$PrayerNoteImpl instance) =>
+Map<String, dynamic> _$PrayerNoteToJson(_PrayerNote instance) =>
     <String, dynamic>{
       'id': instance.id,
       'userId': instance.userId,
