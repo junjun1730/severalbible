@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:severalbible/core/widgets/app_bottom_sheet.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../providers/auth_providers.dart';
 import '../../domain/user_tier.dart';
-import '../widgets/onboarding_popup.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../scripture/presentation/screens/daily_feed_screen.dart';
-import '../../../subscription/presentation/widgets/upsell_dialog.dart';
 import '../../../prayer_note/presentation/utils/my_library_navigation.dart';
 import '../../../settings/presentation/screens/settings_screen.dart';
 
@@ -23,45 +23,58 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _checkAndShowOnboarding();
+    _checkAndShowLoginPrompt();
   }
 
-  Future<void> _checkAndShowOnboarding() async {
+  Future<void> _checkAndShowLoginPrompt() async {
     // Small delay to let the screen build
-    await Future.delayed(const Duration(milliseconds: 500));
+    await Future<void>.delayed(const Duration(milliseconds: 500));
 
     if (!mounted) return;
 
-    final user = ref.read(currentUserProvider);
-    final isAnonymous = user?.isAnonymous ?? false;
-
-    // 1. If Anonymous, show Onboarding Popup (Sign in incentive)
-    if (isAnonymous && mounted) {
-      showOnboardingPopup(context, onSignIn: () => context.go(AppRoutes.login));
-      return;
-    }
-
-    // 2. If Logged in but NOT Premium, optionally show Upsell
-    // We check if they are still on "guest" tier which equates to free tier here
     final tierAsync = ref.read(currentUserTierProvider);
-    tierAsync.whenData((tier) {
-      if (tier == UserTier.guest && !isAnonymous && mounted) {
-        // Show Upsell Dialog for logged-in free users
-        showDialog(
-          context: context,
-          builder: (context) => const UpsellDialog(
-            trigger: UpsellTrigger.contentExhausted,
-            // Using contentExhausted as a generic "Upgrade" entry point for now
-          ),
-        );
+    final tier = tierAsync.valueOrNull ?? UserTier.guest;
+
+    if (tier != UserTier.guest) return;
+
+    final prefs = await SharedPreferences.getInstance();
+    final lastShown = prefs.getString('last_login_prompt_date');
+    final today = DateFormat('yyyy-MM-dd').format(DateTime.now());
+
+    if (lastShown != today) {
+      await prefs.setString('last_login_prompt_date', today);
+      if (mounted) {
+        _showLoginInducementModal();
       }
-    });
+    }
+  }
+
+  void _showLoginInducementModal() {
+    showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('더 많은 은혜를 받으세요'),
+        content: const Text('로그인하면 하루 3배 더 많은 말씀을 받을 수 있습니다.\n지금 바로 시작해보세요!'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('나중에'),
+          ),
+          FilledButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              context.go(AppRoutes.login);
+            },
+            child: const Text('로그인'),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final tierAsync = ref.watch(currentUserTierProvider);
-    final isLoggedIn = ref.watch(isLoggedInProvider);
 
     return Scaffold(
       appBar: AppBar(

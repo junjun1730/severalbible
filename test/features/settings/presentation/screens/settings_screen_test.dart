@@ -3,10 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:severalbible/features/subscription/domain/entities/subscription.dart';
-import 'package:severalbible/features/subscription/presentation/providers/subscription_providers.dart';
 import 'package:severalbible/features/settings/presentation/screens/settings_screen.dart';
-import 'package:severalbible/features/auth/domain/user_tier.dart';
 import 'package:severalbible/features/auth/providers/auth_providers.dart';
 import 'package:severalbible/core/router/app_router.dart';
 import 'package:url_launcher_platform_interface/url_launcher_platform_interface.dart';
@@ -51,11 +48,7 @@ class MockUrlLauncher extends Fake
 }
 
 void main() {
-  Widget createSubject({
-    UserTier tier = UserTier.member,
-    Subscription? subscription,
-    GoRouter? router,
-  }) {
+  Widget createSubject({GoRouter? router}) {
     final testRouter =
         router ??
         GoRouter(
@@ -63,19 +56,9 @@ void main() {
           routes: [
             GoRoute(
               path: AppRoutes.settings,
-              builder: (context, state) => Scaffold(
-                body: const SettingsScreen(),
+              builder: (context, state) => const Scaffold(
+                body: SettingsScreen(),
               ),
-            ),
-            GoRoute(
-              path: AppRoutes.premium,
-              builder: (context, state) =>
-                  const Scaffold(body: Text('Premium Landing')),
-            ),
-            GoRoute(
-              path: AppRoutes.manageSubscription,
-              builder: (context, state) =>
-                  const Scaffold(body: Text('Manage Subscription Page')),
             ),
             GoRoute(
               path: AppRoutes.login,
@@ -96,13 +79,6 @@ void main() {
     return ProviderScope(
       overrides: [
         currentUserProvider.overrideWith((ref) => mockUser),
-        currentUserTierProvider.overrideWith((ref) => Future.value(tier)),
-        subscriptionStatusProvider.overrideWith(
-          (ref) => Future.value(subscription),
-        ),
-        hasPremiumProvider.overrideWith(
-          (ref) => Future.value(subscription != null),
-        ),
       ],
       child: MaterialApp.router(routerConfig: testRouter),
     );
@@ -121,105 +97,20 @@ void main() {
       expect(find.text('설정'), findsOneWidget);
     });
 
-    testWidgets('shows "Upgrade to Premium" for member tier', (tester) async {
+    testWidgets('does NOT show subscription section', (tester) async {
       tester.view.physicalSize = const Size(1080, 2400);
       tester.view.devicePixelRatio = 3.0;
       addTearDown(tester.view.resetPhysicalSize);
 
-      await tester.pumpWidget(createSubject(tier: UserTier.member));
+      await tester.pumpWidget(createSubject());
       await tester.pumpAndSettle();
 
-      expect(find.text('Upgrade to Premium'), findsOneWidget);
-    });
-
-    testWidgets('shows "Upgrade to Premium" for guest tier', (tester) async {
-      tester.view.physicalSize = const Size(1080, 2400);
-      tester.view.devicePixelRatio = 3.0;
-      addTearDown(tester.view.resetPhysicalSize);
-
-      await tester.pumpWidget(createSubject(tier: UserTier.guest));
-      await tester.pumpAndSettle();
-
-      expect(find.text('Upgrade to Premium'), findsOneWidget);
-    });
-
-    testWidgets('shows "Manage Subscription" for premium tier', (tester) async {
-      tester.view.physicalSize = const Size(1080, 2400);
-      tester.view.devicePixelRatio = 3.0;
-      addTearDown(tester.view.resetPhysicalSize);
-
-      final activeSubscription = Subscription(
-        id: 'sub_123',
-        userId: 'test_user',
-        productId: 'monthly_premium',
-        platform: SubscriptionPlatform.ios,
-        status: SubscriptionStatus.active,
-        startedAt: DateTime.now().subtract(const Duration(days: 10)),
-        expiresAt: DateTime.now().add(const Duration(days: 20)),
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
-      );
-
-      await tester.pumpWidget(
-        createSubject(tier: UserTier.premium, subscription: activeSubscription),
-      );
-      await tester.pumpAndSettle();
-
-      expect(find.text('Manage Subscription'), findsOneWidget);
       expect(find.text('Upgrade to Premium'), findsNothing);
+      expect(find.text('Manage Subscription'), findsNothing);
+      expect(find.text('Subscription'), findsNothing);
     });
 
-    testWidgets('tapping "Upgrade to Premium" navigates to premium landing', (
-      tester,
-    ) async {
-      tester.view.physicalSize = const Size(1080, 2400);
-      tester.view.devicePixelRatio = 3.0;
-      addTearDown(tester.view.resetPhysicalSize);
-
-      await tester.pumpWidget(createSubject(tier: UserTier.member));
-      await tester.pumpAndSettle();
-
-      await tester.tap(find.text('Upgrade to Premium'));
-      await tester.pumpAndSettle();
-
-      expect(find.text('Premium Landing'), findsOneWidget);
-    });
-
-    testWidgets(
-      'tapping "Manage Subscription" navigates to manage subscription screen',
-      (tester) async {
-        tester.view.physicalSize = const Size(1080, 2400);
-        tester.view.devicePixelRatio = 3.0;
-        addTearDown(tester.view.resetPhysicalSize);
-
-        final activeSubscription = Subscription(
-          id: 'sub_123',
-          userId: 'test_user',
-          productId: 'monthly_premium',
-          platform: SubscriptionPlatform.ios,
-          status: SubscriptionStatus.active,
-          startedAt: DateTime.now().subtract(const Duration(days: 10)),
-          expiresAt: DateTime.now().add(const Duration(days: 20)),
-          createdAt: DateTime.now(),
-          updatedAt: DateTime.now(),
-        );
-
-        await tester.pumpWidget(
-          createSubject(
-            tier: UserTier.premium,
-            subscription: activeSubscription,
-          ),
-        );
-        await tester.pumpAndSettle();
-
-        await tester.tap(find.text('Manage Subscription'));
-        await tester.pumpAndSettle();
-
-        expect(find.text('Manage Subscription Page'), findsOneWidget);
-      },
-    );
-
-    testWidgets('shows logout option', (tester) async {
+    testWidgets('shows logout option for logged-in user', (tester) async {
       tester.view.physicalSize = const Size(1080, 2400);
       tester.view.devicePixelRatio = 3.0;
       addTearDown(tester.view.resetPhysicalSize);

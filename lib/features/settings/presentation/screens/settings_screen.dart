@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/router/app_router.dart';
-import '../../../subscription/presentation/providers/subscription_providers.dart';
 import '../../../auth/providers/auth_providers.dart';
 
 class SettingsScreen extends ConsumerWidget {
@@ -17,8 +16,6 @@ class SettingsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final hasPremiumAsync = ref.watch(hasPremiumProvider);
-
     return Material(
       color: Theme.of(context).colorScheme.surface,
       child: Column(
@@ -32,49 +29,30 @@ class SettingsScreen extends ConsumerWidget {
             child: ListView(
               shrinkWrap: true,
               children: [
-              const SizedBox(height: 16),
+                const SizedBox(height: 16),
 
-              // Subscription Section
-              _buildSectionHeader(context, 'Subscription'),
-          hasPremiumAsync.when(
-            data: (hasPremium) => hasPremium
-                ? _buildManageSubscriptionTile(context)
-                : _buildUpgradeTile(context),
-            loading: () => const ListTile(
-              leading: SizedBox(
-                width: 24,
-                height: 24,
-                child: CircularProgressIndicator(strokeWidth: 2),
-              ),
-              title: Text('Loading...'),
-            ),
-            error: (_, __) => _buildUpgradeTile(context),
-          ),
+                // Account Section
+                _buildSectionHeader(context, 'Account'),
+                _buildSignOutTile(context, ref),
 
-          const Divider(height: 32),
+                const Divider(height: 32),
 
-          // Account Section
-          _buildSectionHeader(context, 'Account'),
-          _buildSignOutTile(context, ref),
+                // Legal Section
+                _buildSectionHeader(context, 'Legal'),
+                _buildLegalTile(
+                  context,
+                  title: 'Privacy Policy',
+                  icon: Icons.privacy_tip_outlined,
+                  url: privacyPolicyUrl,
+                ),
+                _buildLegalTile(
+                  context,
+                  title: 'Terms of Service',
+                  icon: Icons.description_outlined,
+                  url: termsOfServiceUrl,
+                ),
 
-          const Divider(height: 32),
-
-          // Legal Section
-          _buildSectionHeader(context, 'Legal'),
-          _buildLegalTile(
-            context,
-            title: 'Privacy Policy',
-            icon: Icons.privacy_tip_outlined,
-            url: privacyPolicyUrl,
-          ),
-          _buildLegalTile(
-            context,
-            title: 'Terms of Service',
-            icon: Icons.description_outlined,
-            url: termsOfServiceUrl,
-          ),
-
-          const SizedBox(height: 32),
+                const SizedBox(height: 32),
               ],
             ),
           ),
@@ -116,30 +94,6 @@ class SettingsScreen extends ConsumerWidget {
           fontWeight: FontWeight.bold,
         ),
       ),
-    );
-  }
-
-  Widget _buildUpgradeTile(BuildContext context) {
-    return ListTile(
-      leading: const Icon(Icons.star, color: Colors.amber),
-      title: const Text('Upgrade to Premium'),
-      subtitle: const Text('Unlock all features'),
-      trailing: const Icon(Icons.chevron_right),
-      onTap: () {
-        context.push(AppRoutes.premium);
-      },
-    );
-  }
-
-  Widget _buildManageSubscriptionTile(BuildContext context) {
-    return ListTile(
-      leading: const Icon(Icons.card_membership, color: Colors.green),
-      title: const Text('Manage Subscription'),
-      subtitle: const Text('View or cancel your subscription'),
-      trailing: const Icon(Icons.chevron_right),
-      onTap: () {
-        context.push(AppRoutes.manageSubscription);
-      },
     );
   }
 

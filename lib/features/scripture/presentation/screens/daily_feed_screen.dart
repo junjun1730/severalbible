@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:severalbible/core/widgets/app_bottom_sheet.dart';
 import '../../../auth/domain/user_tier.dart';
 import '../../../auth/providers/auth_providers.dart';
 import '../../../prayer_note/presentation/widgets/prayer_note_input.dart';
 import '../../../prayer_note/presentation/providers/prayer_note_providers.dart';
-import '../../../../core/router/app_router.dart';
 import '../../domain/entities/scripture.dart';
 import '../providers/scripture_providers.dart';
 import '../widgets/scripture_card.dart';
 import '../widgets/page_indicator.dart';
-import '../widgets/content_blocker.dart';
 import '../widgets/navigation_arrow_button.dart';
 import '../widgets/meditation_button.dart';
-import 'package:severalbible/features/subscription/presentation/widgets/upsell_dialog.dart';
+import '../../../ads/widgets/banner_ad_widget.dart';
+import '../../../ads/providers/ad_providers.dart';
 
 /// Main screen displaying daily scriptures in a PageView
 class DailyFeedScreen extends ConsumerStatefulWidget {
@@ -72,9 +70,7 @@ class _DailyFeedScreenState extends ConsumerState<DailyFeedScreen> {
     required int currentIndex,
     required UserTier tier,
   }) {
-    final hasReachedLimit = currentIndex >= scriptures.length;
-    final showBlocker = hasReachedLimit && tier != UserTier.premium;
-    final itemCount = showBlocker ? scriptures.length + 1 : scriptures.length;
+    final itemCount = scriptures.length;
 
     return Column(
       children: [
@@ -88,20 +84,17 @@ class _DailyFeedScreenState extends ConsumerState<DailyFeedScreen> {
                 onPageChanged: (index) {
                   ref.read(currentScriptureIndexProvider.notifier).state = index;
 
-                  // Track view if within scriptures
-                  if (index < scriptures.length) {
-                    ref
-                        .read(scriptureViewTrackerProvider.notifier)
-                        .trackView(scriptures[index].id);
+                  // Show interstitial when member exhausts cards
+                  if (index >= scriptures.length - 1 && tier != UserTier.guest) {
+                    ref.read(interstitialAdProvider.notifier).show();
                   }
+
+                  // Track view
+                  ref
+                      .read(scriptureViewTrackerProvider.notifier)
+                      .trackView(scriptures[index].id);
                 },
                 itemBuilder: (context, index) {
-                  if (index >= scriptures.length) {
-                    return ContentBlocker(
-                      tier: tier,
-                      onAction: () => _handleBlockerAction(tier),
-                    );
-                  }
                   return Center(
                     child: ScriptureCard(
                       scripture: scriptures[index],
@@ -145,7 +138,9 @@ class _DailyFeedScreenState extends ConsumerState<DailyFeedScreen> {
           pageCount: itemCount,
           currentPage: currentIndex,
         ),
-        const SizedBox(height: 24),
+        const SizedBox(height: 8),
+        const BannerAdWidget(),
+        const SizedBox(height: 16),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: MeditationButton(
@@ -228,19 +223,6 @@ class _DailyFeedScreenState extends ConsumerState<DailyFeedScreen> {
         ],
       ),
     );
-  }
-
-  void _handleBlockerAction(UserTier tier) {
-    if (tier == UserTier.guest) {
-      context.go(AppRoutes.login);
-    } else {
-      // Show Upsell Dialog for premium features
-      showDialog(
-        context: context,
-        builder: (context) =>
-            const UpsellDialog(trigger: UpsellTrigger.contentExhausted),
-      );
-    }
   }
 
   void _openMeditationSheet(Scripture scripture) {

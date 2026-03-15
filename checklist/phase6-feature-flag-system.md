@@ -1,3 +1,14 @@
+# ~~Phase 6: Feature Flag System (Free/Paid Mode Switching) - TDD Checklist~~
+
+> ## ⚠️ CANCELLED — 2026-03-15
+> **Reason**: Business model pivot to ad-based revenue (광고 수익 모델로 전환).
+> The subscription tier system that motivated this feature flag system no longer exists.
+> All authenticated users (member) now receive the same features — no premium gating.
+> The feature flag infrastructure (011, 012 migrations + app_config Flutter code) remains as dead code.
+> Do NOT delete these files; they may be referenced for future pivots.
+
+---
+
 # Phase 6: Feature Flag System (Free/Paid Mode Switching) - TDD Checklist
 
 ## Overview

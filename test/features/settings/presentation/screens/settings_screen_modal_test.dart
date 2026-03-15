@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:severalbible/features/settings/presentation/screens/settings_screen.dart';
-import 'package:severalbible/features/subscription/presentation/providers/subscription_providers.dart';
 import 'package:severalbible/features/auth/providers/auth_providers.dart';
 import 'package:severalbible/features/auth/domain/user_tier.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -23,7 +22,6 @@ void main() {
       overrides: [
         currentUserProvider.overrideWith((ref) => mockUser),
         currentUserTierProvider.overrideWith((ref) => Future.value(tier)),
-        hasPremiumProvider.overrideWith((ref) => Future.value(false)),
       ],
       child: const MaterialApp(home: SettingsScreen()),
     );
@@ -40,8 +38,8 @@ void main() {
       // Assert: No AppBar should be present in the widget tree
       expect(find.byType(AppBar), findsNothing);
 
-      // Assert: Content should still be present
-      expect(find.text('Subscription'), findsOneWidget);
+      // Assert: Content should still be present (Account section)
+      expect(find.text('Account'), findsOneWidget);
     });
 
     testWidgets('should display title in modal header', (
@@ -75,15 +73,17 @@ void main() {
       expect(closeButton, findsOneWidget);
     });
 
-    testWidgets('should maintain all existing settings sections', (
+    testWidgets('should NOT show subscription section (ad model pivot)', (
       WidgetTester tester,
     ) async {
       // Arrange & Act
       await tester.pumpWidget(createTestWidget());
       await tester.pumpAndSettle();
 
-      // Assert: Subscription section present
-      expect(find.text('Subscription'), findsOneWidget);
+      // Assert: Subscription section removed
+      expect(find.text('Subscription'), findsNothing);
+      expect(find.text('Upgrade to Premium'), findsNothing);
+      expect(find.text('Manage Subscription'), findsNothing);
 
       // Assert: Account section present
       expect(find.text('Account'), findsOneWidget);
@@ -91,8 +91,7 @@ void main() {
       // Assert: Legal section present
       expect(find.text('Legal'), findsOneWidget);
 
-      // Assert: All ListTiles present
-      expect(find.text('Upgrade to Premium'), findsOneWidget);
+      // Assert: All remaining ListTiles present
       expect(find.text('Sign Out'), findsOneWidget);
       expect(find.text('Privacy Policy'), findsOneWidget);
       expect(find.text('Terms of Service'), findsOneWidget);

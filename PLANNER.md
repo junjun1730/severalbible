@@ -335,9 +335,12 @@
 
 ---
 
-## Phase 6: Feature Flag System (Free/Paid Mode Switching)
-**Goal**: Enable server-side toggle between free and paid modes without app updates
-**Detailed TDD Checklist**: See `checklist/phase6-feature-flag-system.md` (93 items, 78 tests, 6-8 days)
+## ~~Phase 6: Feature Flag System (Free/Paid Mode Switching)~~
+**Status**: **CANCELLED — 광고 수익 모델 피벗으로 피처 플래그 불필요** (2026-03-15)
+**Reason**: Business model pivoted to ad-based revenue. Subscription tier system removed.
+            All authenticated users now have equal access — no premium gating needed.
+            Backend files (011, 012 migrations) remain as dead code.
+**Detailed TDD Checklist**: See `checklist/phase6-feature-flag-system.md` (CANCELLED)
 
 ### 6-1. Backend (Supabase) ✅ (6/21 items completed)
 - [x] **[DB]** Create migration 011: `app_config` table with RLS (5 tests)
@@ -415,8 +418,35 @@
 
 ---
 
-**Phase 6 Status**: Not Started (0%)
-**Total Tests**: 78 (15 pgTAP + 50 unit + 13 integration)
-**Estimated Duration**: 6-8 days
-**Risk Level**: Medium (careful tier logic integration required)
-**Success Criteria**: Toggle free/paid mode via Supabase Dashboard with zero app downtime
+**Phase 6 Status**: CANCELLED (광고 모델 피벗)
+**Reason**: Ad-based revenue model pivot — subscription gating removed entirely.
+
+---
+
+## Phase 7: Ad-Based Revenue Model (광고 수익 모델)
+**Goal**: Replace subscription model with ad-based monetization (AdMob banner + interstitial ads)
+**Last Updated**: 2026-03-15
+
+### Summary of Changes (Completed 2026-03-15)
+- [x] **[Pivot]** Removed 3-tier system (guest/member/premium) → 2-tier (guest/member)
+- [x] **[DB]** Migration 013: Remove prayer note date restriction for member tier
+- [x] **[Test]** pgTAP tests for open prayer note access (6 tests)
+- [x] **[Flutter]** `scripture_providers.dart`: member now uses `getDailyScriptures` (no-duplicate)
+- [x] **[Flutter]** `daily_feed_screen.dart`: removed ContentBlocker, added BannerAdWidget + interstitial trigger
+- [x] **[Flutter]** `my_library_screen.dart`: removed lock logic (isLocked always false)
+- [x] **[Flutter]** `my_library_navigation.dart`: login check instead of premium check
+- [x] **[Flutter]** `home_screen.dart`: daily login prompt (once/day via SharedPreferences) for guests
+- [x] **[Flutter]** `settings_screen.dart`: removed subscription section
+- [x] **[Flutter]** `app_router.dart`: removed premium/manageSubscription routes
+- [x] **[Flutter]** `main.dart`: added MobileAds.initialize()
+- [x] **[Ads]** Created `lib/features/ads/` with AdService, BannerAdWidget, ad_providers
+- [x] **[iOS]** Added GADApplicationIdentifier to Info.plist (test ID)
+- [x] **[Android]** Added APPLICATION_ID meta-data to AndroidManifest.xml (test ID)
+- [x] **[pubspec]** Replaced `in_app_purchase` with `google_mobile_ads` + `shared_preferences`
+
+### Pending (post-MVP)
+- [ ] **[AdMob]** Register real AdMob account and replace test IDs with production IDs
+- [ ] **[Test]** Update Flutter unit/widget tests for new ad-based logic
+- [ ] **[Manual]** Test banner + interstitial ads on physical device
+
+**Phase 7 Status**: Core implementation complete (2026-03-15)

@@ -24,8 +24,8 @@ final currentScriptureIndexProvider = StateProvider<int>((ref) => 0);
 
 /// Provider for daily scriptures based on user tier
 /// - Guest: 1 random scripture (duplicates allowed)
-/// - Member: 3 random scriptures (duplicates allowed)
-/// - Premium: 3 daily scriptures (no duplicates)
+/// - Member: 3 daily scriptures (no duplicates)
+/// - Premium: treated same as Member (data compatibility maintained)
 final dailyScripturesProvider = FutureProvider<List<Scripture>>((ref) async {
   final tierAsync = ref.watch(currentUserTierProvider);
   final currentUser = ref.watch(currentUserProvider);
@@ -46,12 +46,6 @@ final dailyScripturesProvider = FutureProvider<List<Scripture>>((ref) async {
       );
 
     case UserTier.member:
-      final result = await repository.getRandomScripture(3);
-      return result.fold(
-        (failure) => throw Exception(failure.message),
-        (scriptures) => scriptures,
-      );
-
     case UserTier.premium:
       if (currentUser == null) {
         throw Exception('User must be logged in');

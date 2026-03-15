@@ -68,19 +68,29 @@ This project is designed around three core values:
 
 ## 2. User Tiers & Benefits
 
-| Category        | Guest (Non-login)                      | Member (Free)                         | Premium (Paid Subscription)  |
-| --------------- | -------------------------------------- | ------------------------------------- | ---------------------------- |
-| **Data Logic**  | Completely Random (Duplicates allowed) | Random (Duplicates allowed)           | No-Duplicate                 |
-| **Quantity**    | 1 per day                              | 3 per day                             | 3 per day                    |
-| **Prayer Note** | Cannot write                           | Write enabled / View today's only     | Unlimited view of all time   |
-| **Library**     | X → Upsell                             | X → Upsell                            | Full access                  |
-| **Archiving**   | Cannot save                            | Today's notes only                    | Unlimited permanent storage  |
+> **⚠️ Updated 2026-03-15**: Pivoted to ad-based revenue model. 3-tier system (guest/member/premium)
+> replaced with 2-tier. `UserTier.premium` remains in code for data compatibility but is treated
+> identically to `member`.
+
+| Category        | Guest (비로그인)                        | Member (로그인)                          |
+| --------------- | --------------------------------------- | ---------------------------------------- |
+| **Data Logic**  | Completely Random (Duplicates allowed)  | No-Duplicate                             |
+| **Quantity**    | 1 per day                               | 3 per day                                |
+| **Prayer Note** | Cannot write                            | Write + View all time                    |
+| **Library**     | Login prompt                            | Full access                              |
+| **Archiving**   | Cannot save                             | Unlimited permanent storage              |
+| **Ads**         | Banner + Interstitial                   | Banner + Interstitial                    |
+| **Revenue**     | Ad revenue                              | Ad revenue                               |
 
 ### Core Differentiators by Tier
 
-- **Guest**: For trial purposes, offering minimal features to induce sign-up.
-- **Member**: Can perform basic spiritual routines, but with limited record retention.
-- **Premium**: Access to complete spiritual journey archiving and expanded content.
+- **Guest**: For trial purposes. Shows 1 daily random scripture. Daily login prompt (once per day) to encourage sign-up.
+- **Member**: Full spiritual routine. 3 no-duplicate scriptures/day. All prayer notes accessible. Ad-supported.
+
+### Revenue Model
+
+- **Monetization**: AdMob banner ads (always visible) + interstitial ads (triggered when member exhausts daily cards).
+- **No subscription / No IAP**: Subscription model has been removed as of 2026-03-15.
 
 ---
 
@@ -183,32 +193,25 @@ This project is designed around three core values:
 
 ---
 
-### F4. Monetization Model (Upselling)
+### F4. Monetization Model (Ad-Based)
 
-**Conversion Points**:
+> **Updated 2026-03-15**: Subscription/IAP model removed. Revenue from AdMob ads.
 
-1. **Archives (Storage Limit)**
+**Ad Placements**:
 
-   - Situation: Member attempts to view records older than 3 days.
-   - Message: "Revisit past prayers and meditate on the grace."
-   - CTA: Guide to Premium Subscription.
+1. **Banner Ad** — Always visible between PageIndicator and MeditationButton (`BannerAdWidget`).
+2. **Interstitial Ad** — Shown when a member reaches the last card in the daily feed.
 
-2. **More Content (Content Expansion)**
-   - Situation: Member exhausts all 3 cards for the day.
-   - Message: "Do you need more wisdom today?"
-   - CTA: Guide to Premium Subscription.
+**Ad System**:
 
-**Payment System**:
+- Flutter Package: `google_mobile_ads: ^5.x.x`
+- Ad Unit IDs: Google test IDs in debug, real AdMob IDs in production
+- Location: `lib/features/ads/` (services, providers, widgets)
 
-- iOS: In-App Purchase (StoreKit)
-- Android: Google Play Billing
-- Flutter Package: `in_app_purchase` or `purchases_flutter` (RevenueCat)
-- Supabase: Store subscription status in `user_subscriptions` table.
+**Login Inducement** (replaces upsell):
 
-**Pricing Policy**:
-
-- Monthly Subscription: ₩9,900 (Adjustable later)
-- Annual Subscription: ₩99,000 (2 months free)
+- Guest sees daily login prompt (once per day, stored in `SharedPreferences`)
+- Message: "로그인하면 하루 3배 더 많은 말씀을 받을 수 있습니다"
 
 ---
 
