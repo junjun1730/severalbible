@@ -6,7 +6,7 @@ part 'scripture.g.dart';
 /// Scripture entity representing a Bible verse or spiritual content
 /// Immutable data class using freezed for functional programming
 @freezed
-class Scripture with _$Scripture {
+abstract class Scripture with _$Scripture {
   const factory Scripture({
     required String id,
     required String book,

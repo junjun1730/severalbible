@@ -6,7 +6,7 @@ part 'prayer_note.g.dart';
 /// PrayerNote entity representing a user's meditation record
 /// Immutable data class using freezed for functional programming
 @freezed
-class PrayerNote with _$PrayerNote {
+abstract class PrayerNote with _$PrayerNote {
   const factory PrayerNote({
     required String id,
     required String userId,

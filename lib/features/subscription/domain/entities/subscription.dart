@@ -19,7 +19,7 @@ enum SubscriptionPlatform { ios, android, web }
 /// Subscription entity representing a user's subscription status
 /// Immutable data class using freezed for functional programming
 @freezed
-class Subscription with _$Subscription {
+abstract class Subscription with _$Subscription {
   const factory Subscription({
     required String id,
     required String userId,
@@ -43,7 +43,7 @@ class Subscription with _$Subscription {
 /// SubscriptionProduct entity representing available subscription products
 /// Immutable data class using freezed for functional programming
 @freezed
-class SubscriptionProduct with _$SubscriptionProduct {
+abstract class SubscriptionProduct with _$SubscriptionProduct {
   const factory SubscriptionProduct({
     required String id,
     required String name,
@@ -63,7 +63,7 @@ class SubscriptionProduct with _$SubscriptionProduct {
 
 /// PurchaseResult representing the result of an IAP purchase
 @freezed
-class PurchaseResult with _$PurchaseResult {
+abstract class PurchaseResult with _$PurchaseResult {
   const factory PurchaseResult({
     required String productId,
     required String transactionId,
