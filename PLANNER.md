@@ -1,5 +1,26 @@
 # Detailed Development Plan
 
+## Project Status Summary
+
+**Last Updated**: 2026-03-15
+
+| Phase | Description | Status |
+|-------|-------------|--------|
+| Phase 1 | Environment & Auth | ✅ Complete |
+| Phase 2 | Scripture Delivery System | ✅ Complete |
+| Phase 3 | Prayer Note System | ✅ Complete |
+| Phase 4 | Monetization (IAP) | ✅ Complete (dead code — superseded by Phase 7) |
+| Phase 4.5 | UI Upgrade (Material 3) | ✅ Complete |
+| Phase 5 | Optimization & Launch | 40% — Legal done, store assets pending |
+| Phase 6 | Feature Flag System | CANCELLED (ad-based pivot) |
+| Phase 7 | Ad-Based Revenue Model | ✅ Complete (2026-03-15) |
+
+**Active Revenue Model**: AdMob banner + interstitial ads (no subscription/IAP)
+**User Tiers**: Guest / Member (premium treated same as member — 2-tier)
+**Known Fixed Issue**: Freezed 3.x compatibility fixed 2026-03-15 (`abstract` keyword added)
+
+---
+
 ## Phase 1: Environment & Auth
 **Goal**: Establish the project foundation and integrate Supabase Auth to start managing user tiers.
 
@@ -444,9 +465,15 @@
 - [x] **[Android]** Added APPLICATION_ID meta-data to AndroidManifest.xml (test ID)
 - [x] **[pubspec]** Replaced `in_app_purchase` with `google_mobile_ads` + `shared_preferences`
 
+### Phase 7 Hotfix: Freezed 3.x Compatibility (2026-03-15)
+- [x] **[Fix]** Added `abstract` keyword to freezed entity classes to resolve `non_abstract_class_inherits_abstract_member` compilation errors
+  - Files fixed: `user_profile.dart`, `prayer_note.dart`, `scripture.dart`, `subscription.dart`
+  - Commit: `fix(entities): add abstract keyword to freezed classes for Freezed 3.x compatibility`
+  - Flutter tests now compilable across all feature layers (not just `test/core/`)
+
 ### Pending (post-MVP)
 - [ ] **[AdMob]** Register real AdMob account and replace test IDs with production IDs
 - [ ] **[Test]** Update Flutter unit/widget tests for new ad-based logic
 - [ ] **[Manual]** Test banner + interstitial ads on physical device
 
-**Phase 7 Status**: Core implementation complete (2026-03-15)
+**Phase 7 Status**: COMPLETE (2026-03-15) — Core implementation + Freezed compatibility fix done

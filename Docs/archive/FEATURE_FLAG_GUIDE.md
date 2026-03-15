@@ -1,14 +1,8 @@
 # Feature Flag System Guide
 
-> ## ARCHIVED — 2026-03-15
-> **Phase 6 (Feature Flag System) was CANCELLED** due to the business model pivot to ad-based revenue.
-> The subscription tier system that this feature flag controlled no longer exists.
-> This document is kept for historical reference only.
-> Current revenue model: AdMob banner + interstitial ads (see `CLAUDE.md` Section 2 and Phase 7 in `PLANNER.md`).
-
 ## Overview
 
-The Feature Flag System was designed to enable server-side toggling between **Free Mode** and **Paid Mode** without requiring app updates. This plan was cancelled when the subscription model was removed on 2026-03-15.
+The Feature Flag System enables server-side toggling between **Free Mode** and **Paid Mode** without requiring app updates. This allows instant promotional campaigns, A/B testing, and flexible monetization strategies.
 
 ---
 

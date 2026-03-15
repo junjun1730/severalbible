@@ -3,7 +3,11 @@
 ## Overview
 **Goal**: Improve app completeness and release to app stores
 **Duration**: 3-5 days
-**Last Updated**: January 26, 2026
+**Last Updated**: 2026-03-15
+
+> **Note (2026-03-15)**: Revenue model changed to ad-based (AdMob). Subscription/IAP references
+> in this checklist (e.g., "Premium subscription flow") are outdated — replace with ad flow testing.
+> Phase 7 (ad pivot) is complete. This checklist covers store assets and distribution only.
 
 ---
 
@@ -11,11 +15,14 @@
 
 | Category | Total | Completed | Percentage |
 |----------|-------|-----------|------------|
-| **Overall** | 10 | 1 | 10% |
-| Optimization | 3 | 0 | 0% |
+| **Overall** | 10 | 4 | 40% |
+| Optimization | 3 | 1 | 33% |
 | Legal Compliance | 4 | 4 | 100% ✅ |
 | Release Assets | 2 | 0 | 0% |
 | Testing | 1 | 0 | 0% |
+
+> **Progress Note (2026-03-15)**: Legal Compliance fully complete including GitHub Pages hosting.
+> ListView performance already verified as optimized. Subscription IAP testing replaced by ad flow testing.
 
 ---
 
@@ -63,12 +70,13 @@
   - **Tests**: 6 new widget tests, all passing (13 total)
   - **Completed**: January 26, 2026
 
-- [x] **[Hosting]** Prepare policies for hosting
+- [x] **[Hosting]** Host legal documents on GitHub Pages
   - Created mobile-optimized HTML versions
-  - Created `policies/README.md` with hosting instructions
-  - Options documented: GitHub Pages, custom domain, Supabase Storage
-  - **Status**: Ready for deployment
-  - **Next Step**: Follow README to host on GitHub Pages or custom domain
+  - Deployed to: `https://junjun1730.github.io/severalbible/`
+  - Privacy Policy: `https://junjun1730.github.io/severalbible/privacy_policy.html`
+  - Terms of Service: `https://junjun1730.github.io/severalbible/terms_of_service.html`
+  - URLs updated in `settings_screen.dart`
+  - **Completed**: February 3, 2026
 
 ### Widget Tests for Legal Section (6/6 passing) ✅
 - [x] Test: Legal section header renders
