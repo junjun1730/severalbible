@@ -46,21 +46,3 @@ class OneMessageApp extends ConsumerWidget {
     );
   }
 }
-
-// Legacy HomeScreen for backward compatibility with widget_test.dart
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('One Message'),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      ),
-      body: const Center(
-        child: Text('Welcome to One Message', style: TextStyle(fontSize: 24)),
-      ),
-    );
-  }
-}

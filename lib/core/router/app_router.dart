@@ -76,7 +76,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       return null;
     },
     refreshListenable: GoRouterRefreshStream(
-      ref.watch(authStateChangesProvider.stream),
+      ref.watch(authRepositoryProvider).authStateChanges,
     ),
   );
 });
