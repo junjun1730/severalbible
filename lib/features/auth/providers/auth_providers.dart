@@ -59,7 +59,7 @@ final authStateChangesProvider = StreamProvider<AuthState>((ref) {
 final currentUserTierProvider = FutureProvider<UserTier>((ref) async {
   final currentUser = ref.watch(currentUserProvider);
 
-  if (currentUser == null) {
+  if (currentUser == null || currentUser.isAnonymous == true) {
     return UserTier.guest;
   }
 

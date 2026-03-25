@@ -41,13 +41,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
     if (widget.autoNavigate) {
       if (isLoggedIn) {
-        // Check if user is anonymous
-        final user = ref.read(currentUserProvider);
-        if (user != null && !user.isAnonymous) {
-          _navigateToHome();
-        } else {
-          _navigateToLogin();
-        }
+        _navigateToHome();
       } else {
         _navigateToLogin();
       }

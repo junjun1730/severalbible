@@ -27,15 +27,9 @@ final currentScriptureIndexProvider = StateProvider<int>((ref) => 0);
 /// - Member: 3 daily scriptures (no duplicates)
 /// - Premium: treated same as Member (data compatibility maintained)
 final dailyScripturesProvider = FutureProvider<List<Scripture>>((ref) async {
-  final tierAsync = ref.watch(currentUserTierProvider);
+  final tier = await ref.watch(currentUserTierProvider.future);
   final currentUser = ref.watch(currentUserProvider);
   final repository = ref.watch(scriptureRepositoryProvider);
-
-  final tier = tierAsync.when(
-    data: (t) => t,
-    loading: () => UserTier.guest,
-    error: (_, __) => UserTier.guest,
-  );
 
   switch (tier) {
     case UserTier.guest:
