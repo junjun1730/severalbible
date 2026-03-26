@@ -9,7 +9,6 @@ import '../../domain/entities/scripture.dart';
 import '../providers/scripture_providers.dart';
 import '../widgets/scripture_card.dart';
 import '../widgets/page_indicator.dart';
-import '../widgets/navigation_arrow_button.dart';
 import '../widgets/meditation_button.dart';
 import '../../../ads/widgets/banner_ad_widget.dart';
 import '../../../ads/providers/ad_providers.dart';
@@ -75,68 +74,40 @@ class _DailyFeedScreenState extends ConsumerState<DailyFeedScreen> {
     return Column(
       children: [
         Expanded(
-          child: Stack(
-            children: [
-              PageView.builder(
-                controller: _pageController,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: itemCount,
-                onPageChanged: (index) {
-                  ref.read(currentScriptureIndexProvider.notifier).state = index;
+          child: PageView.builder(
+            controller: _pageController,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: itemCount,
+            onPageChanged: (index) {
+              ref.read(currentScriptureIndexProvider.notifier).state = index;
 
-                  // Show interstitial when member exhausts cards
-                  if (index >= scriptures.length - 1 && tier != UserTier.guest) {
-                    ref.read(interstitialAdProvider.notifier).show();
-                  }
+              // Show interstitial when member exhausts cards
+              if (index >= scriptures.length - 1 && tier != UserTier.guest) {
+                ref.read(interstitialAdProvider.notifier).show();
+              }
 
-                  // Track view
-                  ref
-                      .read(scriptureViewTrackerProvider.notifier)
-                      .trackView(scriptures[index].id);
-                },
-                itemBuilder: (context, index) {
-                  return Center(
-                    child: ScriptureCard(
-                      scripture: scriptures[index],
-                    ),
-                  );
-                },
-              ),
-              // Left arrow
-              Positioned(
-                left: 16,
-                top: 0,
-                bottom: 0,
-                child: Center(
-                  child: NavigationArrowButton(
-                    icon: Icons.arrow_back_ios,
-                    onPressed: () => _navigateToPage(currentIndex - 1),
-                    isEnabled: currentIndex > 0,
-                    side: NavigationSide.left,
-                  ),
+              // Track view
+              ref
+                  .read(scriptureViewTrackerProvider.notifier)
+                  .trackView(scriptures[index].id);
+            },
+            itemBuilder: (context, index) {
+              return Center(
+                child: ScriptureCard(
+                  scripture: scriptures[index],
                 ),
-              ),
-              // Right arrow
-              Positioned(
-                right: 16,
-                top: 0,
-                bottom: 0,
-                child: Center(
-                  child: NavigationArrowButton(
-                    icon: Icons.arrow_forward_ios,
-                    onPressed: () => _navigateToPage(currentIndex + 1),
-                    isEnabled: currentIndex < itemCount - 1,
-                    side: NavigationSide.right,
-                  ),
-                ),
-              ),
-            ],
+              );
+            },
           ),
         ),
         const SizedBox(height: 16),
         PageIndicator(
           pageCount: itemCount,
           currentPage: currentIndex,
+          onPrevious: () => _navigateToPage(currentIndex - 1),
+          onNext: () => _navigateToPage(currentIndex + 1),
+          isPreviousEnabled: currentIndex > 0,
+          isNextEnabled: currentIndex < itemCount - 1,
         ),
         const SizedBox(height: 8),
         const BannerAdWidget(),
