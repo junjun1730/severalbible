@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -139,9 +140,12 @@ class SettingsScreen extends ConsumerWidget {
 
           if (context.mounted) {
             result.fold(
-              (error) => ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Sign out failed: $error')),
-              ),
+              (error) {
+                debugPrint('❌ [SettingsScreen] Sign out failed: $error');
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Sign out failed: $error')),
+                );
+              },
               (_) => context.go(AppRoutes.login),
             );
           }
@@ -174,6 +178,7 @@ class SettingsScreen extends ConsumerWidget {
       if (await canLaunchUrl(uri)) {
         await launchUrl(uri, mode: LaunchMode.externalApplication);
       } else {
+        debugPrint('❌ [SettingsScreen] Could not open URL: $url');
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Could not open $title')),
@@ -181,6 +186,7 @@ class SettingsScreen extends ConsumerWidget {
         }
       }
     } catch (e) {
+      debugPrint('❌ [SettingsScreen] Error launching URL ($url): $e');
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Could not open $title')),

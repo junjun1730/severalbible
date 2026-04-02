@@ -164,6 +164,7 @@ class _DailyFeedScreenState extends ConsumerState<DailyFeedScreen> {
   }
 
   Widget _buildErrorState(BuildContext context, Object error) {
+    debugPrint('❌ [DailyFeedScreen] Error loading scriptures: $error');
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -227,6 +228,7 @@ class _DailyFeedScreenState extends ConsumerState<DailyFeedScreen> {
 
           result.fold(
             (error) {
+              debugPrint('❌ [DailyFeedScreen] Failed to save prayer note: $error');
               if (context.mounted) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text('Failed to save: $error')),

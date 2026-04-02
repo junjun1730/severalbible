@@ -1,3 +1,5 @@
+import 'dart:developer' as developer;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,6 +10,28 @@ import 'core/theme/app_theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Log Flutter framework errors to console
+  FlutterError.onError = (FlutterErrorDetails details) {
+    developer.log(
+      '❌ Flutter Error: ${details.exceptionAsString()}',
+      name: 'FlutterError',
+      error: details.exception,
+      stackTrace: details.stack,
+    );
+    FlutterError.presentError(details);
+  };
+
+  // Log async/zone errors to console
+  PlatformDispatcher.instance.onError = (error, stack) {
+    developer.log(
+      '❌ Uncaught Error: $error',
+      name: 'PlatformError',
+      error: error,
+      stackTrace: stack,
+    );
+    return false;
+  };
 
   // Load environment variables
   await dotenv.load(fileName: '.env');

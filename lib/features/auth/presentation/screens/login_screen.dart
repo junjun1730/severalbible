@@ -41,8 +41,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         _showErrorSnackBar(failure);
       },
       (_) {
-        // Navigation will be handled by auth state listener
         setState(() => _isLoading = false);
+        if (mounted) context.go(AppRoutes.home);
       },
     );
   }
@@ -131,6 +131,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   void _showErrorSnackBar(String message) {
+    debugPrint('❌ [LoginScreen] Error: $message');
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
