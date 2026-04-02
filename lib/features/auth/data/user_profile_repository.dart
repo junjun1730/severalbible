@@ -36,7 +36,7 @@ class UserProfileRepository {
       final response = await _dataSource.getProfile(userId);
 
       if (response == null) {
-        return const Right(UserTier.guest);
+        return const Right(UserTier.member);  // non-anonymous users default to member
       }
 
       final tier = UserTier.fromString(response['tier'] as String);

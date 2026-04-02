@@ -66,7 +66,7 @@ final currentUserTierProvider = FutureProvider<UserTier>((ref) async {
   final userProfileRepo = ref.watch(userProfileRepositoryProvider);
   final result = await userProfileRepo.getUserTier(currentUser.id);
 
-  return result.fold((failure) => UserTier.guest, (tier) => tier);
+  return result.fold((failure) => UserTier.member, (tier) => tier);
 });
 
 /// Provider for checking if user is logged in
