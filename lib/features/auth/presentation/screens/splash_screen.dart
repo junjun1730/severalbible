@@ -40,11 +40,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     widget.onAuthChecked?.call(isLoggedIn);
 
     if (widget.autoNavigate) {
-      if (isLoggedIn) {
-        _navigateToHome();
-      } else {
-        _navigateToLogin();
-      }
+      // Always navigate to home — guests see 1 random scripture, members see 3
+      _navigateToHome();
     }
   }
 

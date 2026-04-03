@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../core/router/app_router.dart';
 import 'package:severalbible/core/widgets/app_bottom_sheet.dart';
 import '../../../auth/domain/user_tier.dart';
 import '../../../auth/providers/auth_providers.dart';
@@ -105,9 +107,15 @@ class _DailyFeedScreenState extends ConsumerState<DailyFeedScreen> {
           pageCount: itemCount,
           currentPage: currentIndex,
           onPrevious: () => _navigateToPage(currentIndex - 1),
-          onNext: () => _navigateToPage(currentIndex + 1),
+          onNext: () {
+            if (tier == UserTier.guest && currentIndex >= scriptures.length - 1) {
+              _showGuestLoginBlocker(context);
+            } else {
+              _navigateToPage(currentIndex + 1);
+            }
+          },
           isPreviousEnabled: currentIndex > 0,
-          isNextEnabled: currentIndex < itemCount - 1,
+          isNextEnabled: tier == UserTier.guest ? true : currentIndex < itemCount - 1,
         ),
         const SizedBox(height: 8),
         const BannerAdWidget(),
@@ -123,6 +131,29 @@ class _DailyFeedScreenState extends ConsumerState<DailyFeedScreen> {
         ),
         const SizedBox(height: 16),
       ],
+    );
+  }
+
+  void _showGuestLoginBlocker(BuildContext context) {
+    showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('더 많은 말씀을 받으세요'),
+        content: const Text('로그인하면 하루 3배 더 많은 말씀을\n받을 수 있습니다.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('닫기'),
+          ),
+          FilledButton(
+            onPressed: () {
+              Navigator.pop(context);
+              context.go(AppRoutes.login);
+            },
+            child: const Text('로그인'),
+          ),
+        ],
+      ),
     );
   }
 

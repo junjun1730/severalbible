@@ -68,10 +68,11 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       // Anonymous users should be able to see the login screen to sign in/up
       if (isLogin && isLoggedIn && !isAnonymous) return AppRoutes.home;
 
-      // Guard: If not logged in and not on a public route, go to Login
-      // This ensures that when signing out, the user is forced to the login screen
-      final isPublic = isSplash || isLogin || isCallback;
-      if (!isLoggedIn && !isPublic) return AppRoutes.login;
+      // Guard: my-library requires login (prayer notes are member-only)
+      if (!isLoggedIn && state.matchedLocation == AppRoutes.myLibrary) {
+        return AppRoutes.login;
+      }
+      // Home, settings, etc. are accessible without login (guest tier)
 
       return null;
     },
