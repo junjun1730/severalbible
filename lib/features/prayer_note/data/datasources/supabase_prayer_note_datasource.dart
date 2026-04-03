@@ -17,7 +17,6 @@ class SupabasePrayerNoteDataSource implements PrayerNoteDataSource {
     final response = await _supabaseService.rpc<Map<String, dynamic>>(
       'create_prayer_note',
       params: {
-        'p_user_id': userId,
         'p_content': content,
         'p_scripture_id': scriptureId,
       },
