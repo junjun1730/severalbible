@@ -122,12 +122,20 @@ class _DailyFeedScreenState extends ConsumerState<DailyFeedScreen> {
         const SizedBox(height: 16),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: MeditationButton(
-            isEnabled: tier != UserTier.guest && currentIndex < scriptures.length,
-            onTap: currentIndex < scriptures.length
-                ? () => _openMeditationSheet(scriptures[currentIndex])
-                : () {},
-          ),
+          child: tier == UserTier.guest
+              ? GestureDetector(
+                  onTap: () => _showGuestLoginBlocker(context),
+                  child: MeditationButton(
+                    isEnabled: false,
+                    onTap: () {},
+                  ),
+                )
+              : MeditationButton(
+                  isEnabled: currentIndex < scriptures.length,
+                  onTap: currentIndex < scriptures.length
+                      ? () => _openMeditationSheet(scriptures[currentIndex])
+                      : () {},
+                ),
         ),
         const SizedBox(height: 16),
       ],
