@@ -153,7 +153,7 @@ class _ScriptureCardState extends State<ScriptureCard>
   }
 
   Widget _buildContent(BuildContext context) {
-    return Text(
+    return SelectableText(
       widget.scripture.content,
       textAlign: TextAlign.center,
       style: AppTypography.textTheme.bodyLarge?.copyWith(

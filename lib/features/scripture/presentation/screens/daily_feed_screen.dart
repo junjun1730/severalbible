@@ -55,7 +55,10 @@ class _DailyFeedScreenState extends ConsumerState<DailyFeedScreen> {
               context,
               scriptures: scriptures,
               currentIndex: currentIndex,
-              tier: tierAsync.valueOrNull ?? UserTier.guest,
+              tier: tierAsync.valueOrNull ??
+                  (ref.read(currentUserProvider) != null
+                      ? UserTier.member
+                      : UserTier.guest),
             );
           },
           loading: () => const Center(child: CircularProgressIndicator()),
@@ -275,6 +278,7 @@ class _DailyFeedScreenState extends ConsumerState<DailyFeedScreen> {
               }
             },
             (note) {
+              ref.invalidate(prayerNoteListProvider);
               if (context.mounted) {
                 Navigator.of(context).pop();
                 ScaffoldMessenger.of(context).showSnackBar(
